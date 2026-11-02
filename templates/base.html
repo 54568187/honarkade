@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>{% block title %}{{ site_settings.title|default:"هنرکده | گالری و فروشگاه آنلاین آثار هنری و دست‌سازه‌ها" }}{% endblock %}</title>
+  
+  <meta name="description" content="{% block meta_description %}{{ site_settings.description|default:'خرید و فروش آنلاین آثار اصیل هنری، نقاشی، خوشنویسی، سرامیک و دست‌سازه‌ها' }}{% endblock %}">
+
+  <!-- 
+    ★ قابلیت تغییر فاوآیکون از دیتابیس در جنگو:
+    در صورت وجود مدل تنظیمات در دیتابیس (site_settings.favicon.url)، از آن استفاده می‌شود؛
+    در غیر این صورت از فایل پیش‌فرض باکیفیت static استفاده خواهد شد.
+  -->
+  <link rel="icon" type="image/svg+xml" href="{% if site_settings and site_settings.favicon %}{{ site_settings.favicon.url }}{% else %}/static/images/favicon.svg{% endif %}">
+
+  <!-- استایل‌های بیلد شده تیلویند به همراه فونت‌های محلی بدون نیاز به اینترنت -->
+  <link rel="stylesheet" href="/static/css/style.css">
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex flex-col font-['Vazirmatn'] selection:bg-[#2C4A3E] selection:text-[#FAF7F2] antialiased">
+
+  <!-- نوبار و هدر سایت -->
+  {% include 'components/navbar.html' %}
+
+  <!-- محتوای اصلی صفحات -->
+  <main class="flex-grow">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- سبد خرید کشویی (Cart Drawer) -->
+  {% include 'components/cart-drawer.html' %}
+
+  <!-- فوتر سایت -->
+  {% include 'components/footer.html' %}
+
+  <!-- اسکریپت‌های تعاملی -->
+  <script src="/static/js/main.js"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

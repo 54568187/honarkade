@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- گرادیانت پس‌زمینه سبز زیتونی تیره و لوکس -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E372B" />
+      <stop offset="50%" stop-color="#28493A" />
+      <stop offset="100%" stop-color="#15271E" />
+    </linearGradient>
+
+    <!-- گرادیانت طلای ۲۴ عیار درخشان -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2CE" />
+      <stop offset="30%" stop-color="#E5BE72" />
+      <stop offset="70%" stop-color="#C69A52" />
+      <stop offset="100%" stop-color="#9E7432" />
+    </linearGradient>
+
+    <!-- گرادیانت حلقه دور -->
+    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5BE72" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#82533D" stop-opacity="0.4" />
+    </linearGradient>
+
+    <!-- فیلتر درخشش طلایی -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#E5BE72" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- پس‌زمینه اسکوئیرکل (Squircle) نرم و مدرن -->
+  <rect x="4" y="4" width="120" height="120" rx="34" fill="url(#bgGradient)" stroke="url(#ringGradient)" stroke-width="2.5"/>
+
+  <!-- هاله نور داخلی ظریف -->
+  <circle cx="64" cy="64" r="50" fill="none" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1.5"/>
+
+  <!-- فرم خوشنویسی و آرت‌پیس حرف «هـ» هنرکده ترکیب‌شده با پالت و قلم نقاشی -->
+  <g filter="url(#goldGlow)">
+    <!-- قوس اصلی حرف هـ با پیچش سنتی و فرم شاهین قلم -->
+    <path d="M64 26 
+             C43 26 30 42 30 64 
+             C30 84 45 98 67 98 
+             C87 98 96 82 96 66 
+             C96 48 79 38 64 38 
+             C51 38 43 47 43 59 
+             C43 73 55 81 68 81 
+             C79 81 84 73 84 66" 
+          fill="none" 
+          stroke="url(#goldGradient)" 
+          stroke-width="7.5" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+
+    <!-- سرقلم و قلم‌موی هنری طلایی در مرکز -->
+    <path d="M67 52 L73 40 L69 49 Z" fill="url(#goldGradient)"/>
+
+    <!-- نقطه قدسی و مینیاتوری درخشان -->
+    <circle cx="68" cy="56" r="4" fill="#FAF7F2" stroke="url(#goldGradient)" stroke-width="1.5" />
+    
+    <!-- ستاره هنری درخشان چهارپر (Sparkle ✦) در بالای گوشه -->
+    <path d="M92 30 Q92 36 98 36 Q92 36 92 42 Q92 36 86 36 Q92 36 92 30 Z" fill="url(#goldGradient)"/>
+  </g>
+</svg>

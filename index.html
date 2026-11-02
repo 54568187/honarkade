@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>هنرکده | گالری آنلاین آثار هنری و دست‌سازه‌ها</title>
+  
+  <!-- فاوآیکون فوق‌العاده باکیفیت هنرکده -->
+  <link rel="icon" type="image/svg+xml" href="./static/images/favicon.svg">
+
+  <!-- بارگذاری فونت محلی و سراسری وزیرمتن -->
+  <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex flex-col font-['Vazirmatn'] selection:bg-[#2C4A3E] selection:text-[#FAF7F2] antialiased">
+
+  <!-- ================= ۱. بنر تبلیغاتی بالای صفحه با پس‌زمینه عکس لوکال ================= -->
+  <div id="top-banner" class="relative z-50 text-[#FAF7F2] text-xs sm:text-sm py-2.5 px-4 overflow-hidden border-b border-[#C69A52]/40 shadow-sm transition-all duration-300">
+    
+    <!-- عکس پس‌زمینه محلی بنر (لود فوری و بدون فیلتر) -->
+    <img src="./static/images/banner/top-banner.jpg" 
+         alt="پس‌زمینه گالری هنر" 
+         class="absolute inset-0 w-full h-full object-cover filter brightness-[0.3] contrast-125 scale-105">
+         
+    <!-- لایه گرادیانت تلفیقی زیتونی و مشکی جهت افزایش خوانایی -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#15271E]/95 via-[#233C30]/85 to-[#15271E]/95"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto flex items-center justify-between">
+      <!-- متن بنر و آیکون هدیه -->
+      <div class="flex items-center gap-2 sm:gap-3 mx-auto text-center sm:text-right">
+        <span class="w-6 h-6 rounded-full bg-[#C69A52]/30 text-[#E0BA79] border border-[#C69A52]/50 flex items-center justify-center shrink-0 shadow-sm">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V4a2 2 0 10-2 2h2m-7 4h14a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2z"></path>
+          </svg>
+        </span>
+        <p class="font-medium text-[11px] sm:text-xs text-[#FAF7F2]">
+          <span class="text-[#E0BA79] font-black">جشنواره گالری هنرکده:</span>
+          ارسال رایگان به سراسر کشور + ۱۵٪ تخفیف اولین خرید آثار هنری با کد تخفیف
+          <span class="bg-[#C69A52] text-[#1E3329] px-2.5 py-0.5 rounded-lg font-black font-mono tracking-wider mr-1 shadow-sm">HONAR15</span>
+        </p>
+        <a href="#handicrafts-section" class="hidden md:inline-flex items-center gap-1 text-xs text-[#E0BA79] hover:underline font-bold pr-2 transition-all">
+          <span>مشاهده آثار تخفیف‌دار</span>
+          <svg class="w-3 h-3 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+      <!-- دکمه بستن بنر -->
+      <button id="close-banner-btn" type="button" class="text-white/70 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors shrink-0" title="بستن بنر">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= ۲. هدر اصلی سایت ================= -->
+  <header class="bg-white sticky top-0 z-40 border-b border-[#E8E3D9] shadow-sm">
+    
+    <!-- ردیف اول: لوگو، جستجو، ورود/ثبت‌نام، نوتیفیکیشن، سبد خرید -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div class="flex items-center justify-between gap-4">
+        
+        <!-- لوگو و برند هنرکده همراه با فاوآیکون لوکس -->
+        <a href="./index.html" class="flex items-center gap-3 shrink-0 group">
+          <img src="./static/images/favicon.svg" alt="هنرکده" class="w-10 h-10 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-105 drop-shadow-md">
+          <div class="flex flex-col">
+            <span class="text-xl sm:text-2xl font-black text-[#1E3329] tracking-tight">هُنَـرکَـده</span>
+            <span class="text-[10px] text-[#82533D] font-medium hidden sm:inline">گالری و فروشگاه آنلاین آثار هنری</span>
+          </div>
+        </a>
+
+        <!-- نوار جستجوی پیشرفته آثار و هنرمندان -->
+        <div class="flex-grow max-w-xl mx-2 sm:mx-6 hidden md:block">
+          <div class="relative">
+            <input type="text" placeholder="جستجوی نقاشی، سرامیک دست‌ساز، نام اثر، هنرمند..." 
+                   class="w-full bg-[#FAF7F2] text-[#242826] text-xs sm:text-sm rounded-2xl py-2.5 pr-11 pl-4 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all placeholder:text-[#98A19C]">
+            <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6B726E]">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- ابزارها: ورود/ثبت‌نام، نوتیفیکیشن، سبد خرید -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- دکمه ورود / ثبت نام -->
+          <a href="#login" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#1E3329] border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] transition-all">
+            <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+            </svg>
+            <span>ورود <span class="text-[#98A19C] font-normal">|</span> ثبت‌نام</span>
+          </a>
+
+          <!-- آیکون زنگوله / اعلان‌ها با دراپ‌داون -->
+          <div class="relative">
+            <button id="notif-btn" type="button" class="relative p-2.5 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors border border-transparent hover:border-[#E8E3D9]" title="اعلان‌ها و رویدادها">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+              </svg>
+              <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#82533D] ring-2 ring-white"></span>
+            </button>
+
+            <!-- منوی پاپ‌آپ اعلان‌ها -->
+            <div id="notif-dropdown" class="hidden absolute left-0 mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-xl border border-[#E8E3D9] p-4 z-50">
+              <div class="flex items-center justify-between pb-3 border-b border-[#E8E3D9] mb-3">
+                <span class="text-xs font-bold text-[#1E3329]">اعلان‌های گالری</span>
+                <span class="text-[10px] text-[#82533D] bg-[#F7EFEA] px-2 py-0.5 rounded-full font-semibold">۱ پیام جدید</span>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2.5 p-2 rounded-xl bg-[#FAF7F2]">
+                  <span class="w-7 h-7 rounded-lg bg-[#E8EFEA] text-[#2C4A3E] flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  </span>
+                  <div>
+                    <p class="text-xs font-bold text-[#1E3329]">آغاز نمایشگاه فصلی آبرنگ</p>
+                    <p class="text-[11px] text-[#6B726E] mt-0.5">آثار جدید استاد جلالی با گواهی اصالت به گالری اضافه شد.</p>
+                    <span class="text-[9px] text-[#98A19C] mt-1 block">۱۰ دقیقه پیش</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- دکمه سبد خرید با شمارنده -->
+          <button id="cart-drawer-btn" type="button" class="relative p-2.5 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors border border-transparent hover:border-[#E8E3D9]" title="سبد خرید">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            <span id="cart-count-badge" class="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#82533D] text-white text-[10px] font-bold flex items-center justify-center transition-transform">۰</span>
+          </button>
+
+          <!-- دکمه منوی موبایل -->
+          <button id="mobile-menu-btn" type="button" class="md:hidden p-2 rounded-xl text-[#242826] hover:bg-[#FAF7F2]">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ردیف دوم: منوی افقی با هاور مگامنو (مطابق عکس ارسالی) -->
+    <div class="border-t border-[#E8E3D9] hidden md:block bg-white relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs sm:text-sm">
+        
+        <!-- سمت راست: دسته‌بندی کالاها با هاور مگامنو + سایر لینک‌ها -->
+        <div class="flex items-center gap-1 sm:gap-4 py-2">
+          
+          <!-- دکمه و منوی دسته‌بندی کالاها (با هاور) -->
+          <div class="relative group">
+            <button type="button" class="flex items-center gap-2 py-2 px-3 rounded-lg text-[#1E3329] font-bold hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
+              <svg class="w-4 h-4 text-[#1E3329]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+              <span>دسته‌بندی آثار و صنایع‌دستی</span>
+              <svg class="w-3.5 h-3.5 text-[#6B726E] transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- مگامنوی آبشاری هنگام هاور (Hover Dropdown) -->
+            <div class="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 absolute right-0 top-full mt-1 w-[720px] bg-white rounded-2xl shadow-2xl border border-[#E8E3D9] p-6 z-50">
+              <div class="grid grid-cols-4 gap-6">
+                
+                <!-- ستون ۱: نقاشی و نگارگری -->
+                <div>
+                  <a href="#handicrafts-section" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
+                    <span class="w-2 h-2 rounded-full bg-[#2C4A3E]"></span>
+                    <span>نقاشی و نگارگری</span>
+                  </a>
+                  <ul class="space-y-2 text-xs text-[#6B726E]">
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">رنگ روغن و اکریلیک</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">آبرنگ و گواش</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">مینیاتور و تذهیب</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">سیاه‌قلم و طراحی</a></li>
+                  </ul>
+                </div>
+
+                <!-- ستون ۲: سفال، سرامیک و مجسمه -->
+                <div>
+                  <a href="#handicrafts-section" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
+                    <span class="w-2 h-2 rounded-full bg-[#82533D]"></span>
+                    <span>سفال و سرامیک</span>
+                  </a>
+                  <ul class="space-y-2 text-xs text-[#6B726E]">
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">گلدان‌های دکوراتیو</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">ماگ و فنجان دست‌ساز</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">مجسمه‌های سرامیکی</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">بشقاب‌های دیوارکوب</a></li>
+                  </ul>
+                </div>
+
+                <!-- ستون ۳: خوشنویسی و کتیبه -->
+                <div>
+                  <a href="#handicrafts-section" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
+                    <span class="w-2 h-2 rounded-full bg-[#C69A52]"></span>
+                    <span>خوشنویسی و خط</span>
+                  </a>
+                  <ul class="space-y-2 text-xs text-[#6B726E]">
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">خط نستعلیق و شکسته</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">نقاشی‌خط مدرن</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">خط کوفی و معلی</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">کتیبه‌ها و قطعات نفیس</a></li>
+                  </ul>
+                </div>
+
+                <!-- ستون ۴: صنایع‌دستی و شمع -->
+                <div>
+                  <a href="#handicrafts-section" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
+                    <span class="w-2 h-2 rounded-full bg-[#476E5E]"></span>
+                    <span>صنایع‌دستی و دکوری</span>
+                  </a>
+                  <ul class="space-y-2 text-xs text-[#6B726E]">
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">شمع موم عسل ارگانیک</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">فیروزه‌کوبی و مس</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">منبت و سازه‌های چوبی</a></li>
+                    <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">رودوزی و پته‌دوزی</a></li>
+                  </ul>
+                </div>
+
+              </div>
+
+              <!-- بخش پایینی مگامنو -->
+              <div class="mt-6 pt-4 border-t border-[#E8E3D9] flex items-center justify-between bg-[#FAF7F2] -mx-6 -mb-6 p-4 rounded-b-2xl">
+                <span class="text-xs text-[#6B726E]">همه آثار دارای گواهی اصالت و امضای اختصاصی هنرمند هستند.</span>
+                <a href="#handicrafts-section" class="text-xs font-bold text-[#2C4A3E] hover:underline flex items-center gap-1">
+                  <span>مشاهده تمام آثار گالری</span>
+                  <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <span class="w-px h-5 bg-[#E8E3D9]"></span>
+
+          <!-- لینک‌های افقی مشابه دیجی‌کالا -->
+          <a href="#handicrafts-section" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
+            <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>آثار شگفت‌انگیز</span>
+          </a>
+
+          <a href="#handicrafts-section" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
+            <svg class="w-4 h-4 text-[#C69A52]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+            </svg>
+            <span>پرفروش‌ترین‌ها</span>
+          </a>
+
+          <a href="#artists" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
+            <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            <span>هنرمندان برگزیده</span>
+          </a>
+        </div>
+
+        <!-- سمت چپ منو: لینک «در هنرکده بفروشید!» -->
+        <div class="flex items-center gap-3">
+          <span class="w-px h-5 bg-[#E8E3D9]"></span>
+          <a href="#sell-art" class="flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-[#82533D] font-bold hover:bg-[#F7EFEA] transition-all">
+            <span>در هنرکده اثر بفروشید!</span>
+            <span class="w-2 h-2 rounded-full bg-[#C69A52] animate-ping"></span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- منوی موبایل -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[#E8E3D9] bg-white px-4 py-4 space-y-3">
+      <div class="relative mb-3">
+        <input type="text" placeholder="جستجوی آثار هنری..." class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2 pr-9 pl-3 border border-[#E8E3D9] focus:outline-none">
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B726E]">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </span>
+      </div>
+      <a href="./index.html" class="block text-sm font-bold text-[#2C4A3E] py-1.5">صفحه اصلی</a>
+      <a href="#handicrafts-section" class="block text-sm text-[#242826] py-1.5">دسته‌بندی آثار</a>
+      <a href="#handicrafts-section" class="block text-sm text-[#242826] py-1.5">پرفروش‌ترین‌ها</a>
+      <a href="#artists" class="block text-sm text-[#242826] py-1.5">هنرمندان برگزیده</a>
+      <a href="#sell-art" class="block text-sm font-bold text-[#82533D] py-1.5 bg-[#F7EFEA] px-3 rounded-xl">در هنرکده اثر بفروشید!</a>
+    </div>
+
+  </header>
+
+  <!-- ================= ۳. محتوای اصلی صفحه ================= -->
+  <main class="flex-grow">
+    
+    <!-- ================= اسلایدر خودکار با عکس‌های لوکال و گرادیانت صحیح RTL ================= -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
+      <div id="hero-slider-container" class="relative rounded-3xl overflow-hidden shadow-2xl bg-[#15271E] h-[380px] sm:h-[480px] md:h-[540px] border border-[#E8E3D9]">
+        
+        <!-- اسلاید ۱: نقاشی و نگارگری (عکس لوکال) -->
+        <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-100">
+          <img src="./static/images/hero/slide-1.jpg" 
+               alt="نقاشی اصیل ایرانی" class="w-full h-full object-cover">
+          <!-- گرادیانت راست‌چین RTL: تیره در سمت راست (پشت متن) و شفاف در سمت چپ -->
+          <div class="absolute inset-0 bg-gradient-to-l from-black/85 via-black/55 to-transparent flex items-center">
+            <div class="max-w-xl px-6 sm:px-12 lg:px-16 text-white space-y-4">
+              <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-[#C69A52] text-[#1E3329] shadow-md">
+                <span>شاهکارهای منتخب گالری</span>
+              </span>
+              <h1 class="text-2xl sm:text-4xl md:text-5xl font-black leading-tight text-[#FAF7F2] drop-shadow-md">
+                اصالت هنر، در خلوت خانه شما
+              </h1>
+              <p class="text-xs sm:text-base text-white/90 leading-relaxed font-light drop-shadow">
+                مجموعه‌ای بی‌نظیر از نقاشی‌های آبرنگ و رنگ‌روغن معاصر با امضای مستقیم هنرمندان مستقل و گواهی اصالت فیزیکی.
+              </p>
+              <div class="pt-2 flex items-center gap-3">
+                <a href="#handicrafts-section" class="px-5 py-3 rounded-xl bg-[#2C4A3E] hover:bg-[#3D6756] text-white text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center gap-2">
+                  <span>مشاهده گالری آثار</span>
+                  <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+                <a href="#sell-art" class="px-5 py-3 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur text-white text-xs sm:text-sm font-semibold transition-all">
+                  معرفی اثر خودتان
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- اسلاید ۲: سفال و سرامیک دست‌ساز (عکس لوکال) -->
+        <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0 pointer-events-none">
+          <img src="./static/images/hero/slide-2.jpg" 
+               alt="سفال و سرامیک دست‌ساز کارگاهی" class="w-full h-full object-cover">
+          <!-- گرادیانت راست‌چین RTL: تیره در سمت راست (پشت متن) و شفاف در سمت چپ -->
+          <div class="absolute inset-0 bg-gradient-to-l from-black/85 via-black/55 to-transparent flex items-center">
+            <div class="max-w-xl px-6 sm:px-12 lg:px-16 text-white space-y-4">
+              <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-[#82533D] text-white shadow-md">
+                <span>دست‌سازه‌های سرامیکی</span>
+              </span>
+              <h2 class="text-2xl sm:text-4xl md:text-5xl font-black leading-tight text-[#FAF7F2] drop-shadow-md">
+                روح خاک و آتش در دستان هنرمند
+              </h2>
+              <p class="text-xs sm:text-base text-white/90 leading-relaxed font-light drop-shadow">
+                ظروف، ماگ‌ها و مجسمه‌های سرامیکی با لعاب‌های ویژه و فرم‌های ارگانیک، ساخته شده با عشق و صبوری.
+              </p>
+              <div class="pt-2 flex items-center gap-3">
+                <a href="#handicrafts-section" class="px-5 py-3 rounded-xl bg-[#82533D] hover:bg-[#9C684F] text-white text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center gap-2">
+                  <span>خرید دست‌سازه‌ها</span>
+                  <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- اسلاید ۳: خوشنویسی و نقاشی‌خط (عکس لوکال) -->
+        <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0 pointer-events-none">
+          <img src="./static/images/hero/slide-3.jpg" 
+               alt="خوشنویسی و خطاطی نفیس" class="w-full h-full object-cover">
+          <!-- گرادیانت راست‌چین RTL: تیره در سمت راست (پشت متن) و شفاف در سمت چپ -->
+          <div class="absolute inset-0 bg-gradient-to-l from-black/85 via-black/55 to-transparent flex items-center">
+            <div class="max-w-xl px-6 sm:px-12 lg:px-16 text-white space-y-4">
+              <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-[#C69A52] text-[#1E3329] shadow-md">
+                <span>هنر قدسی خطاطی</span>
+              </span>
+              <h2 class="text-2xl sm:text-4xl md:text-5xl font-black leading-tight text-[#FAF7F2] drop-shadow-md">
+                کلام فاخر، نقش مانا
+              </h2>
+              <p class="text-xs sm:text-base text-white/90 leading-relaxed font-light drop-shadow">
+                تابلوهای نقاشی‌خط و کتیبه‌های نستعلیق از اشعار حافظ، مولانا و سعدی بر بوم و کاغذ دست‌ساز آهارمهره.
+              </p>
+              <div class="pt-2 flex items-center gap-3">
+                <a href="#handicrafts-section" class="px-5 py-3 rounded-xl bg-[#2C4A3E] hover:bg-[#3D6756] text-white text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center gap-2">
+                  <span>مشاهده آثار خطاطی</span>
+                  <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- دکمه‌های کنترل بعدی و قبلی اسلایدر -->
+        <button id="slider-prev" type="button" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur text-white flex items-center justify-center transition-all z-20 shadow-lg" title="قبلی">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        <button id="slider-next" type="button" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur text-white flex items-center justify-center transition-all z-20 shadow-lg" title="بعدی">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+
+        <!-- شاخص‌های دایره‌ای پایین اسلایدر (Indicators) -->
+        <div class="absolute bottom-5 right-1/2 translate-x-1/2 flex items-center gap-2 z-20">
+          <button type="button" class="slider-dot h-2.5 rounded-full transition-all duration-300 bg-[#C69A52] w-8"></button>
+          <button type="button" class="slider-dot h-2.5 rounded-full transition-all duration-300 bg-white/60 w-2.5"></button>
+          <button type="button" class="slider-dot h-2.5 rounded-full transition-all duration-300 bg-white/60 w-2.5"></button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ۴. بخش کارت‌های محصولات و صنایع‌دستی با تصاویر محلی ================= -->
+    <section id="handicrafts-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      
+      <!-- سربرگ بخش محصولات با فیلتر دسته‌بندی -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 pb-4 border-b border-[#E8E3D9]">
+        <div>
+          <div class="flex items-center gap-2 text-[#82533D] text-xs font-bold mb-1">
+            <span class="w-2 h-2 rounded-full bg-[#82533D]"></span>
+            <span>ویترین گالری و دست‌سازه‌ها</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#1E3329]">
+            جدیدترین آثار هنری و صنایع‌دستی
+          </h2>
+          <p class="text-xs sm:text-sm text-[#6B726E] mt-1">
+            آثار اصیل با قیمت شفاف، شناسنامه معتبر و ارسال ایمن به تمام نقاط ایران
+          </p>
+        </div>
+
+        <!-- تب‌های انتخاب دسته‌بندی هنری -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-medium">
+          <button class="px-3.5 py-1.5 rounded-xl bg-[#2C4A3E] text-white shrink-0 font-bold shadow-sm">همه آثار</button>
+          <button class="px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors">سفال و سرامیک</button>
+          <button class="px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors">نقاشی و آبرنگ</button>
+          <button class="px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors">خوشنویسی</button>
+          <button class="px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors">شمع و صنایع‌دستی</button>
+        </div>
+      </div>
+
+      <!-- گرید محصولات و آثار هنری با عکس‌های محلی -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- کارت ۱: گلدان سرامیکی ارگانیک -->
+        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+          <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            <img src="./static/images/products/product-1.jpg" 
+                 alt="گلدان سرامیکی دکوراتیو" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">
+              سرامیک دست‌ساز
+            </span>
+            <span class="absolute top-3 left-3 bg-[#2C4A3E] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+              تک‌نسخه
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
+              <span>هنرمند: <strong class="text-[#1E3329]">سارا فیروزی</strong></span>
+              <span class="text-[10px] text-[#82533D]">تکنیک پخت راکو</span>
+            </div>
+            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+              گلدان سرامیکی ارگانیک با بافت سنگی
+            </h3>
+            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+              فرم برگرفته از صخره‌های زاگرس با لعاب مات ضدآب و ارتفاع ۲۸ سانتی‌متر.
+            </p>
+            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-sm font-extrabold text-[#1E3329]">۸۵۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد خرید">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- کارت ۲: تابلو نقاشی آبرنگ غروب کویر -->
+        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+          <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            <img src="./static/images/products/product-2.jpg" 
+                 alt="تابلو نقاشی غروب کویر" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full shadow-sm">
+              نقاشی آبرنگ
+            </span>
+            <span class="absolute top-3 left-3 bg-[#82533D] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+              با قاب چوبی
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
+              <span>هنرمند: <strong class="text-[#1E3329]">امیرحسین جلالی</strong></span>
+              <span class="text-[10px] text-[#2C4A3E]">ابعاد ۵۰×۷۰</span>
+            </div>
+            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+              تابلو نقاشی آبرنگ «غروب خاموش کویر»
+            </h3>
+            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+              اجرا شده بر روی مقوای فابریانو ۳۰۰ گرم کتان با رنگ‌های درخشان و امضای رسمی هنرمند.
+            </p>
+            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-sm font-extrabold text-[#1E3329]">۲,۴۰۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد خرید">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- کارت ۳: ماگ سرامیکی دست‌ساز نقاشی دستی -->
+        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+          <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            <img src="./static/images/products/product-3.jpg" 
+                 alt="ماگ سرامیکی نقاشی دستی" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">
+              ظروف کاربردی
+            </span>
+            <span class="absolute top-3 left-3 bg-[#C69A52] text-[#1E3329] text-[10px] font-bold px-2 py-0.5 rounded-md">
+              پرفروش
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
+              <span>کارگاه: <strong class="text-[#1E3329]">استودیو کهن</strong></span>
+              <span class="text-[10px] text-[#82533D]">لعاب خوراکی ایمن</span>
+            </div>
+            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+              ماگ سرامیکی دسته گره‌ای طرح انار
+            </h3>
+            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+              پخت در دمای ۱۲۰۰ درجه سانتی‌گر، کاملاً قابل شستشو در ماشین ظرفشویی و ماکروویو.
+            </p>
+            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-sm font-extrabold text-[#1E3329]">۳۹۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد خرید">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- کارت ۴: تابلو نقاشی‌خط مدرن بیتی از مولانا -->
+        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+          <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            <img src="./static/images/products/product-4.jpg" 
+                 alt="تابلو نقاشی‌خط مدرن" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#C69A52] font-bold px-2.5 py-1 rounded-full shadow-sm">
+              نقاشی‌خط
+            </span>
+            <span class="absolute top-3 left-3 bg-[#2C4A3E] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+              اثر برگزیده
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
+              <span>هنرمند: <strong class="text-[#1E3329]">مهدی کیان</strong></span>
+              <span class="text-[10px] text-[#C69A52]">ورق طلا و اکرلیک</span>
+            </div>
+            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+              نقاشی‌خط مدرن «در هوایت بی‌قرارم»
+            </h3>
+            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+              ترکیب بافت برجسته خمیر سرامیک، ورق طلای ۲۴ عیار مات روی بوم ابعاد ۸۰×۸۰.
+            </p>
+            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-sm font-extrabold text-[#1E3329]">۳,۸۰۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد خرید">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- کارت ۵: شمع‌های دست‌ساز موم عسل طبیعی -->
+        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+          <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            <img src="./static/images/products/product-5.jpg" 
+                 alt="شمع دست‌ساز موم عسل" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">
+              شمع دست‌ساز
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
+              <span>سازنده: <strong class="text-[#1E3329]">آتلیه هانی‌کندل</strong></span>
+              <span class="text-[10px] text-[#82533D]">۱۰۰٪ موم زنبور</span>
+            </div>
+            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+              ست ۳ عددی شمع موم عسل آج‌دار طبیعی
+            </h3>
+            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+              رایحه طبیعی عسل و گل‌های کوهی با فیتیله نخی نسوز، تصفیه‌کننده هوای خانه.
+            </p>
+            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-sm font-extrabold text-[#1E3329]">۲۸۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد خرید">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- کارت ۶: کاسه فیروزه‌کوبی روی مس اصفهان -->
+        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+          <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            <img src="./static/images/products/product-6.jpg" 
+                 alt="کاسه فیروزه‌کوبی روی مس" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full shadow-sm">
+              صنایع‌دستی اصیل
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
+              <span>استاد: <strong class="text-[#1E3329]">شفیعی‌زاده (اصفهان)</strong></span>
+              <span class="text-[10px] text-[#2C4A3E]">فیروزه نیشابور اصل</span>
+            </div>
+            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+              کاسه مس دست‌کوب فیروزه‌کوبی نفیس
+            </h3>
+            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+              پوشش پلی‌استر ۴ لایه ضدتیرگی با ضمانت ۱۰ ساله ثبات رنگ مس و سنگ فیروزه.
+            </p>
+            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-sm font-extrabold text-[#1E3329]">۴,۹۰۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد خرید">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- کارت ۷: مجسمه سفالی پرنده صلح -->
+        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+          <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            <img src="./static/images/products/product-7.jpg" 
+                 alt="مجسمه سفالی مدرن" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">
+              مجسمه‌سازی
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
+              <span>هنرمند: <strong class="text-[#1E3329]">نیلوفر راد</strong></span>
+              <span class="text-[10px] text-[#82533D]">تکنیک چرخدستی</span>
+            </div>
+            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+              مجسمه مینیاتوری سفالی «مرغ آمین»
+            </h3>
+            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+              لعاب فیروزه‌ای قجری با ترک‌های آنتیک طبیعی و امضای برجسته زیر پایه مجسمه.
+            </p>
+            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-sm font-extrabold text-[#1E3329]">۶۲۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد خرید">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- کارت ۸: کتیبه خط نستعلیق نفیس -->
+        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+          <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            <img src="./static/images/products/product-8.jpg" 
+                 alt="کتیبه خط نستعلیق" 
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#C69A52] font-bold px-2.5 py-1 rounded-full shadow-sm">
+              خوشنویسی
+            </span>
+            <span class="absolute top-3 left-3 bg-[#1E3329] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+              تذهیب دستی
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
+              <span>استاد: <strong class="text-[#1E3329]">کاظم رضایی</strong></span>
+              <span class="text-[10px] text-[#C69A52]">مرکب سنتی سنندج</span>
+            </div>
+            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+              قطعه سیاه‌مشق نستعلیق با حاشیه تشعیر
+            </h3>
+            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+              تحریر شده با قلم نی دزفولی روی کاغذ دست‌ساز سنتی با پاسپارتو دوبل ابریشمی.
+            </p>
+            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-sm font-extrabold text-[#1E3329]">۱,۷۵۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد خرید">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- دکمه مشاهده بیشتر در گالری -->
+      <div class="text-center mt-12">
+        <a href="#handicrafts-section" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-white border border-[#2C4A3E] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white font-bold text-xs sm:text-sm transition-all shadow-sm">
+          <span>مشاهده همه ۳۲۰ اثر موجود در گالری هنرکده</span>
+          <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ================= ۵. بنر فراخوان فروش اثر ================= -->
+    <section id="sell-art" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="relative bg-gradient-to-l from-[#1E3329] via-[#2C4A3E] to-[#1E3329] rounded-3xl p-8 sm:p-12 overflow-hidden shadow-xl text-white">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-[#C69A52]/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="max-w-xl text-center md:text-right space-y-2">
+            <span class="text-xs uppercase tracking-wider text-[#E0BA79] font-bold">حمایت از هنرمندان مستقل</span>
+            <h3 class="text-2xl sm:text-3xl font-black">هنرمند گرامی، اثر خودت را به هنرکده بسپار</h3>
+            <p class="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
+              عکس و مشخصات اثر هنری خود را ارسال کنید؛ کارشناسان ما پس از بررسی، آن را با نام شما در ویترین اختصاصی گالری به علاقمندان هنر در سراسر کشور عرضه می‌کنند.
+            </p>
+          </div>
+          <a href="#sell-art" class="px-6 py-3.5 rounded-2xl bg-[#C69A52] hover:bg-[#E0BA79] text-[#1E3329] font-black text-xs sm:text-sm transition-all shrink-0 shadow-lg flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            <span>فرم ارسال اثر برای بررسی</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= سبد خرید کشویی (Slide-over Cart Drawer) ================= -->
+  <div id="cart-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <aside id="cart-drawer" class="fixed top-0 left-0 bottom-0 w-full sm:w-96 bg-[#FAF7F2] z-50 shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out border-r border-[#E8E3D9]">
+    <div class="p-5 bg-white border-b border-[#E8E3D9] flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <h3 class="text-base font-bold text-[#1E3329]">سبد خرید شما</h3>
+        <span class="text-xs text-[#82533D] bg-[#F7EFEA] px-2 py-0.5 rounded-full font-medium">اثر انتخابی</span>
+      </div>
+      <button id="close-cart-btn" type="button" class="p-2 text-[#6B726E] hover:text-[#1E3329] rounded-xl hover:bg-[#FAF7F2] transition-colors" title="بستن">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="flex-grow p-6 flex flex-col items-center justify-center text-center">
+      <div class="w-16 h-16 rounded-2xl bg-[#E8EFEA] text-[#2C4A3E] flex items-center justify-center mb-4">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+      </div>
+      <h4 class="text-sm font-bold text-[#1E3329] mb-1">اثر هنری به سبد اضافه شد!</h4>
+      <p class="text-xs text-[#6B726E] max-w-xs leading-relaxed mb-6 font-light">
+        اثر انتخابی با موفقیت ثبت شد. می‌توانید فرآیند تسویه‌حساب و ارسال بیمه‌شده را تکمیل فرمایید.
+      </p>
+      <button onclick="document.getElementById('close-cart-btn').click()" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#2C4A3E] text-white text-xs font-semibold hover:bg-[#1E3329] transition-colors shadow-sm">
+        ادامه بازدید از آثار
+      </button>
+    </div>
+    <div class="p-5 bg-white border-t border-[#E8E3D9] space-y-3">
+      <div class="flex items-center justify-between text-sm">
+        <span class="text-[#6B726E]">جمع کل سفارش:</span>
+        <span class="font-extrabold text-[#1E3329]">۸۵۰,۰۰۰ تومان</span>
+      </div>
+      <button class="w-full py-3 rounded-xl bg-[#2C4A3E] text-white text-sm font-bold hover:bg-[#1E3329] transition-all shadow-md">
+        تکمیل سفارش و پرداخت
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= ۶. فوتر پیشرفته و جامع هنرکده ================= -->
+  <footer class="bg-white border-t border-[#E8E3D9] mt-16 text-[#242826]">
+    
+    <!-- ردیف مزایای خرید از هنرکده (ویژگی‌های اعتماد) -->
+    <div class="border-b border-[#E8E3D9] bg-[#FAF7F2]/60 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center sm:text-right">
+          
+          <!-- مزیت ۱: ضمانت اصالت اثر -->
+          <div class="flex flex-col sm:flex-row items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-[#E8EFEA] text-[#2C4A3E] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">شناسنامه و گواهی اصالت</h4>
+              <p class="text-[11px] text-[#6B726E] mt-0.5">امضای مستقیم هنرمند و گواهی معتبر</p>
+            </div>
+          </div>
+
+          <!-- مزیت ۲: بسته‌بندی ایمن ضدضربه -->
+          <div class="flex flex-col sm:flex-row items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-[#F7EFEA] text-[#82533D] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">بسته‌بندی تخصصی هنری</h4>
+              <p class="text-[11px] text-[#6B726E] mt-0.5">ارسال ضدضربه با بیمه کامل مرسوله</p>
+            </div>
+          </div>
+
+          <!-- مزیت ۳: ضمانت ۷ روزه بازگشت -->
+          <div class="flex flex-col sm:flex-row items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-[#FDF8EE] text-[#C69A52] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">۷ روز ضمانت بازگشت</h4>
+              <p class="text-[11px] text-[#6B726E] mt-0.5">تضمین سلامت فیزیکی و تطابق اثر</p>
+            </div>
+          </div>
+
+          <!-- مزیت ۴: پشتیبانی و مشاوره هنری -->
+          <div class="flex flex-col sm:flex-row items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-[#E8EFEA] text-[#2C4A3E] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">مشاوره رایگان دکوراسیون</h4>
+              <p class="text-[11px] text-[#6B726E] mt-0.5">پاسخگویی و هماهنگی کارشناسان گالری</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- بخش اصلی لینک‌های فوتر -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
+        
+        <!-- ستون ۱: معرفی برند و خبرنامه -->
+        <div class="md:col-span-2 space-y-4">
+          <a href="./index.html" class="flex items-center gap-3">
+            <img src="./static/images/favicon.svg" alt="هنرکده" class="w-9 h-9">
+            <span class="text-2xl font-black text-[#1E3329]">هنرکده</span>
+          </a>
+          <p class="text-xs leading-relaxed text-[#6B726E] max-w-sm">
+            «هنرکده» پلی میان خلاقیت هنرمندان معاصر ایران و علاقمندان به هنر اصیل است. تمامی آثار با نظارت دقیق کارشناسان هنری در گالری عرضه می‌شوند تا ارزش، کیفیت و اصالت هر اثر حفظ شود.
+          </p>
+
+          <div class="pt-2">
+            <span class="block text-xs font-bold text-[#1E3329] mb-2">عضویت در خبرنامه (اطلاع از حراج‌ها و آثار جدید):</span>
+            <div class="flex items-center gap-2 max-w-sm">
+              <input type="email" placeholder="ایمیل یا شماره همراه..." 
+                     class="bg-[#FAF7F2] text-xs rounded-xl px-3.5 py-2.5 border border-[#E8E3D9] flex-grow focus:outline-none focus:border-[#2C4A3E]">
+              <button class="bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors shrink-0">
+                ثبت
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ستون ۲: دسته‌بندی آثار -->
+        <div>
+          <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">دسته‌بندی‌های گالری</h3>
+          <ul class="space-y-2.5 text-xs text-[#6B726E]">
+            <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] transition-colors">نقاشی و رنگ روغن</a></li>
+            <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] transition-colors">خوشنویسی و خطاطی</a></li>
+            <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] transition-colors">سفال و سرامیک دکوراتیو</a></li>
+            <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] transition-colors">صنایع‌دستی و فیروزه‌کوبی</a></li>
+            <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] transition-colors">شمع‌های دست‌ساز هنری</a></li>
+          </ul>
+        </div>
+
+        <!-- ستون ۳: راهنما و خدمات مشتریان -->
+        <div>
+          <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">خدمات و راهنما</h3>
+          <ul class="space-y-2.5 text-xs text-[#6B726E]">
+            <li><a href="#sell-art" class="hover:text-[#82533D] font-semibold transition-colors">فرایند فروش اثر در هنرکده</a></li>
+            <li><a href="#rules" class="hover:text-[#2C4A3E] transition-colors">شرایط بررسی و پذیرش اثر</a></li>
+            <li><a href="#shipping" class="hover:text-[#2C4A3E] transition-colors">شیوه‌های بسته‌بندی و ارسال</a></li>
+            <li><a href="#faq" class="hover:text-[#2C4A3E] transition-colors">پرسش‌های متداول خریداران</a></li>
+            <li><a href="#privacy" class="hover:text-[#2C4A3E] transition-colors">حفظ حریم خصوصی</a></li>
+          </ul>
+        </div>
+
+        <!-- ستون ۴: اطلاعات تماس و نمادها -->
+        <div>
+          <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">تماس با گالری</h3>
+          <div class="space-y-3 text-xs text-[#6B726E]">
+            <p class="leading-relaxed">تهران، خیابان ولیعصر، نرسیده به میدان تجریش، بن‌بست هنر، پلاک ۱۲</p>
+            <p class="font-bold text-[#1E3329] dir-ltr text-right">تلفن: ۰۲۱-۸۸۸۸۴۳۲۱</p>
+            <p class="text-[#82533D]">پشتیبانی: شنبه تا پنج‌شنبه ۹ تا ۲۱</p>
+            
+            <div class="pt-2 flex items-center gap-2">
+              <div class="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E8E3D9] text-center w-20">
+                <span class="block text-[10px] text-[#2C4A3E] font-bold">اینماد</span>
+                <span class="text-[9px] text-[#98A19C]">نماد رسمی</span>
+              </div>
+              <div class="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E8E3D9] text-center w-20">
+                <span class="block text-[10px] text-[#82533D] font-bold">ساماندهی</span>
+                <span class="text-[9px] text-[#98A19C]">ثبت ملی</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- کپی‌رایت نهایی -->
+      <div class="border-t border-[#E8E3D9] mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#6B726E] gap-4">
+        <p>© کلیه حقوق مادی و معنوی این وب‌سایت متعلق به گالری اینترنتی «هنرکده» است.</p>
+        <div class="flex items-center gap-4 text-[11px] text-[#98A19C]">
+          <span>هنر اصیل، زندگی زیبا</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- اسکریپت اصلی -->
+  <script src="./static/js/main.js"></script>
+</body>
+</html>

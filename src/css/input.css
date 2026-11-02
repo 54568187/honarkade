@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* ================= فونت اصیل و بومی وزیرمتن (بدون وابستگی به اینترنت) ================= */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../fonts/vazirmatn-arabic-300-normal.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../fonts/vazirmatn-arabic-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../fonts/vazirmatn-arabic-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../fonts/vazirmatn-arabic-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../fonts/vazirmatn-arabic-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../fonts/vazirmatn-arabic-800-normal.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../fonts/vazirmatn-arabic-900-normal.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* پالت رنگی اختصاصی هنرکده بر اساس سند نیازمندی‌ها */
+  --color-cream-base: #FAF7F2;       /* کرم / Off-white برای زمینه اصلی */
+  --color-cream-surface: #FFFFFF;    /* سفید برای سطوح و کارت‌ها */
+  --color-cream-muted: #F2ECE1;      /* کرم تیره‌تر برای حاشیه‌ها و هاورها */
+  
+  --color-olive-dark: #1E3329;       /* زیتونی تیره لوکس */
+  --color-olive-primary: #2C4A3E;    /* سبز زیتونی - رنگ اصلی و شاخص */
+  --color-olive-light: #476E5E;      /* زیتونی روشن برای دکمه‌ها و تگ‌ها */
+  --color-olive-soft: #E8EFEA;       /* زیتونی ملایم برای پس‌زمینه نشان‌ها */
+  
+  --color-art-brown: #82533D;        /* قهوه‌ای گرم سفالی و هنری */
+  --color-art-brown-light: #9C684F;  /* قهوه‌ای ملایم‌تر */
+  --color-art-brown-soft: #F7EFEA;   /* خاکی خیلی روشن */
+  
+  --color-art-gold: #C69A52;         /* طلایی مات و ظریف */
+  --color-art-gold-light: #E0BA79;   /* طلایی روشن برای هاور */
+  
+  --color-text-main: #242826;        /* رنگ متن اصلی (ذغالی مایل به سبز تیره) */
+  --color-text-muted: #6B726E;       /* متن فرعی */
+  --color-text-subtle: #98A19C;      /* متون غیرفعال یا راهنما */
+  
+  --color-border-subtle: #E8E3D9;    /* بوردر ملایم کرم-خاکستری */
+  --color-border-focus: #2C4A3E;
+
+  /* فونت فارسی با اعداد تماماً فارسی و استاندارد */
+  --font-vazir: "Vazirmatn", "IRANSans", "B Yekan", Tahoma, sans-serif;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-vazir);
+    font-feature-settings: "ss01" 1; /* فعال‌سازی ارقام فارسی در تمام متون و قیمت‌ها */
+    direction: rtl;
+  }
+
+  body {
+    background-color: var(--color-cream-base);
+    color: var(--color-text-main);
+    font-family: var(--font-vazir);
+    direction: rtl;
+    text-align: right;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
