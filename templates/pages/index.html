@@ -334,6 +334,14 @@
       </div>
     </article>
   </div>
+
+  <!-- دکمه مشاهده بیشتر در گالری -->
+  <div class="text-center mt-12">
+    <a href="{% url 'shop' %}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-white border border-[#2C4A3E] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white font-bold text-xs sm:text-sm transition-all shadow-sm">
+      <span>مشاهده همه آثار موجود در گالری هنرکده</span>
+      <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </a>
+  </div>
 </section>
 
 <!-- ================= بنر فراخوان ارسال اثر ================= -->
@@ -347,7 +355,7 @@
           عکس و مشخصات اثر خود را ثبت کنید؛ پس از بررسی، اثر با نام شما در ویترین اختصاصی گالری به تمام کشور عرضه می‌شود.
         </p>
       </div>
-      <a href="/submit-art/" class="px-6 py-3.5 rounded-2xl bg-[#C69A52] hover:bg-[#E0BA79] text-[#1E3329] font-black text-xs sm:text-sm transition-all shrink-0 shadow-lg flex items-center gap-2">
+      <a href="{% url 'register' %}" class="px-6 py-3.5 rounded-2xl bg-[#C69A52] hover:bg-[#E0BA79] text-[#1E3329] font-black text-xs sm:text-sm transition-all shrink-0 shadow-lg flex items-center gap-2">
         <span>فرم ارسال اثر برای بررسی</span>
       </a>
     </div>
