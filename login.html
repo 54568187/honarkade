@@ -8,19 +8,19 @@
   <!-- فاوآیکون فوق‌العاده باکیفیت هنرکده -->
   <link rel="icon" type="image/svg+xml" href="./static/images/favicon.svg">
 
-  <!-- بارگذاری فونت محلی و سراسری وزیرمتن -->
+  <!-- بارگذاری فونت محلی و سراسری وزیرمتن و استایل‌ها -->
   <link rel="stylesheet" href="./static/css/style.css">
 </head>
 <body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex flex-col font-['Vazirmatn'] selection:bg-[#2C4A3E] selection:text-[#FAF7F2] antialiased">
 
-  <!-- هدر ساده صفحه احراز هویت -->
-  <header class="py-6 px-4 border-b border-[#E8E3D9] bg-white">
+  <!-- هدر صفحه احراز هویت -->
+  <header class="py-5 px-4 sm:px-6 border-b border-[#E8E3D9] bg-white sticky top-0 z-50 shadow-xs">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <a href="./index.html" class="flex items-center gap-3 group">
         <img src="./static/images/favicon.svg" alt="هنرکده" class="w-10 h-10 transition-transform duration-300 group-hover:scale-105">
         <div class="flex flex-col">
           <span class="text-xl font-black text-[#1E3329] tracking-tight">هُنَـرکَـده</span>
-          <span class="text-[10px] text-[#82533D] font-medium">گالری و فروشگاه آنلاین آثار هنری</span>
+          <span class="text-[10px] text-[#82533D] font-medium">گالری و ویترین اختصاصی آثار هنری اصیل ایران</span>
         </div>
       </a>
       <a href="./index.html" class="inline-flex items-center gap-1.5 text-xs text-[#6B726E] hover:text-[#2C4A3E] font-medium transition-colors">
@@ -30,162 +30,844 @@
     </div>
   </header>
 
-  <!-- کانتینر اصلی فرم ورود و ثبت نام -->
-  <main class="flex-grow flex items-center justify-center p-4 sm:p-6 lg:p-10">
-    <div class="max-w-4xl w-full bg-white rounded-3xl shadow-xl border border-[#E8E3D9] overflow-hidden grid grid-cols-1 md:grid-cols-2">
+  <!-- کانتینر اصلی فرم ورود و ثبت نام با انیمیشن جابه‌جایی نرم ستون‌ها -->
+  <main class="flex-grow flex items-center justify-center p-3 sm:p-6 lg:p-10 my-auto">
+    <div id="auth-card" class="mode-buyer max-w-5xl w-full bg-white rounded-3xl shadow-2xl border border-[#E8E3D9] overflow-hidden relative flex flex-col md:flex-row min-h-[660px]">
       
-      <!-- ستون فرم (راست) -->
-      <div class="p-8 sm:p-10 flex flex-col justify-center">
+      <!-- ================= ستون ۱: کادرهای اطلاعات و فرم‌ها (Form Panel) ================= -->
+      <div id="form-panel" class="auth-panel-transition w-full md:w-1/2 p-6 sm:p-9 flex flex-col justify-between bg-white z-10 order-2 md:order-none">
         
-        <!-- تب‌های انتخاب ورود / ثبت‌نام -->
-        <div class="flex items-center p-1.5 bg-[#FAF7F2] rounded-2xl border border-[#E8E3D9] mb-8">
-          <button id="tab-login-btn" type="button" class="w-1/2 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all bg-[#2C4A3E] text-white shadow-sm">
-            ورود به حساب
-          </button>
-          <button id="tab-register-btn" type="button" class="w-1/2 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all text-[#6B726E] hover:text-[#1E3329]">
-            ثبت‌نام جدید
-          </button>
-        </div>
-
-        <!-- ================= فرم ورود ================= -->
-        <div id="login-form" class="space-y-4">
-          <div>
-            <h2 class="text-xl sm:text-2xl font-black text-[#1E3329] mb-1">خوش‌آمدید به هنرکده</h2>
-            <p class="text-xs text-[#6B726E]">برای دسترسی به سبد خرید و پیگیری سفارش‌ها وارد شوید.</p>
+        <div>
+          <!-- تب‌های سوییچ میان «ورود به حساب» و «ثبت‌نام جدید» -->
+          <div class="flex items-center p-1.5 bg-[#FAF7F2] rounded-2xl border border-[#E8E3D9] mb-6">
+            <button id="tab-login-btn" type="button" onclick="switchAuthTab('login')"
+                    class="w-1/2 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all bg-[#2C4A3E] text-white shadow-sm">
+              ورود به حساب
+            </button>
+            <button id="tab-register-btn" type="button" onclick="switchAuthTab('register')"
+                    class="w-1/2 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all text-[#6B726E] hover:text-[#1E3329]">
+              ثبت‌نام جدید
+            </button>
           </div>
 
-          <form onsubmit="event.preventDefault(); alert('ورود با موفقیت انجام شد!'); window.location.href='./index.html';" class="space-y-4 pt-2">
+          <!-- ================= فرم ورود ================= -->
+          <div id="login-view" class="space-y-5">
             <div>
-              <label class="block text-xs font-bold text-[#1E3329] mb-1.5">شماره همراه یا ایمیل</label>
-              <div class="relative">
-                <input type="text" required placeholder="مثلاً ۰۹۱۲۳۴۵۶۷۸۹ یا ایمیل..." 
-                       class="w-full bg-[#FAF7F2] text-xs sm:text-sm rounded-xl py-3 pr-10 pl-4 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
-                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[#98A19C]">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                </span>
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FAF7F2] text-[#2C4A3E] border border-[#E8E3D9] mb-2">
+                <span>✦ خوش‌آمدید به خانواده هنرکده</span>
               </div>
+              <h2 class="text-xl sm:text-2xl font-black text-[#1E3329] mb-1.5">ورود به حساب کاربری</h2>
+              <p class="text-xs text-[#6B726E] leading-relaxed">
+                برای مدیریت سفارش‌ها، ارتباط با هنرمندان و دسترسی به سبد خرید وارد شوید.
+              </p>
             </div>
 
-            <div>
-              <div class="flex items-center justify-between mb-1.5">
-                <label class="text-xs font-bold text-[#1E3329]">کلمه عبور</label>
-                <a href="#forgot" class="text-[11px] text-[#82533D] hover:underline">فراموشی رمز عبور؟</a>
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-4 pt-1">
+              <div>
+                <label class="block text-xs font-bold text-[#1E3329] mb-1.5">شماره همراه یا ایمیل</label>
+                <div class="relative">
+                  <input id="login-identifier" type="text" required placeholder="مثلاً: ۰۹۱۲۳۴۵۶۷۸۹ یا ایمیل..." 
+                         class="w-full bg-[#FAF7F2] text-xs sm:text-sm rounded-xl py-3 pr-10 pl-4 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
+                  <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#98A19C]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                  </span>
+                </div>
               </div>
-              <div class="relative">
-                <input type="password" required placeholder="رمز عبور خود را وارد کنید..." 
-                       class="w-full bg-[#FAF7F2] text-xs sm:text-sm rounded-xl py-3 pr-10 pl-4 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
-                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[#98A19C]">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                </span>
-              </div>
-            </div>
 
-            <div class="flex items-center justify-between text-xs pt-1">
-              <label class="flex items-center gap-2 cursor-pointer text-[#6B726E]">
-                <input type="checkbox" checked class="rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
-                <span>مرا به خاطر بسپار</span>
-              </label>
-              <button type="button" class="text-[11px] text-[#2C4A3E] hover:underline font-semibold">
-                ورود با پیامک (کد یکبار مصرف)
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label class="text-xs font-bold text-[#1E3329]">کلمه عبور</label>
+                  <a href="#forgot" onclick="alert('لینک بازیابی رمز عبور به شماره همراه یا ایمیل شما ارسال خواهد شد.');" class="text-[11px] text-[#82533D] hover:underline font-medium">فراموشی رمز؟</a>
+                </div>
+                <div class="relative">
+                  <input id="login-password" type="password" required placeholder="کلمه عبور خود را وارد کنید..." 
+                         class="w-full bg-[#FAF7F2] text-xs sm:text-sm rounded-xl py-3 pr-10 pl-10 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
+                  <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#98A19C]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                  </span>
+                  <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-[#98A19C] hover:text-[#1E3329]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between text-xs pt-1">
+                <label class="flex items-center gap-2 cursor-pointer text-[#6B726E] hover:text-[#1E3329]">
+                  <input type="checkbox" checked class="rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
+                  <span>مرا به خاطر بسپار</span>
+                </label>
+                <button type="button" onclick="alert('کد تایید یکبار مصرف ۴ رقمی پیامک شد.');" class="text-[11px] text-[#2C4A3E] hover:underline font-bold">
+                  ورود سریع با کد پیامکی
+                </button>
+              </div>
+
+              <button type="submit" class="w-full py-3.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                <span>ورود به حساب کاربری</span>
+                <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
+            </form>
+
+            <!-- راهنمای ثبت‌نام سریع برای خریدار یا هنرمند -->
+            <div class="pt-4 border-t border-[#E8E3D9] text-center">
+              <span class="text-xs text-[#6B726E]">هنوز حساب کاربری ندارید؟</span>
+              <div class="flex items-center justify-center gap-3 mt-2 text-xs font-bold">
+                <button type="button" onclick="openRegisterAs('buyer')" class="text-[#2C4A3E] hover:underline flex items-center gap-1 cursor-pointer">
+                  <span>عضویت خریداران</span>
+                </button>
+                <span class="text-[#E8E3D9]">|</span>
+                <button type="button" onclick="openRegisterAs('artist')" class="text-[#82533D] hover:underline flex items-center gap-1 cursor-pointer">
+                  <span>ثبت‌نام هنرمندان</span>
+                </button>
+              </div>
             </div>
-
-            <button type="submit" class="w-full py-3.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs sm:text-sm font-bold transition-all shadow-md">
-              ورود به حساب کاربری
-            </button>
-          </form>
-        </div>
-
-        <!-- ================= فرم ثبت‌نام ================= -->
-        <div id="register-form" class="space-y-4 hidden">
-          <div>
-            <h2 class="text-xl sm:text-2xl font-black text-[#1E3329] mb-1">عضویت در حلقه هنرکده</h2>
-            <p class="text-xs text-[#6B726E]">برای ثبت سفارش آثار یا فروش اثر هنری ثبت‌نام کنید.</p>
           </div>
 
-          <form onsubmit="event.preventDefault(); alert('ثبت‌نام با موفقیت انجام شد!'); window.location.href='./index.html';" class="space-y-3 pt-2">
-            <div>
-              <label class="block text-xs font-bold text-[#1E3329] mb-1">نام و نام خانوادگی</label>
-              <input type="text" required placeholder="مثلاً: سارا احمدی" 
-                     class="w-full bg-[#FAF7F2] text-xs sm:text-sm rounded-xl py-2.5 px-3.5 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold text-[#1E3329] mb-1">شماره همراه</label>
-              <input type="tel" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" 
-                     class="w-full bg-[#FAF7F2] text-xs sm:text-sm rounded-xl py-2.5 px-3.5 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all dir-ltr text-right">
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold text-[#1E3329] mb-1">نوع کاربری</label>
-              <div class="grid grid-cols-2 gap-2 text-xs">
-                <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E8E3D9] bg-[#FAF7F2] cursor-pointer hover:border-[#2C4A3E]">
-                  <input type="radio" name="user_type" checked class="text-[#2C4A3E] focus:ring-[#2C4A3E]">
-                  <span class="font-medium text-[#1E3329]">خریدار و علاقمند هنر</span>
-                </label>
-                <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E8E3D9] bg-[#FAF7F2] cursor-pointer hover:border-[#2C4A3E]">
-                  <input type="radio" name="user_type" class="text-[#2C4A3E] focus:ring-[#2C4A3E]">
-                  <span class="font-medium text-[#1E3329]">هنرمند و آفریننده اثر</span>
-                </label>
+          <!-- ================= فرم ثبت‌نام با انتخاب نوع کاربری ================= -->
+          <div id="register-view" class="hidden">
+            
+            <!-- انتخابگر نوع کاربری (خریدار یا هنرمند) -->
+            <div class="mb-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-[#1E3329]">نوع حساب کاربری شما:</span>
+                <span id="role-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#2C4A3E]/10 text-[#2C4A3E]">
+                  خریدار و علاقه‌مند هنر
+                </span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 p-1.5 bg-[#FAF7F2] rounded-2xl border border-[#E8E3D9]">
+                <button type="button" id="role-buyer-btn" onclick="switchUserRole('buyer')"
+                        class="flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm bg-[#2C4A3E] text-white border border-[#2C4A3E] cursor-pointer">
+                  <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                  <span>خریدار و علاقمند هنر</span>
+                </button>
+                <button type="button" id="role-artist-btn" onclick="switchUserRole('artist')"
+                        class="flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition-all text-[#6B726E] hover:text-[#1E3329] border border-transparent hover:bg-white cursor-pointer">
+                  <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                  <span>هنرمند و آفریننده اثر</span>
+                </button>
               </div>
             </div>
 
-            <div>
-              <label class="block text-xs font-bold text-[#1E3329] mb-1">کلمه عبور</label>
-              <input type="password" required placeholder="حداقل ۸ کاراکتر..." 
-                     class="w-full bg-[#FAF7F2] text-xs sm:text-sm rounded-xl py-2.5 px-3.5 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
+            <!-- محفظه فرم‌ها با ترنزیشن فید و کشویی -->
+            <div class="relative">
+
+              <!-- ================= فرم ۱: کاربر خریدار و علاقمند هنر ================= -->
+              <div id="buyer-form-section" class="auth-fade-layer opacity-100">
+                <div class="mb-3">
+                  <h3 class="text-base sm:text-lg font-black text-[#1E3329]">عضویت خریداران هنر</h3>
+                  <p class="text-[11px] sm:text-xs text-[#6B726E]">دسترسی به اصیل‌ترین شاهکارهای هنری با شناسنامه رسمی و بسته‌بندی ضدضربه</p>
+                </div>
+
+                <form onsubmit="handleBuyerSubmit(event)" class="space-y-3">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">نام و نام خانوادگی *</label>
+                      <input id="buyer-name" type="text" required placeholder="مثلاً: نام و نام خانوادگی شما" 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">شماره همراه *</label>
+                      <input id="buyer-phone" type="tel" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all dir-ltr text-right">
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">ایمیل (اختیاری جهت فاکتور)</label>
+                      <input id="buyer-email" type="email" placeholder="sara@example.com" 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">استان و شهر سکونت</label>
+                      <input id="buyer-city" type="text" placeholder="مثلاً: اصفهان" 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
+                    </div>
+                  </div>
+
+                  <!-- انتخاب زمینه‌های هنری مورد علاقه خریدار -->
+                  <div>
+                    <label class="block text-[11px] font-bold text-[#1E3329] mb-1.5">زمینه‌های هنری مورد علاقه شما (اختیاری):</label>
+                    <div class="flex flex-wrap gap-1.5">
+                      <button type="button" onclick="toggleInterest(this)" class="interest-chip px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[#FAF7F2] text-[#6B726E] border border-[#E8E3D9] hover:border-[#2C4A3E] cursor-pointer">
+                        🖼️ نقاشی و طراحی
+                      </button>
+                      <button type="button" onclick="toggleInterest(this)" class="interest-chip active px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[#FAF7F2] text-[#6B726E] border border-[#E8E3D9] hover:border-[#2C4A3E] cursor-pointer">
+                        ✒️ خوشنویسی و خط
+                      </button>
+                      <button type="button" onclick="toggleInterest(this)" class="interest-chip active px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[#FAF7F2] text-[#6B726E] border border-[#E8E3D9] hover:border-[#2C4A3E] cursor-pointer">
+                        🏺 سفال و سرامیک
+                      </button>
+                      <button type="button" onclick="toggleInterest(this)" class="interest-chip px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[#FAF7F2] text-[#6B726E] border border-[#E8E3D9] hover:border-[#2C4A3E] cursor-pointer">
+                        🪵 صنایع دستی و خاتم
+                      </button>
+                      <button type="button" onclick="toggleInterest(this)" class="interest-chip px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[#FAF7F2] text-[#6B726E] border border-[#E8E3D9] hover:border-[#2C4A3E] cursor-pointer">
+                        🗿 مجسمه‌سازی
+                      </button>
+                      <button type="button" onclick="toggleInterest(this)" class="interest-chip px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[#FAF7F2] text-[#6B726E] border border-[#E8E3D9] hover:border-[#2C4A3E] cursor-pointer">
+                        🧵 نگارگری و مینیاتور
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">کلمه عبور *</label>
+                      <div class="relative">
+                        <input id="buyer-password" type="password" required placeholder="حداقل ۸ کاراکتر..." 
+                               class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 pr-3 pl-8 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
+                        <button type="button" onclick="togglePasswordVisibility('buyer-password', this)" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#98A19C] hover:text-[#1E3329]">
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">تکرار کلمه عبور *</label>
+                      <input id="buyer-confirm-password" type="password" required placeholder="تکرار کلمه عبور..." 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all">
+                    </div>
+                  </div>
+
+                  <label class="flex items-start gap-2 cursor-pointer text-[11px] text-[#6B726E] pt-1">
+                    <input type="checkbox" required checked class="mt-0.5 rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
+                    <span>ثبت‌نام به منزله پذیرش <a href="#terms" class="text-[#2C4A3E] underline font-bold">قوانین هنرکده</a> و حمایت از اصالت آثار است.</span>
+                  </label>
+
+                  <button type="submit" class="w-full py-3.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>تکمیل ثبت‌نام به عنوان خریدار هنر</span>
+                  </button>
+                </form>
+              </div>
+
+              <!-- ================= فرم ۲: کاربر هنرمند و آفریننده اثر ================= -->
+              <div id="artist-form-section" class="auth-fade-layer opacity-0 hidden">
+                <div class="mb-3">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#82533D]"></span>
+                    <h3 class="text-base sm:text-lg font-black text-[#1E3329]">عضویت در کانون هنرمندان هنرکده</h3>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-[#6B726E]">گالری اختصاصی رایگان، ارتباط مستقیم با کلکسیونرها و تسویه حساب سریع ۲۴ ساعته</p>
+                </div>
+
+                <form onsubmit="handleArtistSubmit(event)" class="space-y-3">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">نام و نام خانوادگی یا نام هنری *</label>
+                      <input id="artist-name" type="text" required placeholder="مثلاً: استاد بهرام مهدوی" 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#82533D] focus:bg-white transition-all">
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">شماره همراه (جهت تماس کیوریتور) *</label>
+                      <input id="artist-phone" type="tel" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#82533D] focus:bg-white transition-all dir-ltr text-right">
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">شاخه و تخصص اصلی هنر *</label>
+                      <select id="artist-specialty" required class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#82533D] focus:bg-white transition-all cursor-pointer">
+                        <option value="">انتخاب شاخه هنری...</option>
+                        <option value="painting">نقاشی (رنگ روغن، اکریلیک، آبرنگ)</option>
+                        <option value="calligraphy">خوشنویسی و خطاطی (نستعلیق، شکسته)</option>
+                        <option value="ceramic">سفال، سرامیک و لعاب دست‌ساز</option>
+                        <option value="sculpture">مجسمه‌سازی و تندیس‌های هنری</option>
+                        <option value="miniature">نگارگری، مینیاتور و تذهیب سنتی</option>
+                        <option value="crafts">صنایع دستی اصیل (خاتم، قلم‌زنی، منبت)</option>
+                        <option value="photography">عکاسی هنری و دیجیتال آرت</option>
+                        <option value="carpet">دست‌بافته‌های هنری، فرش و گلیم</option>
+                        <option value="other">سایر هنرهای تجسمی و دستی</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">سبک هنری شاخص</label>
+                      <input id="artist-style" type="text" placeholder="مثلاً: سنتی اصیل، مدرن، انتزاعی..." 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#82533D] focus:bg-white transition-all">
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">پیوند پورتفولیو یا اینستاگرام هنری</label>
+                      <input id="artist-portfolio" type="text" placeholder="instagram.com/artist_name یا لینک..." 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#82533D] focus:bg-white transition-all dir-ltr text-right">
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">استان و شهر آتلیه / کارگاه *</label>
+                      <input id="artist-city" type="text" required placeholder="مثلاً: تهران، کارگاه خیابان لاله زار" 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#82533D] focus:bg-white transition-all">
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">کلمه عبور *</label>
+                      <div class="relative">
+                        <input id="artist-password" type="password" required placeholder="حداقل ۸ کاراکتر..." 
+                               class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 pr-3 pl-8 border border-[#E8E3D9] focus:outline-none focus:border-[#82533D] focus:bg-white transition-all">
+                        <button type="button" onclick="togglePasswordVisibility('artist-password', this)" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#98A19C] hover:text-[#1E3329]">
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-[#1E3329] mb-1">تکرار کلمه عبور *</label>
+                      <input id="artist-confirm-password" type="password" required placeholder="تکرار کلمه عبور..." 
+                             class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2.5 px-3 border border-[#E8E3D9] focus:outline-none focus:border-[#82533D] focus:bg-white transition-all">
+                    </div>
+                  </div>
+
+                  <label class="flex items-start gap-2 cursor-pointer text-[11px] text-[#6B726E] pt-1">
+                    <input type="checkbox" required checked class="mt-0.5 rounded border-[#E8E3D9] text-[#82533D] focus:ring-[#82533D]">
+                    <span>تعهد می‌دهم تمامی آثار بارگذاری‌شده اصیل، دست‌ساز و دارای حقوق مالکیت معنوی اینجانب هستند.</span>
+                  </label>
+
+                  <button type="submit" class="w-full py-3.5 rounded-xl bg-[#82533D] hover:bg-[#9C684F] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>ثبت‌نام و ارسال درخواست عضویت هنرمند</span>
+                  </button>
+                </form>
+              </div>
+
             </div>
 
-            <p class="text-[11px] text-[#6B726E] leading-relaxed pt-1">
-              ثبت‌نام به منزله پذیرش <a href="#terms" class="text-[#82533D] underline">قوانین و مقررات هنرکده</a> و حمایت از اصالت آثار هنری است.
-            </p>
+          </div>
+        </div>
 
-            <button type="submit" class="w-full py-3.5 rounded-xl bg-[#82533D] hover:bg-[#9C684F] text-white text-xs sm:text-sm font-bold transition-all shadow-md">
-              تکمیل ثبت‌نام و ساخت حساب
-            </button>
-          </form>
+        <div class="mt-6 pt-4 border-t border-[#E8E3D9] flex items-center justify-between text-[11px] text-[#98A19C]">
+          <span>© ۱۴۰۵ هنرکده | تمام حقوق محفوظ است</span>
+          <span class="flex items-center gap-1 text-[#2C4A3E]">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <span>رمزنگاری امن SSL</span>
+          </span>
         </div>
 
       </div>
 
-      <!-- ستون تصویر و هویت بصری (چپ) -->
-      <div class="relative hidden md:block bg-[#15271E] overflow-hidden">
-        <img src="./static/images/hero/slide-2.jpg" alt="گالری هنرکده" class="w-full h-full object-cover filter brightness-75">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-10 text-white">
-          <span class="text-xs uppercase tracking-widest text-[#E0BA79] font-bold mb-2">هنر، آینه روح ایرانی</span>
-          <h3 class="text-2xl font-black mb-2">به جمع دوستداران هنر اصیل بپیوندید</h3>
-          <p class="text-xs text-white/80 leading-relaxed font-light">
-            در هنرکده، تمامی دست‌سازه‌ها و تابلوهای نقاشی و خوشنویسی دارای گواهی شناسنامه معتبر فیزیکی و امضای اختصاصی هنرمند هستند.
-          </p>
+      <!-- ================= ستون ۲: تصویر و هویت بصری پویا (Image Panel) ================= -->
+      <div id="image-panel" class="auth-panel-transition w-full md:w-1/2 relative bg-[#15271E] overflow-hidden min-h-[220px] md:min-h-full z-20 flex flex-col justify-end order-1 md:order-none">
+        
+        <!-- لایه بصری ۱: ویژه کاربر خریدار و علاقمند هنر -->
+        <div id="buyer-visual" class="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 text-white transition-opacity duration-500 ease-in-out opacity-100 z-10">
+          <img src="./static/images/hero/slide-2.jpg" alt="گالری اصیل هنرکده" class="absolute inset-0 w-full h-full object-cover filter brightness-75">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#15271E] via-[#15271E]/75 to-black/20"></div>
+          
+          <div class="relative z-10 space-y-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#E0BA79]/20 text-[#E0BA79] border border-[#E0BA79]/40 backdrop-blur-md">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+              <span>ویژه خریداران و دوستداران هنر</span>
+            </span>
+
+            <h3 class="text-xl sm:text-2xl font-black text-white leading-tight">
+              تجربه خرید آثار اصیل ایرانی با شناسنامه معتبر فیزیکی
+            </h3>
+
+            <p class="text-xs text-white/80 leading-relaxed font-light hidden sm:block">
+              در هنرکده تمامی تابلوهای نقاشی، آثار خطاطی و دست‌سازه‌های سفالی و چوبی دارای شناسنامه هولوگرام‌دار و امضای معتبر استاد آفریننده هستند.
+            </p>
+
+            <!-- ویژگی‌های اختصاصی خریداران -->
+            <div class="pt-2 grid grid-cols-2 gap-2 text-[11px] text-white/90 font-medium">
+              <div class="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm p-2 rounded-xl border border-white/10">
+                <span class="text-[#E0BA79]">✓</span>
+                <span>شناسنامه رسمی فیزیکی</span>
+              </div>
+              <div class="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm p-2 rounded-xl border border-white/10">
+                <span class="text-[#E0BA79]">✓</span>
+                <span>۷ روز ضمانت بازگشت</span>
+              </div>
+              <div class="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm p-2 rounded-xl border border-white/10">
+                <span class="text-[#E0BA79]">✓</span>
+                <span>بسته‌بندی ایمن موزه‌ای</span>
+              </div>
+              <div class="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm p-2 rounded-xl border border-white/10">
+                <span class="text-[#E0BA79]">✓</span>
+                <span>خرید مستقیم و بی‌واسطه</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- لایه بصری ۲: ویژه کاربر هنرمند و آفریننده اثر -->
+        <div id="artist-visual" class="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 text-white transition-opacity duration-500 ease-in-out opacity-0 pointer-events-none z-10">
+          <img src="./static/images/hero/slide-1.jpg" alt="آتلیه و کارگاه خلق هنر" class="absolute inset-0 w-full h-full object-cover filter brightness-70">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#26150F] via-[#26150F]/75 to-black/20"></div>
+          
+          <div class="relative z-10 space-y-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#C69A52]/25 text-[#FAF7F2] border border-[#C69A52]/40 backdrop-blur-md">
+              <svg class="w-3.5 h-3.5 text-[#E0BA79]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+              <span>ویژه اساتید و هنرمندان آفریننده</span>
+            </span>
+
+            <h3 class="text-xl sm:text-2xl font-black text-white leading-tight">
+              ویترین ملی برای معرفی و فروش مستقیم آثار شما
+            </h3>
+
+            <p class="text-xs text-white/80 leading-relaxed font-light hidden sm:block">
+              با ایجاد گالری آنلاین در هنرکده، ساخته‌های دست خود را به هزاران خریدار و مجموعه‌دار در سراسر ایران معرفی کنید و بدون کمیسیون‌های سنگین بفروشید.
+            </p>
+
+            <!-- ویژگی‌های اختصاصی هنرمندان -->
+            <div class="pt-2 grid grid-cols-2 gap-2 text-[11px] text-white/90 font-medium">
+              <div class="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm p-2 rounded-xl border border-white/10">
+                <span class="text-[#E0BA79]">✓</span>
+                <span>گالری اختصاصی با نام شما</span>
+              </div>
+              <div class="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm p-2 rounded-xl border border-white/10">
+                <span class="text-[#E0BA79]">✓</span>
+                <span>تسویه ۲۴ ساعته پس از فروش</span>
+              </div>
+              <div class="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm p-2 rounded-xl border border-white/10">
+                <span class="text-[#E0BA79]">✓</span>
+                <span>کیوریتوری و قیمت‌گذاری اثر</span>
+              </div>
+              <div class="flex items-center gap-1.5 bg-black/30 backdrop-blur-sm p-2 rounded-xl border border-white/10">
+                <span class="text-[#E0BA79]">✓</span>
+                <span>عکاسی و معرفی در کاتالوگ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
   </main>
 
+  <!-- ================= مودال لوکس پیام تایید و موفقیت ثبت‌نام / ورود ================= -->
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+    <div id="auth-modal-card" class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-[#E8E3D9] text-center transform scale-95 transition-all duration-300 relative overflow-hidden">
+      
+      <!-- افکت نور پس‌زمینه در بالای مودال -->
+      <div id="modal-glow" class="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 bg-[#2C4A3E]/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- دکمه بستن در گوشه -->
+      <button type="button" onclick="closeAuthModal()" class="absolute left-4 top-4 text-[#98A19C] hover:text-[#1E3329] p-1.5 rounded-xl hover:bg-[#FAF7F2] transition-colors cursor-pointer" title="بستن">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <!-- آیکون نشان موفقیت متناسب با نقش کاربر -->
+      <div class="relative z-10 flex justify-center mb-4">
+        <div id="modal-icon-container" class="w-20 h-20 rounded-2xl bg-[#E8EFEA] text-[#2C4A3E] flex items-center justify-center shadow-lg border border-[#2C4A3E]/20">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+      </div>
+
+      <!-- عناوین و پیام مودال -->
+      <div class="relative z-10 space-y-2 mb-6">
+        <span id="modal-badge" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-[#E8EFEA] text-[#2C4A3E] border border-[#2C4A3E]/20">
+          تایید شد
+        </span>
+        <h3 id="modal-title" class="text-xl sm:text-2xl font-black text-[#1E3329]">
+          ثبت‌نام با موفقیت انجام شد!
+        </h3>
+        <p id="modal-message" class="text-xs sm:text-sm text-[#6B726E] leading-relaxed">
+          به جمع همراهان هنرکده خوش آمدید.
+        </p>
+      </div>
+
+      <!-- کارت خلاصه مشخصات حساب -->
+      <div class="relative z-10 bg-[#FAF7F2] rounded-2xl p-4 border border-[#E8E3D9] text-xs text-right space-y-2 mb-6">
+        <div class="flex items-center justify-between">
+          <span class="text-[#6B726E]">نام و نام خانوادگی:</span>
+          <span id="modal-user-name" class="font-bold text-[#1E3329]">-</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-[#6B726E]">نوع حساب:</span>
+          <span id="modal-user-role" class="font-bold text-[#2C4A3E]">-</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-[#6B726E]">شماره همراه:</span>
+          <span id="modal-user-phone" class="font-bold font-mono text-[#1E3329] dir-ltr text-right">-</span>
+        </div>
+        <div id="modal-extra-row" class="flex items-center justify-between pt-1 border-t border-[#E8E3D9]/60">
+          <span id="modal-extra-label" class="text-[#6B726E]">وضعیت حساب:</span>
+          <span id="modal-extra-val" class="font-bold text-[#82533D]">فعال و آماده</span>
+        </div>
+      </div>
+
+      <!-- دکمه‌های هدایت و اکشن -->
+      <div class="relative z-10 space-y-2">
+        <a id="modal-primary-btn" href="./profile.html" class="w-full py-3.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+          <span>ورود به پروفایل کاربری</span>
+        </a>
+        <a href="./index.html" class="w-full py-2.5 rounded-xl text-xs text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] font-semibold transition-all flex items-center justify-center gap-1.5">
+          <span>رفتن به صفحه اصلی گالری</span>
+          <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+      <!-- شمارشگر ثانیه معکوس هدایت خودکار -->
+      <p class="text-[10px] text-[#98A19C] mt-3">
+        انتقال خودکار به پروفایل تا <span id="modal-countdown" class="font-bold text-[#1E3329]">۴</span> ثانیه دیگر...
+      </p>
+
+    </div>
+  </div>
+
   <script>
-    // کنترل سوئیچ بین فرم ورود و ثبت‌نام
-    const tabLogin = document.getElementById('tab-login-btn');
-    const tabRegister = document.getElementById('tab-register-btn');
-    const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form');
+    // متغیرهای وضعیت صفحه احراز هویت
+    let currentAuthTab = 'login'; // 'login' | 'register'
+    let currentUserRole = 'buyer'; // 'buyer' | 'artist'
 
-    tabLogin.addEventListener('click', () => {
-      tabLogin.classList.add('bg-[#2C4A3E]', 'text-white', 'shadow-sm');
-      tabLogin.classList.remove('text-[#6B726E]');
-      tabRegister.classList.remove('bg-[#2C4A3E]', 'text-white', 'shadow-sm');
-      tabRegister.classList.add('text-[#6B726E]');
-      loginForm.classList.remove('hidden');
-      registerForm.classList.add('hidden');
-    });
+    const authCard = document.getElementById('auth-card');
+    const tabLoginBtn = document.getElementById('tab-login-btn');
+    const tabRegisterBtn = document.getElementById('tab-register-btn');
+    const loginView = document.getElementById('login-view');
+    const registerView = document.getElementById('register-view');
 
-    tabRegister.addEventListener('click', () => {
-      tabRegister.classList.add('bg-[#2C4A3E]', 'text-white', 'shadow-sm');
-      tabRegister.classList.remove('text-[#6B726E]');
-      tabLogin.classList.remove('bg-[#2C4A3E]', 'text-white', 'shadow-sm');
-      tabLogin.classList.add('text-[#6B726E]');
-      registerForm.classList.remove('hidden');
-      loginForm.classList.add('hidden');
+    const roleBuyerBtn = document.getElementById('role-buyer-btn');
+    const roleArtistBtn = document.getElementById('role-artist-btn');
+    const roleBadge = document.getElementById('role-badge');
+    const buyerFormSection = document.getElementById('buyer-form-section');
+    const artistFormSection = document.getElementById('artist-form-section');
+
+    const buyerVisual = document.getElementById('buyer-visual');
+    const artistVisual = document.getElementById('artist-visual');
+
+    // سوییچ بین تب ورود و ثبت‌نام
+    function switchAuthTab(tab) {
+      currentAuthTab = tab;
+
+      if (tab === 'login') {
+        tabLoginBtn.className = 'w-1/2 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all bg-[#2C4A3E] text-white shadow-sm';
+        tabRegisterBtn.className = 'w-1/2 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all text-[#6B726E] hover:text-[#1E3329]';
+        
+        loginView.classList.remove('hidden');
+        registerView.classList.add('hidden');
+
+        // هنگام بازگشت به فرم ورود، جهت و چیدمان استاندارد بازمی‌گردد
+        authCard.classList.remove('mode-artist');
+        authCard.classList.add('mode-buyer');
+        updateVisualLayer('buyer');
+      } else {
+        tabRegisterBtn.className = 'w-1/2 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all bg-[#2C4A3E] text-white shadow-sm';
+        tabLoginBtn.className = 'w-1/2 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all text-[#6B726E] hover:text-[#1E3329]';
+        
+        loginView.classList.add('hidden');
+        registerView.classList.remove('hidden');
+
+        // اعمال حالت نقش کاربری ذخیره‌شده
+        applyUserRole(currentUserRole, false);
+      }
+    }
+
+    // باز کردن مستقیم ثبت‌نام با نقش تعیین‌شده
+    function openRegisterAs(role) {
+      currentUserRole = role;
+      switchAuthTab('register');
+      switchUserRole(role);
+    }
+
+    // تغییر نوع کاربری (خریدار یا هنرمند) با انیمیشن جابه‌جایی نرم ستون‌ها و کادرها
+    function switchUserRole(role) {
+      if (role === currentUserRole && !registerView.classList.contains('hidden')) {
+        return;
+      }
+      currentUserRole = role;
+      applyUserRole(role, true);
+    }
+
+    function applyUserRole(role, animated = true) {
+      if (role === 'artist') {
+        // ۱. فعال‌سازی استایل دکمه‌های نقش
+        roleArtistBtn.className = 'flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm bg-[#82533D] text-white border border-[#82533D] cursor-pointer';
+        roleBuyerBtn.className = 'flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition-all text-[#6B726E] hover:text-[#1E3329] border border-transparent hover:bg-white cursor-pointer';
+        roleBadge.textContent = 'هنرمند و آفریننده اثر';
+        roleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#82533D]/10 text-[#82533D]';
+
+        // ۲. جابه‌جایی موقعیت ستون تصویر و فرم با انیمیشن نرم در دسکتاپ
+        authCard.classList.remove('mode-buyer');
+        authCard.classList.add('mode-artist');
+
+        // ۳. تغییر لایه تصویر به هویت هنرمند
+        updateVisualLayer('artist');
+
+        // ۴. ترنزیشن نرم میان فرم‌ها
+        buyerFormSection.style.opacity = '0';
+        buyerFormSection.style.transform = 'translateY(6px)';
+        
+        setTimeout(() => {
+          buyerFormSection.classList.add('hidden');
+          artistFormSection.classList.remove('hidden');
+          // تحریک رندر برای شروع انیمیشن فیدین
+          void artistFormSection.offsetWidth;
+          artistFormSection.style.opacity = '1';
+          artistFormSection.style.transform = 'translateY(0)';
+        }, animated ? 180 : 0);
+
+      } else {
+        // ۱. فعال‌سازی استایل دکمه‌های نقش
+        roleBuyerBtn.className = 'flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm bg-[#2C4A3E] text-white border border-[#2C4A3E] cursor-pointer';
+        roleArtistBtn.className = 'flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition-all text-[#6B726E] hover:text-[#1E3329] border border-transparent hover:bg-white cursor-pointer';
+        roleBadge.textContent = 'خریدار و علاقه‌مند هنر';
+        roleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#2C4A3E]/10 text-[#2C4A3E]';
+
+        // ۲. جابه‌جایی موقعیت ستون تصویر و فرم با انیمیشن نرم در دسکتاپ (بازگشت به موقعیت اول)
+        authCard.classList.remove('mode-artist');
+        authCard.classList.add('mode-buyer');
+
+        // ۳. تغییر لایه تصویر به هویت خریدار
+        updateVisualLayer('buyer');
+
+        // ۴. ترنزیشن نرم میان فرم‌ها
+        artistFormSection.style.opacity = '0';
+        artistFormSection.style.transform = 'translateY(6px)';
+
+        setTimeout(() => {
+          artistFormSection.classList.add('hidden');
+          buyerFormSection.classList.remove('hidden');
+          // تحریک رندر برای شروع انیمیشن فیدین
+          void buyerFormSection.offsetWidth;
+          buyerFormSection.style.opacity = '1';
+          buyerFormSection.style.transform = 'translateY(0)';
+        }, animated ? 180 : 0);
+      }
+    }
+
+    // کراس‌فید لایه تصویر و بنر سمت دیگر
+    function updateVisualLayer(role) {
+      if (role === 'artist') {
+        buyerVisual.classList.add('opacity-0', 'pointer-events-none');
+        buyerVisual.classList.remove('opacity-100');
+        artistVisual.classList.remove('opacity-0', 'pointer-events-none');
+        artistVisual.classList.add('opacity-100');
+      } else {
+        artistVisual.classList.add('opacity-0', 'pointer-events-none');
+        artistVisual.classList.remove('opacity-100');
+        buyerVisual.classList.remove('opacity-0', 'pointer-events-none');
+        buyerVisual.classList.add('opacity-100');
+      }
+    }
+
+    // کلیک روی چیپ‌های علاقه‌مندی هنری خریدار
+    function toggleInterest(button) {
+      button.classList.toggle('active');
+    }
+
+    // نمایش یا مخفی‌سازی کلمه عبور
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.classList.add('text-[#2C4A3E]');
+      } else {
+        input.type = 'password';
+        btn.classList.remove('text-[#2C4A3E]');
+      }
+    }
+
+    let redirectTimer = null;
+
+    // نمایش مودال موفقیت‌آمیز بودن احراز هویت با مشخصات کامل
+    function openSuccessModal(userData) {
+      // ذخیره جلسه کاربر در حافظه محلی
+      try {
+        localStorage.setItem('honarkadeh_user', JSON.stringify(userData));
+      } catch (err) {
+        console.warn('Could not save to localStorage', err);
+      }
+
+      const modal = document.getElementById('auth-modal');
+      const modalCard = document.getElementById('auth-modal-card');
+      const modalIcon = document.getElementById('modal-icon-container');
+      const modalBadge = document.getElementById('modal-badge');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMsg = document.getElementById('modal-message');
+      const modalName = document.getElementById('modal-user-name');
+      const modalRole = document.getElementById('modal-user-role');
+      const modalPhone = document.getElementById('modal-user-phone');
+      const modalExtraLabel = document.getElementById('modal-extra-label');
+      const modalExtraVal = document.getElementById('modal-extra-val');
+      const modalPrimaryBtn = document.getElementById('modal-primary-btn');
+      const countdownEl = document.getElementById('modal-countdown');
+      const glowEl = document.getElementById('modal-glow');
+
+      modalName.textContent = userData.name || 'کاربر هنرکده';
+      modalRole.textContent = userData.roleName || (userData.role === 'artist' ? 'هنرمند و آفریننده اثر' : 'خریدار و علاقمند هنر');
+      modalPhone.textContent = userData.phone || '۰۹۱۲۳۴۵۶۷۸۹';
+
+      if (userData.role === 'artist') {
+        glowEl.className = 'absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 bg-[#82533D]/25 rounded-full blur-3xl pointer-events-none';
+        modalIcon.className = 'w-20 h-20 rounded-2xl bg-[#F7EFEA] text-[#82533D] flex items-center justify-center shadow-lg border border-[#82533D]/30';
+        modalIcon.innerHTML = `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>`;
+        modalBadge.className = 'inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-[#F7EFEA] text-[#82533D] border border-[#82533D]/30';
+        modalBadge.textContent = 'درخواست عضویت هنرمند';
+        modalTitle.textContent = 'درخواست شما با موفقیت ثبت شد!';
+        modalMsg.textContent = `استاد ${userData.name} گرامی، اطلاعات و سوابق کارگاه شما در سامانه هنرمندان هنرکده ثبت شد. کارشناسان کیوریتوری ظرف ۲۴ ساعت جهت تایید آثار و فعال‌سازی ویترین اختصاصی با شما تماس خواهند گرفت.`;
+        modalExtraLabel.textContent = 'شاخه هنری:';
+        modalExtraVal.textContent = userData.specialty || 'هنرهای تجسمی و دستی';
+        modalExtraVal.className = 'font-bold text-[#82533D]';
+        modalPrimaryBtn.className = 'w-full py-3.5 rounded-xl bg-[#82533D] hover:bg-[#9C684F] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer';
+        modalPrimaryBtn.innerHTML = `<span>ورود به میز کار و پروفایل هنرمند</span><svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
+      } else {
+        glowEl.className = 'absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 bg-[#2C4A3E]/20 rounded-full blur-3xl pointer-events-none';
+        modalIcon.className = 'w-20 h-20 rounded-2xl bg-[#E8EFEA] text-[#2C4A3E] flex items-center justify-center shadow-lg border border-[#2C4A3E]/20';
+        modalIcon.innerHTML = `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+        modalBadge.className = 'inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-[#E8EFEA] text-[#2C4A3E] border border-[#2C4A3E]/20';
+        modalBadge.textContent = '✦ خریدار و عضو رسمی هنرکده';
+        modalTitle.textContent = userData.isLogin ? 'خوش‌آمدید به هنرکده!' : 'ثبت‌نام با موفقیت انجام شد!';
+        modalMsg.textContent = `${userData.name} عزیز، به خانواده بزرگ هنرکده خوش آمدید. حساب کاربری شما فعال شد و اکنون می‌توانید آثار اصیل دست‌ساز ایرانی را همراه با شناسنامه معتبر فیزیکی هولوگرام‌دار ثبت سفارش نمایید.`;
+        modalExtraLabel.textContent = 'وضعیت حساب:';
+        modalExtraVal.textContent = 'فعال و آماده خرید';
+        modalExtraVal.className = 'font-bold text-[#2C4A3E]';
+        modalPrimaryBtn.className = 'w-full py-3.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer';
+        modalPrimaryBtn.innerHTML = `<span>ورود به پروفایل کاربری</span><svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
+      }
+
+      // نمایش مودال با انیمیشن باز شدن نرم
+      modal.classList.remove('hidden');
+      void modal.offsetWidth;
+      modal.classList.remove('opacity-0');
+      modalCard.classList.remove('scale-95');
+      modalCard.classList.add('scale-100');
+
+      // شمارشگر معکوس ۴ ثانیه‌ای انتقال خودکار به پروفایل
+      let secondsLeft = 4;
+      countdownEl.textContent = secondsLeft;
+      if (redirectTimer) clearInterval(redirectTimer);
+      redirectTimer = setInterval(() => {
+        secondsLeft--;
+        countdownEl.textContent = secondsLeft;
+        if (secondsLeft <= 0) {
+          clearInterval(redirectTimer);
+          window.location.href = './profile.html';
+        }
+      }, 1000);
+    }
+
+    function closeAuthModal() {
+      if (redirectTimer) clearInterval(redirectTimer);
+      const modal = document.getElementById('auth-modal');
+      const modalCard = document.getElementById('auth-modal-card');
+      modal.classList.add('opacity-0');
+      modalCard.classList.remove('scale-100');
+      modalCard.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        window.location.href = './profile.html';
+      }, 250);
+    }
+
+    // ارسال فرم ورود
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const identifier = document.getElementById('login-identifier').value.trim();
+      const isEmail = identifier.includes('@');
+
+      let existingUser = null;
+      try {
+        const stored = localStorage.getItem('honarkadeh_user');
+        if (stored) existingUser = JSON.parse(stored);
+      } catch (err) {}
+
+      let userName = '';
+      if (existingUser && existingUser.name && (existingUser.phone === identifier || existingUser.email === identifier || !existingUser.phone)) {
+        userName = existingUser.name;
+      } else if (isEmail) {
+        userName = identifier.split('@')[0];
+      } else if (isNaN(identifier)) {
+        userName = identifier;
+      } else {
+        userName = 'کاربر ' + identifier.slice(-4);
+      }
+
+      const userRole = (existingUser && existingUser.role) ? existingUser.role : 'buyer';
+
+      const userData = {
+        isLoggedIn: true,
+        isLogin: true,
+        name: userName,
+        phone: !isEmail ? identifier : (existingUser && existingUser.phone ? existingUser.phone : ''),
+        email: isEmail ? identifier : (existingUser && existingUser.email ? existingUser.email : ''),
+        city: existingUser && existingUser.city ? existingUser.city : 'ایران',
+        role: userRole,
+        roleName: userRole === 'artist' ? 'هنرمند و آفریننده اثر' : 'خریدار و علاقمند هنر',
+        joinedDate: (existingUser && existingUser.joinedDate) ? existingUser.joinedDate : 'آبان ۱۴۰۵'
+      };
+
+      openSuccessModal(userData);
+    }
+
+    // ارسال فرم ثبت‌نام خریدار
+    function handleBuyerSubmit(e) {
+      e.preventDefault();
+      const p1 = document.getElementById('buyer-password').value;
+      const p2 = document.getElementById('buyer-confirm-password').value;
+      if (p1 !== p2) {
+        alert('کلمه عبور با تکرار آن یکسان نیست. لطفاً مجدداً بررسی فرمایید.');
+        return;
+      }
+
+      const name = document.getElementById('buyer-name').value.trim();
+      const phone = document.getElementById('buyer-phone').value.trim();
+      const email = document.getElementById('buyer-email').value.trim();
+      const city = document.getElementById('buyer-city').value.trim();
+
+      const userData = {
+        isLoggedIn: true,
+        isLogin: false,
+        name: name || 'کاربر گرامی',
+        phone: phone || '',
+        email: email || '',
+        city: city || 'ایران',
+        role: 'buyer',
+        roleName: 'خریدار و علاقمند هنر',
+        joinedDate: 'آبان ۱۴۰۵'
+      };
+
+      openSuccessModal(userData);
+    }
+
+    // ارسال فرم ثبت‌نام هنرمند
+    function handleArtistSubmit(e) {
+      e.preventDefault();
+      const p1 = document.getElementById('artist-password').value;
+      const p2 = document.getElementById('artist-confirm-password').value;
+      if (p1 !== p2) {
+        alert('کلمه عبور با تکرار آن یکسان نیست. لطفاً مجدداً بررسی فرمایید.');
+        return;
+      }
+
+      const name = document.getElementById('artist-name').value.trim();
+      const phone = document.getElementById('artist-phone').value.trim();
+      const specialtySelect = document.getElementById('artist-specialty');
+      const specialty = specialtySelect.options[specialtySelect.selectedIndex].text;
+      const style = document.getElementById('artist-style').value.trim();
+      const portfolio = document.getElementById('artist-portfolio').value.trim();
+      const city = document.getElementById('artist-city').value.trim();
+
+      const userData = {
+        isLoggedIn: true,
+        isLogin: false,
+        name: name || 'هنرمند گرامی',
+        phone: phone || '',
+        specialty: specialty || 'نقاشی و هنرهای تجسمی',
+        style: style || 'معاصر و اصیل',
+        portfolio: portfolio || '',
+        city: city || 'ایران',
+        role: 'artist',
+        roleName: 'هنرمند و آفریننده اثر',
+        joinedDate: 'آبان ۱۴۰۵'
+      };
+
+      openSuccessModal(userData);
+    }
+
+    // بررسی پارامترهای آدرس (URL Parameters & Hash) هنگام بارگذاری اولیه صفحه
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const hash = window.location.hash.toLowerCase();
+      const roleParam = urlParams.get('role') || urlParams.get('type');
+      const tabParam = urlParams.get('tab');
+
+      if (roleParam === 'artist' || hash === '#artist' || hash === '#sell-art') {
+        openRegisterAs('artist');
+      } else if (tabParam === 'register' || hash === '#register') {
+        openRegisterAs('buyer');
+      }
     });
   </script>
 </body>

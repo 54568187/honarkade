@@ -119,18 +119,18 @@
       </p>
     </div>
 
-    <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-medium">
-      <button class="px-3.5 py-1.5 rounded-xl bg-[#2C4A3E] text-white shrink-0 font-bold shadow-sm">همه آثار</button>
-      <button class="px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors">سفال و سرامیک</button>
-      <button class="px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors">نقاشی و آبرنگ</button>
-      <button class="px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors">خوشنویسی</button>
-      <button class="px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors">شمع و صنایع‌دستی</button>
+    <div id="category-tabs" class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-medium">
+      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-[#2C4A3E] text-white shrink-0 font-bold shadow-sm transition-all" data-category="all">همه آثار</button>
+      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="pottery">سفال و سرامیک</button>
+      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="painting">نقاشی و آبرنگ</button>
+      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="calligraphy">خوشنویسی</button>
+      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="decorative">شمع و دکوراتیو</button>
     </div>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     <!-- کارت ۱ -->
-    <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+    <article data-category="pottery" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <img src="/static/images/products/product-1.jpg" alt="گلدان سرامیکی فیروزه‌ای" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">سفال و سرامیک</span>
@@ -156,7 +156,7 @@
     </article>
 
     <!-- کارت ۲ -->
-    <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+    <article data-category="painting" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <img src="/static/images/products/product-2.jpg" alt="تابلو نقاشی رنگ‌روغن" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full shadow-sm">نقاشی رنگ‌روغن</span>
@@ -182,7 +182,7 @@
     </article>
 
     <!-- کارت ۳ -->
-    <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+    <article data-category="decorative" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <img src="/static/images/products/product-3.jpg" alt="پالت چوبی نقاشی" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">صنایع‌دستی چوبی</span>
@@ -208,7 +208,7 @@
     </article>
 
     <!-- کارت ۴ -->
-    <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+    <article data-category="calligraphy painting" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <img src="/static/images/products/product-4.jpg" alt="تابلو نقاشی‌خط با ورق طلا" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#C69A52] font-bold px-2.5 py-1 rounded-full shadow-sm">خوشنویسی و تذهیب</span>
@@ -234,7 +234,7 @@
     </article>
 
     <!-- کارت ۵ -->
-    <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+    <article data-category="decorative" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <img src="/static/images/products/product-5.jpg" alt="شمع‌های موم طبیعی عسل" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">شمع دست‌ساز</span>
@@ -259,7 +259,7 @@
     </article>
 
     <!-- کارت ۶ -->
-    <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+    <article data-category="pottery decorative" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <img src="/static/images/products/product-6.jpg" alt="کوزه سفالی فیروزه" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full shadow-sm">سرامیک دست‌ساز</span>
@@ -284,7 +284,7 @@
     </article>
 
     <!-- کارت ۷ -->
-    <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+    <article data-category="painting" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <img src="/static/images/products/product-7.jpg" alt="ست قلم‌موهای نگارگری" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">ابزار هنر سنتی</span>
@@ -309,7 +309,7 @@
     </article>
 
     <!-- کارت ۸ -->
-    <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+    <article data-category="calligraphy" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <img src="/static/images/products/product-8.jpg" alt="قطعه خوشنویسی آهارمهره" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#C69A52] font-bold px-2.5 py-1 rounded-full shadow-sm">خوشنویسی اصیل</span>

@@ -102,4 +102,67 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* کارت‌های محصول با امکان کلیک روی کل سطح کارت */
+  article, .product-card {
+    cursor: pointer;
+  }
 }
+
+/* ================= انیمیشن جابه‌جایی نرم ستون‌های ورود و ثبت‌نام ================= */
+.auth-panel-transition {
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.65s ease;
+  will-change: transform;
+}
+
+.auth-fade-layer {
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+@media (min-width: 768px) {
+  /* حالت خریدار: فرم در راست (۰)، تصویر در چپ (۰) */
+  #auth-card.mode-buyer #form-panel {
+    transform: translateX(0);
+    z-index: 10;
+  }
+  #auth-card.mode-buyer #image-panel {
+    transform: translateX(0);
+    z-index: 20;
+    box-shadow: 15px 0 35px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  /* حالت هنرمند: فرم جابه‌جا شده به چپ (-100%)، تصویر جابه‌جا شده به راست (+100%) */
+  #auth-card.mode-artist #form-panel {
+    transform: translateX(-100%);
+    z-index: 10;
+  }
+  #auth-card.mode-artist #image-panel {
+    transform: translateX(100%);
+    z-index: 20;
+    box-shadow: -15px 0 35px -5px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* استایل چیپ‌های انتخابی علاقه‌مندی */
+.interest-chip {
+  transition: all 0.2s ease;
+}
+.interest-chip.active {
+  background-color: #2C4A3E !important;
+  color: #FAF7F2 !important;
+  border-color: #2C4A3E !important;
+  box-shadow: 0 2px 6px -1px rgba(44, 74, 62, 0.35);
+}
+
+/* وضعیت نمایش منوی کاربری و دکمه ورود/ثبت‌نام در هدر */
+html.user-logged-in #nav-guest-btn {
+  display: none !important;
+}
+html.user-logged-in #nav-user-profile {
+  display: block !important;
+}
+html:not(.user-logged-in) #nav-user-profile {
+  display: none !important;
+}
+

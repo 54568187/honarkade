@@ -1,37 +1,38 @@
-<!-- ================= ۱. بنر تبلیغاتی بالای صفحه با پس‌زمینه عکس هنری ================= -->
-<div id="top-banner" class="relative z-50 text-[#FAF7F2] text-xs sm:text-sm py-2.5 px-4 overflow-hidden border-b border-[#C69A52]/40 shadow-sm transition-all duration-300">
+<!-- ================= ۱. بنر تبلیغاتی بالای صفحه با پس‌زمینه عکس هنری لوکال ================= -->
+<div id="top-banner" class="relative z-50 text-[#FAF7F2] py-3 sm:py-3.5 px-3 sm:px-6 overflow-hidden border-b border-[#C69A52]/50 shadow-md transition-all duration-300">
   
-  <!-- عکس هنری پس‌زمینه بنر با کیفیت بالا و افکت تیره برای خوانایی عالی -->
-  <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1920&q=80" 
+  <!-- عکس هنری پس‌زمینه بنر با کیفیت بالا مشابه اسلایدر اصلی سایت -->
+  <img src="./static/images/banner/top-banner.jpg" 
        alt="پس‌زمینه گالری هنر" 
-       class="absolute inset-0 w-full h-full object-cover filter brightness-[0.28] contrast-125 scale-105">
+       class="absolute inset-0 w-full h-full object-cover object-[center_35%] filter brightness-[0.72] contrast-110 scale-105">
        
-  <!-- لایه گرادیانت تلفیقی زیتونی و مشکی -->
-  <div class="absolute inset-0 bg-gradient-to-r from-[#15271E]/95 via-[#233C30]/85 to-[#15271E]/95"></div>
+  <!-- لایه گرادیانت ظریف و شیشه‌ای جهت جلوه هنری و خوانایی کامل متون -->
+  <div class="absolute inset-0 bg-gradient-to-r from-[#112018]/85 via-[#15271E]/60 to-[#112018]/85"></div>
+  <div class="absolute inset-0 bg-black/20"></div>
 
-  <div class="relative z-10 max-w-7xl mx-auto flex items-center justify-between">
+  <div class="relative z-10 max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
     <!-- متن بنر و آیکون هدیه -->
     <div class="flex items-center gap-2 sm:gap-3 mx-auto text-center sm:text-right">
-      <span class="w-6 h-6 rounded-full bg-[#C69A52]/30 text-[#E0BA79] border border-[#C69A52]/50 flex items-center justify-center shrink-0 shadow-sm">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#C69A52]/30 text-[#E0BA79] border border-[#C69A52]/60 flex items-center justify-center shrink-0 shadow-md backdrop-blur-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V4a2 2 0 10-2 2h2m-7 4h14a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2z"></path>
         </svg>
       </span>
-      <p class="font-medium text-[11px] sm:text-xs text-[#FAF7F2]">
-        <span class="text-[#E0BA79] font-black">جشنواره گالری هنرکده:</span>
+      <p class="font-medium text-[11px] sm:text-xs md:text-sm text-[#FAF7F2] drop-shadow leading-relaxed">
+        <span class="text-[#E0BA79] font-black drop-shadow-sm">جشنواره گالری هنرکده:</span>
         ارسال رایگان به سراسر کشور + ۱۵٪ تخفیف اولین خرید آثار هنری با کد تخفیف
-        <span class="bg-[#C69A52] text-[#1E3329] px-2.5 py-0.5 rounded-lg font-black font-mono tracking-wider mr-1 shadow-sm">HONAR15</span>
+        <span class="bg-[#C69A52] text-[#1E3329] px-2 sm:px-2.5 py-0.5 rounded-lg font-black font-mono tracking-wider mr-1 shadow-md inline-block">HONAR15</span>
       </p>
-      <a href="#handicrafts-section" class="hidden md:inline-flex items-center gap-1 text-xs text-[#E0BA79] hover:underline font-bold pr-2 transition-all">
+      <a href="#handicrafts-section" class="hidden md:inline-flex items-center gap-1.5 text-xs sm:text-[13px] text-[#E0BA79] hover:text-white font-bold px-3 py-1 rounded-xl bg-black/30 hover:bg-[#C69A52]/30 border border-[#C69A52]/40 backdrop-blur-sm transition-all drop-shadow shrink-0">
         <span>مشاهده آثار تخفیف‌دار</span>
-        <svg class="w-3 h-3 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path></svg>
       </a>
     </div>
 
     <!-- دکمه بستن بنر -->
-    <button id="close-banner-btn" type="button" class="text-white/70 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors shrink-0" title="بستن بنر">
+    <button id="close-banner-btn" type="button" class="text-white/80 hover:text-white p-1.5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all shrink-0 border border-white/10 shadow-sm" title="بستن بنر">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path>
       </svg>
     </button>
   </div>
@@ -69,13 +70,73 @@
       <!-- ابزارها: ورود/ثبت‌نام، نوتیفیکیشن، سبد خرید -->
       <div class="flex items-center gap-2 sm:gap-3">
         
-        <!-- دکمه ورود / ثبت نام -->
-        <a href="./login.html" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#1E3329] border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] transition-all">
-          <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-          </svg>
-          <span>ورود <span class="text-[#98A19C] font-normal">|</span> ثبت‌نام</span>
-        </a>
+        <!-- دکمه ورود / ثبت‌نام یا پروفایل کاربر در صورت ورود -->
+        <div id="nav-auth-container" class="relative">
+          <!-- حالت مهمان (پیش‌فرض قبل از لاگین) -->
+          <a id="nav-guest-btn" href="./login.html" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#1E3329] border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] transition-all">
+            <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+            </svg>
+            <span>ورود <span class="text-[#98A19C] font-normal">|</span> ثبت‌نام</span>
+          </a>
+
+          <!-- حالت کاربر لاگین‌شده: آیکون و منوی پروفایل -->
+          <div id="nav-user-profile" class="hidden relative">
+            <button id="nav-profile-toggle-btn" type="button" class="inline-flex items-center gap-2 p-1.5 sm:px-3 sm:py-1.5 rounded-2xl bg-white border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] transition-all shadow-xs cursor-pointer">
+              <div class="relative">
+                <div id="nav-avatar-initial" class="w-8 h-8 rounded-xl bg-[#2C4A3E] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                  ک
+                </div>
+                <span class="absolute -bottom-0.5 -left-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
+              </div>
+              <div class="hidden sm:flex flex-col text-right">
+                <span id="nav-profile-name" class="text-xs font-bold text-[#1E3329] max-w-[110px] truncate">کاربر گرامی</span>
+                <span id="nav-profile-role" class="text-[9px] font-semibold text-[#82533D]">خریدار هنر</span>
+              </div>
+              <svg class="w-3.5 h-3.5 text-[#98A19C] mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+
+            <!-- دراپ‌داون اختصاصی پروفایل کاربر -->
+            <div id="nav-profile-dropdown" class="hidden absolute left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-[#E8E3D9] p-2 z-50 divide-y divide-[#E8E3D9]/60">
+              <div class="p-3">
+                <div class="flex items-center gap-2.5">
+                  <div id="nav-dropdown-avatar" class="w-10 h-10 rounded-xl bg-[#2C4A3E] text-white flex items-center justify-center font-bold text-sm">
+                    ک
+                  </div>
+                  <div class="flex flex-col">
+                    <span id="nav-dropdown-name" class="text-xs font-bold text-[#1E3329]">کاربر گرامی</span>
+                    <span id="nav-dropdown-phone" class="text-[10px] text-[#6B726E] font-mono">۰۹۱۲۳۴۵۶۷۸۹</span>
+                    <span id="nav-dropdown-role-badge" class="text-[9px] font-bold text-[#2C4A3E] bg-[#E8EFEA] px-2 py-0.5 rounded-full mt-1 w-fit">
+                      خریدار و مجموعه‌دار هنر
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="py-1.5 text-xs font-medium space-y-0.5">
+                <a href="./profile.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
+                  <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                  <span>میز کار و پروفایل کاربری</span>
+                </a>
+                <a href="./profile.html#orders" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
+                  <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                  <span id="nav-menu-orders-label">سفارش‌ها و شناسنامه‌ها</span>
+                </a>
+                <a href="./profile.html#wishlist" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
+                  <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                  <span>نشان‌شده‌ها و علاقه‌مندی‌ها</span>
+                </a>
+              </div>
+
+              <div class="pt-1">
+                <button type="button" onclick="logoutHonarkadeh()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 transition-colors text-xs font-bold cursor-pointer">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                  <span>خروج از حساب</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- آیکون زنگوله / اعلان‌ها با دراپ‌داون -->
         <div class="relative">
@@ -285,7 +346,7 @@
           <span>پرفروش‌ترین‌ها</span>
         </a>
 
-        <a href="./shop.html" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
+        <a href="./artists.html" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
           <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
           </svg>
