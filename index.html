@@ -13,40 +13,41 @@
 </head>
 <body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex flex-col font-['Vazirmatn'] selection:bg-[#2C4A3E] selection:text-[#FAF7F2] antialiased">
 
-  <!-- ================= ۱. بنر تبلیغاتی بالای صفحه با پس‌زمینه عکس لوکال ================= -->
-  <div id="top-banner" class="relative z-50 text-[#FAF7F2] text-xs sm:text-sm py-2.5 px-4 overflow-hidden border-b border-[#C69A52]/40 shadow-sm transition-all duration-300">
+  <!-- ================= ۱. بنر تبلیغاتی بالای صفحه با پس‌زمینه عکس هنری لوکال ================= -->
+  <div id="top-banner" class="relative z-50 text-[#FAF7F2] py-3.5 sm:py-4 px-4 sm:px-6 overflow-hidden border-b border-[#C69A52]/50 shadow-md transition-all duration-300">
     
-    <!-- عکس پس‌زمینه محلی بنر (لود فوری و بدون فیلتر) -->
-    <img src="./static/images/banner/top-banner.jpg" 
+    <!-- عکس پس‌زمینه محلی بنر با وضوح بالا، دقیقاً مشابه اسلایدر هنری -->
+    <img src="./static/images/hero/slide-1.jpg" 
          alt="پس‌زمینه گالری هنر" 
-         class="absolute inset-0 w-full h-full object-cover filter brightness-[0.3] contrast-125 scale-105">
+         class="absolute inset-0 w-full h-full object-cover object-[center_35%] filter brightness-[0.7] contrast-110 scale-105">
          
-    <!-- لایه گرادیانت تلفیقی زیتونی و مشکی جهت افزایش خوانایی -->
-    <div class="absolute inset-0 bg-gradient-to-r from-[#15271E]/95 via-[#233C30]/85 to-[#15271E]/95"></div>
+    <!-- لایه گرادیانت ظریف جهت خوانایی عالی نوشته‌ها بدون محو کردن عکس -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#112018]/85 via-[#15271E]/60 to-[#112018]/85"></div>
+    <div class="absolute inset-0 bg-black/20"></div>
 
-    <div class="relative z-10 max-w-7xl mx-auto flex items-center justify-between">
+    <div class="relative z-10 max-w-7xl mx-auto flex items-center justify-between gap-4">
       <!-- متن بنر و آیکون هدیه -->
-      <div class="flex items-center gap-2 sm:gap-3 mx-auto text-center sm:text-right">
-        <span class="w-6 h-6 rounded-full bg-[#C69A52]/30 text-[#E0BA79] border border-[#C69A52]/50 flex items-center justify-center shrink-0 shadow-sm">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="flex items-center gap-2.5 sm:gap-3.5 mx-auto text-center sm:text-right flex-wrap sm:flex-nowrap justify-center">
+        <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#C69A52]/30 text-[#E0BA79] border border-[#C69A52]/60 flex items-center justify-center shrink-0 shadow-md backdrop-blur-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V4a2 2 0 10-2 2h2m-7 4h14a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2z"></path>
           </svg>
         </span>
-        <p class="font-medium text-[11px] sm:text-xs text-[#FAF7F2]">
-          <span class="text-[#E0BA79] font-black">جشنواره گالری هنرکده:</span>
+        <p class="font-medium text-xs sm:text-[13px] md:text-sm text-[#FAF7F2] drop-shadow">
+          <span class="text-[#E0BA79] font-black drop-shadow-sm">جشنواره گالری هنرکده:</span>
           ارسال رایگان به سراسر کشور + ۱۵٪ تخفیف اولین خرید آثار هنری با کد تخفیف
-          <span class="bg-[#C69A52] text-[#1E3329] px-2.5 py-0.5 rounded-lg font-black font-mono tracking-wider mr-1 shadow-sm">HONAR15</span>
+          <span class="bg-[#C69A52] text-[#1E3329] px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-lg font-black font-mono tracking-wider mr-1 shadow-md inline-block">HONAR15</span>
         </p>
-        <a href="#handicrafts-section" class="hidden md:inline-flex items-center gap-1 text-xs text-[#E0BA79] hover:underline font-bold pr-2 transition-all">
+        <a href="#handicrafts-section" class="hidden md:inline-flex items-center gap-1.5 text-xs sm:text-[13px] text-[#E0BA79] hover:text-white font-bold px-3 py-1 rounded-xl bg-black/30 hover:bg-[#C69A52]/30 border border-[#C69A52]/40 backdrop-blur-sm transition-all drop-shadow">
           <span>مشاهده آثار تخفیف‌دار</span>
-          <svg class="w-3 h-3 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+          <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path></svg>
         </a>
       </div>
 
       <!-- دکمه بستن بنر -->
-      <button id="close-banner-btn" type="button" class="text-white/70 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors shrink-0" title="بستن بنر">
+      <button id="close-banner-btn" type="button" class="text-white/80 hover:text-white p-1.5 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all shrink-0 border border-white/10 shadow-sm" title="بستن بنر">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
@@ -122,13 +123,62 @@
             </div>
           </div>
 
-          <!-- دکمه سبد خرید با شمارنده -->
-          <button id="cart-drawer-btn" type="button" class="relative p-2.5 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors border border-transparent hover:border-[#E8E3D9]" title="سبد خرید">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-            </svg>
-            <span id="cart-count-badge" class="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#82533D] text-white text-[10px] font-bold flex items-center justify-center transition-transform">۰</span>
-          </button>
+          <!-- آیکون سبد خرید به همراه دراپ‌داون اختصاصی زیر آن -->
+          <div class="relative">
+            <button id="cart-dropdown-btn" type="button" class="relative p-2.5 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors border border-transparent hover:border-[#E8E3D9]" title="سبد خرید">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+              </svg>
+              <span id="cart-count-badge" class="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#82533D] text-white text-[10px] font-bold flex items-center justify-center transition-transform shadow-sm">۱</span>
+            </button>
+
+            <!-- منوی دراپ‌داون سبد خرید دقیقاً زیر آیکون فروشگاه -->
+            <div id="cart-dropdown-menu" class="hidden absolute left-0 mt-2 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-[#E8E3D9] p-4 z-50">
+              <!-- سربرگ سبد -->
+              <div class="flex items-center justify-between pb-3 border-b border-[#E8E3D9] mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-[#1E3329]">سبد خرید شما</span>
+                  <span id="cart-items-count-badge" class="text-[10px] text-[#2C4A3E] bg-[#E8EFEA] px-2 py-0.5 rounded-full font-bold">۱ اثر هنری</span>
+                </div>
+                <button id="close-cart-dropdown-btn" type="button" class="text-[#98A19C] hover:text-[#1E3329] p-1 rounded-lg transition-colors" title="بستن">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+              </div>
+
+              <!-- لیست آثار انتخابی -->
+              <div id="cart-items-container" class="space-y-3 max-h-64 overflow-y-auto pr-1">
+                <div class="flex items-center gap-3 p-2.5 rounded-2xl bg-[#FAF7F2] border border-[#E8E3D9]/70 relative group">
+                  <img src="./static/images/products/product-1.jpg" alt="گلدان سرامیکی" class="w-14 h-14 rounded-xl object-cover bg-white shrink-0 border border-[#E8E3D9]">
+                  <div class="flex-grow min-w-0">
+                    <h5 class="text-xs font-bold text-[#1E3329] truncate">گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار</h5>
+                    <span class="text-[10px] text-[#82533D] block">تک‌نسخه • کارگاه کهن</span>
+                    <div class="flex items-center justify-between mt-1">
+                      <span class="text-xs font-black text-[#2C4A3E]">۱,۴۵۰,۰۰۰ تومان</span>
+                      <span class="text-[10px] text-[#6B726E] bg-white px-1.5 py-0.5 rounded border border-[#E8E3D9]">۱ عدد</span>
+                    </div>
+                  </div>
+                  <button type="button" onclick="this.closest('.flex').remove();" class="text-[#98A19C] hover:text-red-500 p-1 transition-colors" title="حذف اثر">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- بخش فاکتور و دکمه تسویه‌حساب -->
+              <div class="mt-4 pt-3 border-t border-[#E8E3D9] space-y-3">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-[#6B726E]">جمع کل سفارش:</span>
+                  <span id="cart-dropdown-total-price" class="font-black text-[#1E3329] text-sm">۱,۴۵۰,۰۰۰ تومان</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-[10px] text-emerald-700 bg-[#E8EFEA] px-2.5 py-1.5 rounded-xl">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                  <span>بسته‌بندی ۵ لایه ضدضربه و بیمه رایگان</span>
+                </div>
+                <a href="./cart.html" class="block w-full py-2.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-center text-xs font-bold transition-all shadow-md">
+                  مشاهده سبد و تسویه‌حساب نهایی ←
+                </a>
+              </div>
+            </div>
+          </div>
 
           <!-- دکمه منوی موبایل -->
           <button id="mobile-menu-btn" type="button" class="md:hidden p-2 rounded-xl text-[#242826] hover:bg-[#FAF7F2]">
@@ -751,44 +801,7 @@
 
   </main>
 
-  <!-- ================= سبد خرید کشویی (Slide-over Cart Drawer) ================= -->
-  <div id="cart-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden transition-opacity"></div>
-  <aside id="cart-drawer" class="fixed top-0 left-0 bottom-0 w-full sm:w-96 bg-[#FAF7F2] z-50 shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out border-r border-[#E8E3D9]">
-    <div class="p-5 bg-white border-b border-[#E8E3D9] flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <h3 class="text-base font-bold text-[#1E3329]">سبد خرید شما</h3>
-        <span class="text-xs text-[#82533D] bg-[#F7EFEA] px-2 py-0.5 rounded-full font-medium">اثر انتخابی</span>
-      </div>
-      <button id="close-cart-btn" type="button" class="p-2 text-[#6B726E] hover:text-[#1E3329] rounded-xl hover:bg-[#FAF7F2] transition-colors" title="بستن">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-      </button>
-    </div>
-    <div class="flex-grow p-6 flex flex-col items-center justify-center text-center">
-      <div class="w-16 h-16 rounded-2xl bg-[#E8EFEA] text-[#2C4A3E] flex items-center justify-center mb-4">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-        </svg>
-      </div>
-      <h4 class="text-sm font-bold text-[#1E3329] mb-1">اثر هنری به سبد اضافه شد!</h4>
-      <p class="text-xs text-[#6B726E] max-w-xs leading-relaxed mb-6 font-light">
-        اثر انتخابی با موفقیت ثبت شد. می‌توانید فرآیند تسویه‌حساب و ارسال بیمه‌شده را تکمیل فرمایید.
-      </p>
-      <button onclick="document.getElementById('close-cart-btn').click()" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#2C4A3E] text-white text-xs font-semibold hover:bg-[#1E3329] transition-colors shadow-sm">
-        ادامه بازدید از آثار
-      </button>
-    </div>
-    <div class="p-5 bg-white border-t border-[#E8E3D9] space-y-3">
-      <div class="flex items-center justify-between text-sm">
-        <span class="text-[#6B726E]">جمع کل سفارش:</span>
-        <span class="font-extrabold text-[#1E3329]">۱,۴۵۰,۰۰۰ تومان</span>
-      </div>
-      <button class="w-full py-3 rounded-xl bg-[#2C4A3E] text-white text-sm font-bold hover:bg-[#1E3329] transition-all shadow-md">
-        تکمیل سفارش و پرداخت
-      </button>
-    </div>
-  </aside>
+
 
   <!-- ================= ۶. فوتر پیشرفته و جامع هنرکده ================= -->
   <footer class="bg-white border-t border-[#E8E3D9] mt-16 text-[#242826]">

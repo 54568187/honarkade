@@ -28,31 +28,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ================= 3. سبد خرید کشویی (Cart Drawer) =================
-  const cartDrawerBtn = document.getElementById('cart-drawer-btn');
-  const cartDrawer = document.getElementById('cart-drawer');
-  const cartOverlay = document.getElementById('cart-overlay');
-  const closeCartBtn = document.getElementById('close-cart-btn');
+  // ================= 3. سبد خرید به صورت دراپ‌داون زیر آیکون فروشگاه (بدون تاری صفحه) =================
+  const cartBtn = document.getElementById('cart-dropdown-btn') || document.getElementById('cart-drawer-btn') || document.getElementById('cart-btn');
+  const cartDropdown = document.getElementById('cart-dropdown-menu') || document.getElementById('cart-dropdown');
+  const closeCartBtn = document.getElementById('close-cart-dropdown-btn') || document.getElementById('close-cart-btn');
 
-  function openCart() {
-    if (cartDrawer && cartOverlay) {
-      cartDrawer.classList.remove('translate-x-full');
-      cartOverlay.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
+  function openCartDropdown() {
+    if (cartDropdown) {
+      // بستن منوی اعلان‌ها در صورت باز بودن
+      if (notifDropdown) notifDropdown.classList.add('hidden');
+      cartDropdown.classList.remove('hidden');
     }
   }
 
-  function closeCart() {
-    if (cartDrawer && cartOverlay) {
-      cartDrawer.classList.add('translate-x-full');
-      cartOverlay.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
+  function closeCartDropdown() {
+    if (cartDropdown) {
+      cartDropdown.classList.add('hidden');
     }
   }
 
-  if (cartDrawerBtn) cartDrawerBtn.addEventListener('click', openCart);
-  if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
-  if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+  function toggleCartDropdown(e) {
+    if (e) e.stopPropagation();
+    if (cartDropdown) {
+      if (cartDropdown.classList.contains('hidden')) {
+        openCartDropdown();
+      } else {
+        closeCartDropdown();
+      }
+    }
+  }
+
+  if (cartBtn) {
+    cartBtn.addEventListener('click', toggleCartDropdown);
+  }
+
+  if (closeCartBtn) {
+    closeCartBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeCartDropdown();
+    });
+  }
+
+  // بستن در صورت کلیک در هر جای دیگر صفحه
+  document.addEventListener('click', (e) => {
+    if (cartDropdown && !cartDropdown.contains(e.target) && cartBtn && !cartBtn.contains(e.target)) {
+      closeCartDropdown();
+    }
+  });
 
   // ================= 4. منوی موبایل =================
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -150,21 +172,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ================= 6. افزودن به سبد خرید تستی برای کارت‌ها =================
+  // ================= 6. افزودن به سبد خرید برای کارت‌ها =================
   const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
   const cartBadge = document.getElementById('cart-count-badge');
-  let cartCount = 0;
+  const cartDropdownBadge = document.getElementById('cart-items-count-badge');
+  let cartCount = 1; // مقدار پیش‌فرض ۱ اثر منتخب در سبد
 
   addToCartButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       cartCount++;
       if (cartBadge) {
         cartBadge.textContent = cartCount;
         cartBadge.classList.add('scale-125');
         setTimeout(() => cartBadge.classList.remove('scale-125'), 200);
       }
-      openCart();
+      if (cartDropdownBadge) {
+        cartDropdownBadge.textContent = `${cartCount} اثر هنری`;
+      }
+      // باز شدن سبد خرید زیر آیکون فروشگاه بدون تار شدن صفحه
+      openCartDropdown();
     });
   });
 });
