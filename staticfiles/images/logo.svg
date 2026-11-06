@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48">
+  <defs>
+    <linearGradient id="logoOlive" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2C4A3E" />
+      <stop offset="100%" stop-color="#1E3329" />
+    </linearGradient>
+    <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0BA79" />
+      <stop offset="100%" stop-color="#C69A52" />
+    </linearGradient>
+  </defs>
+
+  <!-- آیکون هنری سمت راست (RTL) -->
+  <g transform="translate(156, 4)">
+    <rect width="40" height="40" rx="10" fill="url(#logoOlive)"/>
+    <path d="M20 9 C13.7 9 10 14 10 20.3 C10 26.6 15 31.6 21.3 31.6 C27.5 31.6 30 26.6 30 21.5 C30 15.3 25 11.5 20 11.5 C16.2 11.5 13.8 14 13.8 17.8 C13.8 22.2 17.5 24.7 21.3 24.7 C25 24.7 26.3 22.2 26.3 20.3" 
+          fill="none" 
+          stroke="url(#logoGold)" 
+          stroke-width="2.4" 
+          stroke-linecap="round"/>
+    <circle cx="21.3" cy="17.8" r="1.6" fill="#FAF7F2" />
+  </g>
+
+  <!-- تایپوگرافی هنرکده -->
+  <text x="144" y="27" font-family="'Vazirmatn', Tahoma, sans-serif" font-size="20" font-weight="700" fill="#1E3329" text-anchor="end">هُنَـرکَـده</text>
+  <text x="144" y="39" font-family="'Vazirmatn', Tahoma, sans-serif" font-size="9" font-weight="400" fill="#82533D" letter-spacing="1" text-anchor="end">گالری و فروشگاه آنلاین آثار هنری</text>
+</svg>
