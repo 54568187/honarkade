@@ -1,10 +1,13 @@
-<!-- ================= ۱. بنر تبلیغاتی بالای صفحه با پس‌زمینه عکس هنری لوکال ================= -->
+<!-- ================= ۱. بنر تبلیغاتی بالای صفحه ================= -->
+{% if top_banner and top_banner.is_active %}
 <div id="top-banner" class="relative z-50 text-[#FAF7F2] py-3 sm:py-3.5 px-3 sm:px-6 overflow-hidden border-b border-[#C69A52]/50 shadow-md transition-all duration-300">
   
-  <!-- عکس هنری پس‌زمینه بنر با کیفیت بالا مشابه اسلایدر اصلی سایت -->
-  <img src="./static/images/banner/top-banner.jpg" 
-       alt="پس‌زمینه گالری هنر" 
-       class="absolute inset-0 w-full h-full object-cover object-[center_35%] filter brightness-[0.72] contrast-110 scale-105">
+  <!-- عکس هنری پس‌زمینه بنر -->
+  {% if top_banner.image %}
+  <img src="{{ top_banner.image.url }}" alt="{{ top_banner.alt_text|default:'بنر هنرکده' }}" class="absolute inset-0 w-full h-full object-cover object-[center_35%] filter brightness-[0.72] contrast-110 scale-105">
+  {% else %}
+  <img src="/static/images/banner/top-banner.jpg" alt="پس‌زمینه گالری هنر" class="absolute inset-0 w-full h-full object-cover object-[center_35%] filter brightness-[0.72] contrast-110 scale-105">
+  {% endif %}
        
   <!-- لایه گرادیانت ظریف و شیشه‌ای جهت جلوه هنری و خوانایی کامل متون -->
   <div class="absolute inset-0 bg-gradient-to-r from-[#112018]/85 via-[#15271E]/60 to-[#112018]/85"></div>
@@ -19,14 +22,18 @@
         </svg>
       </span>
       <p class="font-medium text-[11px] sm:text-xs md:text-sm text-[#FAF7F2] drop-shadow leading-relaxed">
-        <span class="text-[#E0BA79] font-black drop-shadow-sm">جشنواره گالری هنرکده:</span>
-        ارسال رایگان به سراسر کشور + ۱۵٪ تخفیف اولین خرید آثار هنری با کد تخفیف
-        <span class="bg-[#C69A52] text-[#1E3329] px-2 sm:px-2.5 py-0.5 rounded-lg font-black font-mono tracking-wider mr-1 shadow-md inline-block">HONAR15</span>
+        <span class="text-[#E0BA79] font-black drop-shadow-sm">{{ top_banner.title }}:</span>
+        {{ top_banner.description }}
+        {% if top_banner.discount_code %}
+        <span class="bg-[#C69A52] text-[#1E3329] px-2 sm:px-2.5 py-0.5 rounded-lg font-black font-mono tracking-wider mr-1 shadow-md inline-block">{{ top_banner.discount_code }}</span>
+        {% endif %}
       </p>
-      <a href="#handicrafts-section" class="hidden md:inline-flex items-center gap-1.5 text-xs sm:text-[13px] text-[#E0BA79] hover:text-white font-bold px-3 py-1 rounded-xl bg-black/30 hover:bg-[#C69A52]/30 border border-[#C69A52]/40 backdrop-blur-sm transition-all drop-shadow shrink-0">
-        <span>مشاهده آثار تخفیف‌دار</span>
+      {% if top_banner.link %}
+      <a href="{{ top_banner.link }}" class="hidden md:inline-flex items-center gap-1.5 text-xs sm:text-[13px] text-[#E0BA79] hover:text-white font-bold px-3 py-1 rounded-xl bg-black/30 hover:bg-[#C69A52]/30 border border-[#C69A52]/40 backdrop-blur-sm transition-all drop-shadow shrink-0">
+        <span>مشاهده آثار</span>
         <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path></svg>
       </a>
+      {% endif %}
     </div>
 
     <!-- دکمه بستن بنر -->
@@ -37,6 +44,7 @@
     </button>
   </div>
 </div>
+{% endif %}
 
 <!-- ================= ۲. هدر اصلی سایت ================= -->
 <header class="bg-white sticky top-0 z-40 border-b border-[#E8E3D9] shadow-sm">
@@ -45,17 +53,17 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
     <div class="flex items-center justify-between gap-4">
       
-      <!-- لوگو و برند هنرکده همراه فاوآیکون جدید -->
-      <a href="./index.html" class="flex items-center gap-3 shrink-0 group">
-        <img src="./static/images/favicon.svg" alt="هنرکده" class="w-10 h-10 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-105 drop-shadow-md">
+      <!-- لوگو و برند هنرکده همراه فاوآیکون -->
+      <a href="{% url 'home' %}" class="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
+        <img src="{% if site_settings and site_settings.header_logo %}{{ site_settings.header_logo.url }}{% else %}/static/images/favicon.svg{% endif %}" alt="هنرکده" class="w-9 h-9 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-105 drop-shadow-md">
         <div class="flex flex-col">
-          <span class="text-xl sm:text-2xl font-black text-[#1E3329] tracking-tight">هُنَـرکَـده</span>
-          <span class="text-[10px] text-[#82533D] font-medium hidden sm:inline">گالری و فروشگاه آنلاین آثار هنری</span>
+          <span class="text-lg sm:text-2xl font-black text-[#1E3329] tracking-tight">هنرکده</span>
+          <span class="text-[10px] text-[#82533D] font-medium hidden sm:inline">{{ site_settings.tagline|default:"گالری و فروشگاه آنلاین آثار هنری" }}</span>
         </div>
       </a>
 
       <!-- نوار جستجوی پیشرفته آثار و هنرمندان -->
-      <form action="./search.html" method="GET" class="flex-grow max-w-xl mx-2 sm:mx-6 hidden md:block">
+      <form action="{% url 'search' %}" method="GET" class="flex-grow max-w-xl mx-2 sm:mx-6 hidden md:block">
         <div class="relative">
           <input type="text" name="q" placeholder="جستجوی نقاشی، سرامیک دست‌ساز، نام اثر، هنرمند..." 
                  class="w-full bg-[#FAF7F2] text-[#242826] text-xs sm:text-sm rounded-2xl py-2.5 pr-11 pl-4 border border-[#E8E3D9] focus:outline-none focus:border-[#2C4A3E] focus:bg-white transition-all placeholder:text-[#98A19C]">
@@ -70,68 +78,88 @@
       <!-- ابزارها: ورود/ثبت‌نام، نوتیفیکیشن، سبد خرید -->
       <div class="flex items-center gap-2 sm:gap-3">
         
-        <!-- دکمه ورود / ثبت‌نام یا پروفایل کاربر در صورت ورود -->
+        <!-- بخش حساب کاربری -->
         <div id="nav-auth-container" class="relative">
-          <!-- حالت مهمان (پیش‌فرض قبل از لاگین) -->
-          <a id="nav-guest-btn" href="./login.html" class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#1E3329] border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] transition-all">
+          <!-- دکمه ورود / عضویت برای مهمان -->
+          <a id="nav-guest-btn" href="{% url 'login' %}" 
+             class="{% if user.is_authenticated and not user.is_staff and not user.is_superuser %}hidden{% else %}inline-flex{% endif %} items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#1E3329] border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] transition-all">
             <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
             </svg>
-            <span>ورود <span class="text-[#98A19C] font-normal">|</span> ثبت‌نام</span>
+            <span class="hidden sm:inline">ورود <span class="text-[#98A19C] font-normal">|</span> ثبت‌نام</span>
           </a>
 
           <!-- حالت کاربر لاگین‌شده: آیکون و منوی پروفایل -->
-          <div id="nav-user-profile" class="hidden relative">
+          <div id="nav-user-profile" 
+               data-authenticated="{% if user.is_authenticated and not user.is_staff and not user.is_superuser %}true{% else %}false{% endif %}"
+               class="{% if user.is_authenticated and not user.is_staff and not user.is_superuser %}block{% else %}hidden{% endif %} relative">
             <button id="nav-profile-toggle-btn" type="button" class="inline-flex items-center gap-2 p-1.5 sm:px-3 sm:py-1.5 rounded-2xl bg-white border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] transition-all shadow-xs cursor-pointer">
+              <!-- آواتار کاربر با حاشیه سبز آنلاین -->
               <div class="relative">
-                <div id="nav-avatar-initial" class="w-8 h-8 rounded-xl bg-[#2C4A3E] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                  ک
+                <div id="nav-avatar-initial" class="w-8 h-8 rounded-xl {% if user.profile.role == 'seller' %}bg-[#82533D]{% else %}bg-[#2C4A3E]{% endif %} text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                  {{ user.first_name|first|default:user.username|first|upper|default:'ک' }}
                 </div>
                 <span class="absolute -bottom-0.5 -left-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
               </div>
+              <!-- نام و نقش کاربر (در تبلت و دسکتاپ) -->
               <div class="hidden sm:flex flex-col text-right">
-                <span id="nav-profile-name" class="text-xs font-bold text-[#1E3329] max-w-[110px] truncate">کاربر گرامی</span>
-                <span id="nav-profile-role" class="text-[9px] font-semibold text-[#82533D]">خریدار هنر</span>
+                <span id="nav-profile-name" class="text-xs font-bold text-[#1E3329] max-w-[110px] truncate">
+                  {{ user.get_full_name|default:user.username|default:'کاربر گرامی' }}
+                </span>
+                <span id="nav-profile-role" class="text-[9px] font-semibold {% if user.profile.role == 'seller' %}text-[#82533D]{% else %}text-[#2C4A3E]{% endif %}">
+                  {% if user.is_superuser %}مدیر کل پلتفرم{% elif user.is_staff %}مدیر / پرسنل{% elif user.profile.role == 'seller' %}هنرمند / غرفه‌دار{% else %}خریدار هنر{% endif %}
+                </span>
               </div>
               <svg class="w-3.5 h-3.5 text-[#98A19C] mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
 
-            <!-- دراپ‌داون اختصاصی پروفایل کاربر -->
-            <div id="nav-profile-dropdown" class="hidden absolute left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-[#E8E3D9] p-2 z-50 divide-y divide-[#E8E3D9]/60">
+            <!-- دراپ‌داون پروفایل کاربر (کنترل با کلیک) -->
+            <div id="nav-profile-dropdown" class="hidden absolute left-0 mt-2 w-64 max-w-[calc(100vw-32px)] bg-white rounded-2xl shadow-2xl border border-[#E8E3D9] p-2 z-50 divide-y divide-[#E8E3D9]/60">
               <div class="p-3">
                 <div class="flex items-center gap-2.5">
-                  <div id="nav-dropdown-avatar" class="w-10 h-10 rounded-xl bg-[#2C4A3E] text-white flex items-center justify-center font-bold text-sm">
-                    ک
+                  <div id="nav-dropdown-avatar" class="w-10 h-10 rounded-xl {% if user.profile.role == 'seller' %}bg-[#82533D]{% else %}bg-[#2C4A3E]{% endif %} text-white flex items-center justify-center font-bold text-sm shadow-xs">
+                    {{ user.first_name|first|default:user.username|first|upper|default:'ک' }}
                   </div>
-                  <div class="flex flex-col">
-                    <span id="nav-dropdown-name" class="text-xs font-bold text-[#1E3329]">کاربر گرامی</span>
-                    <span id="nav-dropdown-phone" class="text-[10px] text-[#6B726E] font-mono">۰۹۱۲۳۴۵۶۷۸۹</span>
-                    <span id="nav-dropdown-role-badge" class="text-[9px] font-bold text-[#2C4A3E] bg-[#E8EFEA] px-2 py-0.5 rounded-full mt-1 w-fit">
-                      خریدار و مجموعه‌دار هنر
+                  <div class="flex flex-col truncate">
+                    <span id="nav-dropdown-name" class="text-xs font-bold text-[#1E3329] truncate">{{ user.get_full_name|default:user.username|default:'کاربر گرامی' }}</span>
+                    <span id="nav-dropdown-phone" class="text-[10px] text-[#6B726E] font-mono truncate">{{ user.profile.phone_number|default:user.username|default:'۰۹۱۲۳۴۵۶۷۸۹' }}</span>
+                    <span id="nav-dropdown-role-badge" class="text-[9px] font-bold mt-1 px-2 py-0.5 rounded-full w-fit {% if user.profile.role == 'seller' %}bg-[#F7EFEA] text-[#82533D]{% else %}bg-[#E8EFEA] text-[#2C4A3E]{% endif %}">
+                      {% if user.profile.role == 'seller' %}هنرمند رسمی گالری{% else %}خریدار و مجموعه‌دار هنر{% endif %}
                     </span>
                   </div>
                 </div>
               </div>
 
               <div class="py-1.5 text-xs font-medium space-y-0.5">
-                <a href="./profile.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
+                <a href="{% url 'profile' %}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#1E3329] hover:bg-[#FAF7F2] font-bold transition-colors">
                   <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                  <span>میز کار و پروفایل کاربری</span>
+                  <span>میز کار و داشبورد کاربری</span>
                 </a>
-                <a href="./profile.html#orders" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
+                <a href="{% url 'profile' %}#orders" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
                   <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                   <span id="nav-menu-orders-label">سفارش‌ها و شناسنامه‌ها</span>
                 </a>
-                <a href="./profile.html#wishlist" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
+                <a href="{% url 'profile' %}#wishlist" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#242826] hover:text-[#2C4A3E] hover:bg-[#FAF7F2] transition-colors">
                   <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                  <span>نشان‌شده‌ها و علاقه‌مندی‌ها</span>
+                  <span>آثار نشان‌شده و علاقه‌مندی‌ها</span>
                 </a>
+                <a href="{% url 'profile' %}#gallery" id="nav-artist-gallery-link" class="{% if user.profile.role != 'seller' %}hidden{% endif %} flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#82533D] font-bold hover:bg-[#F7EFEA] transition-colors">
+                  <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  <span>مدیریت غرفه و آثار</span>
+                </a>
+                {% if user.is_staff or user.is_superuser %}
+                <a href="/admin/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#00A4BE] font-bold hover:bg-teal-50 transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  <span>ورود به پیشخوان مدیریت</span>
+                </a>
+                {% endif %}
               </div>
 
+              <!-- خروج از حساب -->
               <div class="pt-1">
                 <button type="button" onclick="logoutHonarkadeh()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 transition-colors text-xs font-bold cursor-pointer">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                  <span>خروج از حساب</span>
+                  <span>خروج از حساب کاربری</span>
                 </button>
               </div>
             </div>
@@ -148,7 +176,7 @@
           </button>
 
           <!-- منوی پاپ‌آپ اعلان‌ها -->
-          <div id="notif-dropdown" class="hidden absolute left-0 mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-xl border border-[#E8E3D9] p-4 z-50">
+          <div id="notif-dropdown" class="hidden absolute left-0 mt-2 w-72 sm:w-80 max-w-[calc(100vw-32px)] bg-white rounded-2xl shadow-xl border border-[#E8E3D9] p-4 z-50">
             <div class="flex items-center justify-between pb-3 border-b border-[#E8E3D9] mb-3">
               <span class="text-xs font-bold text-[#1E3329]">اعلان‌های گالری</span>
               <span class="text-[10px] text-[#82533D] bg-[#F7EFEA] px-2 py-0.5 rounded-full font-semibold">۱ پیام جدید</span>
@@ -178,7 +206,7 @@
           </button>
 
           <!-- منوی دراپ‌داون سبد خرید دقیقاً زیر آیکون فروشگاه -->
-          <div id="cart-dropdown-menu" class="hidden absolute left-0 mt-2 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-[#E8E3D9] p-4 z-50">
+          <div id="cart-dropdown-menu" class="hidden absolute left-0 mt-2 w-80 sm:w-96 max-w-[calc(100vw-32px)] bg-white rounded-3xl shadow-2xl border border-[#E8E3D9] p-4 z-50">
             <!-- سربرگ سبد -->
             <div class="flex items-center justify-between pb-3 border-b border-[#E8E3D9] mb-3">
               <div class="flex items-center gap-2">
@@ -256,72 +284,36 @@
             </svg>
           </button>
 
-          <!-- مگامنوی آبشاری هنگام هاور (Hover Dropdown) -->
-          <div class="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 absolute right-0 top-full mt-1 w-[720px] bg-white rounded-2xl shadow-2xl border border-[#E8E3D9] p-6 z-50">
+          <!-- مگامنوی آبشاری پویا بر اساس شاخه‌ها و زیرمجموعه‌های دیتابیس جنگو -->
+          <div class="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 absolute right-0 top-full mt-1 w-[720px] max-w-[92vw] bg-white rounded-2xl shadow-2xl border border-[#E8E3D9] p-6 z-50">
             <div class="grid grid-cols-4 gap-6">
-              
-              <!-- ستون ۱: نقاشی و نگارگری -->
+              {% for parent_cat in header_categories|slice:":4" %}
               <div>
-                <a href="#handicrafts-section" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
-                  <span class="w-2 h-2 rounded-full bg-[#2C4A3E]"></span>
-                  <span>نقاشی و نگارگری</span>
+                <a href="{% url 'shop' %}?cat={{ parent_cat.slug }}" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
+                  <span class="w-2 h-2 rounded-full {% cycle 'bg-[#2C4A3E]' 'bg-[#82533D]' 'bg-[#C69A52]' 'bg-[#476E5E]' %}"></span>
+                  <span>{{ parent_cat.name }}</span>
                 </a>
                 <ul class="space-y-2 text-xs text-[#6B726E]">
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">رنگ روغن و اکریلیک</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">آبرنگ و گواش</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">مینیاتور و تذهیب</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">سیاه‌قلم و طراحی</a></li>
+                  {% for child_cat in parent_cat.children.all %}
+                  {% if child_cat.is_active %}
+                  <li>
+                    <a href="{% url 'shop' %}?cat={{ child_cat.slug }}" class="hover:text-[#2C4A3E] hover:underline block py-0.5">
+                      {{ child_cat.name }}
+                    </a>
+                  </li>
+                  {% endif %}
+                  {% empty %}
+                  <li><span class="text-[11px] text-[#98A19C]">زیرمجموعه‌ای ثبت نشده</span></li>
+                  {% endfor %}
                 </ul>
               </div>
-
-              <!-- ستون ۲: سفال، سرامیک و مجسمه -->
-              <div>
-                <a href="#handicrafts-section" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
-                  <span class="w-2 h-2 rounded-full bg-[#82533D]"></span>
-                  <span>سفال و سرامیک</span>
-                </a>
-                <ul class="space-y-2 text-xs text-[#6B726E]">
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">گلدان‌های دکوراتیو</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">ماگ و فنجان دست‌ساز</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">مجسمه‌های سرامیکی</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">بشقاب‌های دیوارکوب</a></li>
-                </ul>
-              </div>
-
-              <!-- ستون ۳: خوشنویسی و کتیبه -->
-              <div>
-                <a href="#handicrafts-section" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
-                  <span class="w-2 h-2 rounded-full bg-[#C69A52]"></span>
-                  <span>خوشنویسی و خط</span>
-                </a>
-                <ul class="space-y-2 text-xs text-[#6B726E]">
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">خط نستعلیق و شکسته</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">نقاشی‌خط مدرن</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">خط کوفی و معلی</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">کتیبه‌ها و قطعات نفیس</a></li>
-                </ul>
-              </div>
-
-              <!-- ستون ۴: صنایع‌دستی و شمع -->
-              <div>
-                <a href="#handicrafts-section" class="font-bold text-[#1E3329] hover:text-[#2C4A3E] flex items-center gap-1.5 pb-2 mb-2 border-b border-[#E8E3D9]">
-                  <span class="w-2 h-2 rounded-full bg-[#476E5E]"></span>
-                  <span>صنایع‌دستی و دکوری</span>
-                </a>
-                <ul class="space-y-2 text-xs text-[#6B726E]">
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">شمع موم عسل ارگانیک</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">فیروزه‌کوبی و مس</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">منبت و سازه‌های چوبی</a></li>
-                  <li><a href="#handicrafts-section" class="hover:text-[#2C4A3E] hover:underline block py-0.5">رودوزی و پته‌دوزی</a></li>
-                </ul>
-              </div>
-
+              {% endfor %}
             </div>
 
             <!-- بخش پایینی مگامنو -->
             <div class="mt-6 pt-4 border-t border-[#E8E3D9] flex items-center justify-between bg-[#FAF7F2] -mx-6 -mb-6 p-4 rounded-b-2xl">
               <span class="text-xs text-[#6B726E]">همه آثار دارای گواهی اصالت و امضای اختصاصی هنرمند هستند.</span>
-              <a href="./shop.html" class="text-xs font-bold text-[#2C4A3E] hover:underline flex items-center gap-1">
+              <a href="{% url 'shop' %}" class="text-xs font-bold text-[#2C4A3E] hover:underline flex items-center gap-1">
                 <span>مشاهده تمام آثار گالری</span>
                 <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
               </a>
@@ -331,34 +323,34 @@
 
         <span class="w-px h-5 bg-[#E8E3D9]"></span>
 
-        <!-- لینک‌های افقی مشابه دیجی‌کالا -->
-        <a href="./shop.html" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
+        <!-- لینک‌های ناوبری اصلی منو -->
+        <a href="{% url 'shop' %}" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
           <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
-          <span>آثار شگفت‌انگیز</span>
+          <span>گالری آثار</span>
         </a>
 
-        <a href="./shop.html" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
+        <a href="{% url 'shop' %}?cat=woven-products" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
           <svg class="w-4 h-4 text-[#C69A52]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
           </svg>
-          <span>پرفروش‌ترین‌ها</span>
+          <span>دستباف و سنتی</span>
         </a>
 
-        <a href="./artists.html" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
+        <a href="{% url 'artists' %}" class="flex items-center gap-1.5 py-2 px-2.5 text-[#6B726E] hover:text-[#2C4A3E] transition-colors font-medium">
           <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
           </svg>
-          <span>هنرمندان برگزیده</span>
+          <span>هنرمندان و غرفه‌ها</span>
         </a>
       </div>
 
       <!-- سمت چپ منو: لینک «در هنرکده بفروشید!» -->
       <div class="flex items-center gap-3">
         <span class="w-px h-5 bg-[#E8E3D9]"></span>
-        <a href="./login.html" class="flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-[#82533D] font-bold hover:bg-[#F7EFEA] transition-all">
-          <span>در هنرکده اثر بفروشید!</span>
+        <a href="{% url 'login' %}" class="flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-[#82533D] font-bold hover:bg-[#F7EFEA] transition-all">
+          <span>در هنرکده غرفه بزنید!</span>
           <span class="w-2 h-2 rounded-full bg-[#C69A52] animate-ping"></span>
         </a>
       </div>
@@ -368,17 +360,43 @@
 
   <!-- منوی موبایل -->
   <div id="mobile-menu" class="hidden md:hidden border-t border-[#E8E3D9] bg-white px-4 py-4 space-y-3">
-    <form action="./search.html" method="GET" class="relative mb-3">
+    <form action="{% url 'search' %}" method="GET" class="relative mb-3">
       <input type="text" name="q" placeholder="جستجوی آثار هنری..." class="w-full bg-[#FAF7F2] text-xs rounded-xl py-2 pr-9 pl-3 border border-[#E8E3D9] focus:outline-none">
       <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B726E]">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
       </button>
     </form>
-    <a href="./index.html" class="block text-sm font-bold text-[#2C4A3E] py-1.5">صفحه اصلی</a>
-    <a href="./shop.html" class="block text-sm text-[#242826] py-1.5">گالری کامل آثار</a>
-    <a href="./search.html" class="block text-sm text-[#242826] py-1.5">جستجوی پیشرفته</a>
-    <a href="./cart.html" class="block text-sm text-[#242826] py-1.5">سبد خرید</a>
-    <a href="./login.html" class="block text-sm font-bold text-[#82533D] py-1.5 bg-[#F7EFEA] px-3 rounded-xl">ورود / ثبت‌نام در هنرکده</a>
+    
+    {% if user.is_authenticated and not user.is_staff and not user.is_superuser %}
+    <div class="p-3 bg-[#FAF7F2] rounded-2xl border border-[#E8E3D9] mb-3 space-y-2.5">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl {% if user.profile.role == 'seller' %}bg-[#82533D]{% else %}bg-[#2C4A3E]{% endif %} text-white flex items-center justify-center font-bold text-xs shadow-xs">
+          {{ user.first_name|first|default:user.username|first|upper }}
+        </div>
+        <div class="flex flex-col truncate">
+          <span class="text-xs font-bold text-[#1E3329] truncate">{{ user.get_full_name|default:user.username }}</span>
+          <span class="text-[10px] text-[#82533D]">{% if user.profile.role == 'seller' %}هنرمند و غرفه‌دار{% else %}خریدار و مجموعه‌دار هنر{% endif %}</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-2 border-t border-[#E8E3D9]">
+        <a href="{% url 'profile' %}" class="text-center py-2 px-3 rounded-xl bg-[#2C4A3E] text-white text-xs font-bold shadow-xs">
+          میز کار و داشبورد
+        </a>
+        <a href="{% url 'logout' %}" class="text-center py-2 px-3 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold">
+          خروج از حساب
+        </a>
+      </div>
+    </div>
+    {% else %}
+    <a href="{% url 'login' %}" class="block text-sm font-bold text-[#82533D] py-2.5 bg-[#F7EFEA] px-3 rounded-xl text-center border border-[#82533D]/20">
+      ورود / ثبت‌نام در هنرکده
+    </a>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="block text-sm font-bold text-[#2C4A3E] py-1.5">صفحه اصلی</a>
+    <a href="{% url 'shop' %}" class="block text-sm text-[#242826] py-1.5">گالری کامل آثار</a>
+    <a href="{% url 'artists' %}" class="block text-sm text-[#242826] py-1.5">هنرمندان و غرفه‌ها</a>
+    <a href="{% url 'cart' %}" class="block text-sm text-[#242826] py-1.5">سبد خرید</a>
   </div>
 
 </header>

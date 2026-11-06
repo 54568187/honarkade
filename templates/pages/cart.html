@@ -13,21 +13,21 @@
   </nav>
 
   <!-- مراحل تسویه حساب -->
-  <div class="bg-white rounded-2xl p-4 border border-[#E8E3D9] mb-8 shadow-sm">
-    <div class="flex items-center justify-around max-w-2xl mx-auto text-xs font-bold">
-      <div class="flex items-center gap-2 text-[#2C4A3E]">
-        <span class="w-6 h-6 rounded-full bg-[#2C4A3E] text-white flex items-center justify-center text-[11px]">۱</span>
+  <div class="bg-white rounded-2xl p-3 sm:p-4 border border-[#E8E3D9] mb-8 shadow-sm">
+    <div class="flex items-center justify-between sm:justify-around max-w-2xl mx-auto text-[10px] sm:text-xs font-bold gap-1 sm:gap-2">
+      <div class="flex items-center gap-1.5 sm:gap-2 text-[#2C4A3E] shrink-0">
+        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#2C4A3E] text-white flex items-center justify-center text-[10px] sm:text-[11px]">۱</span>
         <span>سبد خرید</span>
       </div>
-      <span class="w-12 h-px bg-[#2C4A3E]"></span>
-      <div class="flex items-center gap-2 text-[#98A19C]">
-        <span class="w-6 h-6 rounded-full bg-[#FAF7F2] border border-[#E8E3D9] text-[#6B726E] flex items-center justify-center text-[11px]">۲</span>
-        <span>اطلاعات ارسال و بیمه</span>
+      <span class="flex-grow max-w-[32px] sm:max-w-[48px] h-px bg-[#2C4A3E]"></span>
+      <div class="flex items-center gap-1.5 sm:gap-2 text-[#98A19C] shrink-0">
+        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FAF7F2] border border-[#E8E3D9] text-[#6B726E] flex items-center justify-center text-[10px] sm:text-[11px]">۲</span>
+        <span>ارسال و بیمه</span>
       </div>
-      <span class="w-12 h-px bg-[#E8E3D9]"></span>
-      <div class="flex items-center gap-2 text-[#98A19C]">
-        <span class="w-6 h-6 rounded-full bg-[#FAF7F2] border border-[#E8E3D9] text-[#6B726E] flex items-center justify-center text-[11px]">۳</span>
-        <span>پرداخت امن بانکی</span>
+      <span class="flex-grow max-w-[32px] sm:max-w-[48px] h-px bg-[#E8E3D9]"></span>
+      <div class="flex items-center gap-1.5 sm:gap-2 text-[#98A19C] shrink-0">
+        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FAF7F2] border border-[#E8E3D9] text-[#6B726E] flex items-center justify-center text-[10px] sm:text-[11px]">۳</span>
+        <span>پرداخت بانکی</span>
       </div>
     </div>
   </div>
@@ -36,55 +36,55 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     
     <!-- ستون آیتم‌های سبد خرید (۲ ستون راست) -->
-    <div class="lg:col-span-2 space-y-4">
+    <div id="cart-page-items" class="lg:col-span-2 space-y-4">
       
       <!-- کارت آیتم ۱ -->
-      <div class="bg-white rounded-3xl p-5 sm:p-6 border border-[#E8E3D9] shadow-sm flex flex-col sm:flex-row items-center gap-5 relative group">
-        <img src="/static/images/products/product-1.jpg" alt="گلدان سرامیکی" class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover bg-[#FAF7F2] shrink-0 border border-[#E8E3D9]">
-        <div class="flex-grow space-y-2 w-full text-center sm:text-right">
+      <div class="bg-white rounded-3xl p-4 sm:p-6 border border-[#E8E3D9] shadow-sm flex flex-row items-center gap-3.5 sm:gap-5 relative group">
+        <img src="/static/images/products/product-1.jpg" alt="گلدان سرامیکی" class="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl object-cover bg-[#FAF7F2] shrink-0 border border-[#E8E3D9]">
+        <div class="flex-grow space-y-1.5 sm:space-y-2 w-full text-right">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[10px] bg-[#E8EFEA] text-[#2C4A3E] px-2.5 py-0.5 rounded-full font-bold">سفال و سرامیک • تک‌نسخه</span>
+            <span class="text-[9px] sm:text-[10px] bg-[#E8EFEA] text-[#2C4A3E] px-2 sm:px-2.5 py-0.5 rounded-full font-bold">سفال و سرامیک • تک‌نسخه</span>
             <button type="button" class="text-[#98A19C] hover:text-red-500 transition-colors p-1" title="حذف از سبد">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
             </button>
           </div>
-          <h3 class="text-sm sm:text-base font-bold text-[#1E3329]">گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار</h3>
-          <p class="text-xs text-[#6B726E]">کارگاه: استودیو کهن • دارای شناسنامه فیزیکی معتبر</p>
-          <div class="flex items-center justify-between pt-2 border-t border-[#E8E3D9]/60">
-            <div class="flex items-center gap-2 border border-[#E8E3D9] rounded-xl px-2 py-1 bg-[#FAF7F2]">
-              <button class="w-6 h-6 flex items-center justify-center text-[#1E3329] font-bold hover:bg-white rounded-lg">+</button>
+          <h3 class="text-xs sm:text-base font-bold text-[#1E3329] line-clamp-1 sm:line-clamp-none">گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار</h3>
+          <p class="text-[11px] sm:text-xs text-[#6B726E] hidden sm:block">کارگاه: استودیو کهن • دارای شناسنامه فیزیکی معتبر</p>
+          <div class="flex items-center justify-between pt-1 sm:pt-2 border-t border-[#E8E3D9]/60">
+            <div class="flex items-center gap-1.5 sm:gap-2 border border-[#E8E3D9] rounded-xl px-1.5 sm:px-2 py-0.5 sm:py-1 bg-[#FAF7F2]">
+              <button class="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[#1E3329] font-bold hover:bg-white rounded-lg text-xs">+</button>
               <span class="text-xs font-bold w-4 text-center">۱</span>
-              <button class="w-6 h-6 flex items-center justify-center text-[#98A19C] hover:bg-white rounded-lg">-</button>
+              <button class="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[#98A19C] hover:bg-white rounded-lg text-xs">-</button>
             </div>
             <div class="text-left">
-              <span class="text-xs text-[#98A19C] block">قیمت اثر:</span>
-              <span class="text-sm sm:text-base font-extrabold text-[#1E3329]">۱,۴۵۰,۰۰۰ تومان</span>
+              <span class="text-[10px] sm:text-xs text-[#98A19C] block">قیمت اثر:</span>
+              <span class="text-xs sm:text-base font-extrabold text-[#1E3329]">۱,۴۵۰,۰۰۰ تومان</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- کارت آیتم ۲ -->
-      <div class="bg-white rounded-3xl p-5 sm:p-6 border border-[#E8E3D9] shadow-sm flex flex-col sm:flex-row items-center gap-5 relative group">
-        <img src="/static/images/products/product-2.jpg" alt="تابلو نقاشی کویر" class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover bg-[#FAF7F2] shrink-0 border border-[#E8E3D9]">
-        <div class="flex-grow space-y-2 w-full text-center sm:text-right">
+      <div class="bg-white rounded-3xl p-4 sm:p-6 border border-[#E8E3D9] shadow-sm flex flex-row items-center gap-3.5 sm:gap-5 relative group">
+        <img src="/static/images/products/product-2.jpg" alt="تابلو نقاشی کویر" class="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl object-cover bg-[#FAF7F2] shrink-0 border border-[#E8E3D9]">
+        <div class="flex-grow space-y-1.5 sm:space-y-2 w-full text-right">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[10px] bg-[#F7EFEA] text-[#82533D] px-2.5 py-0.5 rounded-full font-bold">نقاشی رنگ‌روغن • با قاب چوبی</span>
+            <span class="text-[9px] sm:text-[10px] bg-[#F7EFEA] text-[#82533D] px-2 sm:px-2.5 py-0.5 rounded-full font-bold">نقاشی رنگ‌روغن • با قاب چوبی</span>
             <button type="button" class="text-[#98A19C] hover:text-red-500 transition-colors p-1" title="حذف از سبد">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
             </button>
           </div>
-          <h3 class="text-sm sm:text-base font-bold text-[#1E3329]">تابلو رنگ‌روغن «کویر و گنبد فیروزه‌ای»</h3>
-          <p class="text-xs text-[#6B726E]">هنرمند: استاد امیرحسین جلالی • ابعاد ۶۰×۸۰ روی بوم کتان</p>
-          <div class="flex items-center justify-between pt-2 border-t border-[#E8E3D9]/60">
-            <div class="flex items-center gap-2 border border-[#E8E3D9] rounded-xl px-2 py-1 bg-[#FAF7F2]">
-              <button class="w-6 h-6 flex items-center justify-center text-[#1E3329] font-bold hover:bg-white rounded-lg">+</button>
+          <h3 class="text-xs sm:text-base font-bold text-[#1E3329] line-clamp-1 sm:line-clamp-none">تابلو رنگ‌روغن «کویر و گنبد فیروزه‌ای»</h3>
+          <p class="text-[11px] sm:text-xs text-[#6B726E] hidden sm:block">هنرمند: استاد امیرحسین جلالی • ابعاد ۶۰×۸۰ روی بوم کتان</p>
+          <div class="flex items-center justify-between pt-1 sm:pt-2 border-t border-[#E8E3D9]/60">
+            <div class="flex items-center gap-1.5 sm:gap-2 border border-[#E8E3D9] rounded-xl px-1.5 sm:px-2 py-0.5 sm:py-1 bg-[#FAF7F2]">
+              <button class="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[#1E3329] font-bold hover:bg-white rounded-lg text-xs">+</button>
               <span class="text-xs font-bold w-4 text-center">۱</span>
-              <button class="w-6 h-6 flex items-center justify-center text-[#98A19C] hover:bg-white rounded-lg">-</button>
+              <button class="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[#98A19C] hover:bg-white rounded-lg text-xs">-</button>
             </div>
             <div class="text-left">
-              <span class="text-xs text-[#98A19C] block">قیمت اثر:</span>
-              <span class="text-sm sm:text-base font-extrabold text-[#1E3329]">۲,۸۰۰,۰۰۰ تومان</span>
+              <span class="text-[10px] sm:text-xs text-[#98A19C] block">قیمت اثر:</span>
+              <span class="text-xs sm:text-base font-extrabold text-[#1E3329]">۲,۸۰۰,۰۰۰ تومان</span>
             </div>
           </div>
         </div>
@@ -111,12 +111,12 @@
         
         <div class="space-y-2.5 text-xs text-[#6B726E]">
           <div class="flex items-center justify-between">
-            <span>جمع قیمت آثار (۲ اثر):</span>
-            <span class="font-bold text-[#1E3329]">۴,۲۵۰,۰۰۰ تومان</span>
+            <span id="cart-summary-count">جمع قیمت آثار (۲ اثر):</span>
+            <span id="cart-summary-subtotal" class="font-bold text-[#1E3329]">۴,۲۵۰,۰۰۰ تومان</span>
           </div>
           <div class="flex items-center justify-between text-[#82533D]">
             <span>تخفیف اولین سفارش (HONAR15):</span>
-            <span class="font-bold">۶۳۷,۵۰۰- تومان</span>
+            <span id="cart-summary-discount" class="font-bold">۶۳۷,۵۰۰- تومان</span>
           </div>
           <div class="flex items-center justify-between">
             <span>بسته‌بندی ایمن گالری:</span>
@@ -143,7 +143,7 @@
         <div class="pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
           <div>
             <span class="text-xs text-[#98A19C] block">مبلغ نهایی پرداخت:</span>
-            <span class="text-lg font-black text-[#2C4A3E]">۳,۶۱۲,۵۰۰ تومان</span>
+            <span id="cart-summary-total" class="text-lg font-black text-[#2C4A3E]">۳,۶۱۲,۵۰۰ تومان</span>
           </div>
         </div>
 

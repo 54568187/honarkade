@@ -14,8 +14,8 @@
             </svg>
           </div>
           <div>
-            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">شناسنامه و گواهی اصالت</h4>
-            <p class="text-[11px] text-[#6B726E] mt-0.5">امضای مستقیم هنرمند و گواهی معتبر</p>
+            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ site_settings.benefit_1_title|default:"شناسنامه و گواهی اصالت" }}</h4>
+            <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_1_desc|default:"امضای مستقیم هنرمند و گواهی معتبر" }}</p>
           </div>
         </div>
 
@@ -27,8 +27,8 @@
             </svg>
           </div>
           <div>
-            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">بسته‌بندی تخصصی هنری</h4>
-            <p class="text-[11px] text-[#6B726E] mt-0.5">ارسال ضدضربه با بیمه کامل مرسوله</p>
+            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ site_settings.benefit_2_title|default:"بسته‌بندی تخصصی هنری" }}</h4>
+            <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_2_desc|default:"ارسال ضدضربه با بیمه کامل مرسوله" }}</p>
           </div>
         </div>
 
@@ -40,8 +40,8 @@
             </svg>
           </div>
           <div>
-            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">۷ روز ضمانت بازگشت</h4>
-            <p class="text-[11px] text-[#6B726E] mt-0.5">تضمین سلامت فیزیکی و تطابق اثر</p>
+            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ site_settings.benefit_3_title|default:"۷ روز ضمانت بازگشت" }}</h4>
+            <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_3_desc|default:"تضمین سلامت فیزیکی و تطابق اثر" }}</p>
           </div>
         </div>
 
@@ -53,8 +53,8 @@
             </svg>
           </div>
           <div>
-            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">مشاوره رایگان دکوراسیون</h4>
-            <p class="text-[11px] text-[#6B726E] mt-0.5">پاسخگویی و هماهنگی کارشناسان گالری</p>
+            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ site_settings.benefit_4_title|default:"مشاوره رایگان دکوراسیون" }}</h4>
+            <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_4_desc|default:"پاسخگویی و هماهنگی کارشناسان گالری" }}</p>
           </div>
         </div>
 
@@ -68,9 +68,9 @@
       
       <!-- ستون ۱: معرفی برند و خبرنامه (۲ ستون در دسکتاپ) -->
       <div class="md:col-span-2 space-y-4">
-        <a href="./index.html" class="flex items-center gap-3">
-          <img src="./static/images/favicon.svg" alt="هنرکده" class="w-9 h-9">
-          <span class="text-2xl font-black text-[#1E3329]">هنرکده</span>
+        <a href="{% url 'home' %}" class="flex items-center gap-3">
+          <img src="{% if site_settings and site_settings.header_logo %}{{ site_settings.header_logo.url }}{% else %}/static/images/favicon.svg{% endif %}" alt="هنرکده" class="w-9 h-9">
+          <span class="text-2xl font-black text-[#1E3329]">{{ site_settings.title|default:"هنرکده" }}</span>
         </a>
         <p class="text-xs leading-relaxed text-[#6B726E] max-w-sm">
           «هنرکده» پلی میان خلاقیت هنرمندان معاصر ایران و علاقمندان به هنر اصیل است. تمامی آثار با بررسی و نظارت دقیق کارشناسان هنری در گالری عرضه می‌شوند تا ارزش، کیفیت و اصالت هر اثر حفظ شود.
@@ -93,33 +93,39 @@
       <div>
         <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">دسته‌بندی‌های گالری</h3>
         <ul class="space-y-2.5 text-xs text-[#6B726E]">
-          <li><a href="#painting" class="hover:text-[#2C4A3E] transition-colors">نقاشی و رنگ روغن</a></li>
-          <li><a href="#calligraphy" class="hover:text-[#2C4A3E] transition-colors">خوشنویسی و خطاطی</a></li>
-          <li><a href="#ceramics" class="hover:text-[#2C4A3E] transition-colors">سفال و سرامیک دکوراتیو</a></li>
-          <li><a href="#handicrafts" class="hover:text-[#2C4A3E] transition-colors">صنایع‌دستی و فیروزه‌کوبی</a></li>
-          <li><a href="#candles" class="hover:text-[#2C4A3E] transition-colors">شمع‌های دست‌ساز هنری</a></li>
+          {% for cat in header_categories %}
+          <li><a href="{% url 'shop' %}?cat={{ cat.slug }}" class="hover:text-[#2C4A3E] transition-colors">{{ cat.name }}</a></li>
+          {% empty %}
+          <li><a href="{% url 'shop' %}?cat=painting" class="hover:text-[#2C4A3E] transition-colors">نقاشی و نگارگری</a></li>
+          <li><a href="{% url 'shop' %}?cat=pottery" class="hover:text-[#2C4A3E] transition-colors">سفال و سرامیک</a></li>
+          <li><a href="{% url 'shop' %}?cat=calligraphy" class="hover:text-[#2C4A3E] transition-colors">خوشنویسی و خط</a></li>
+          <li><a href="{% url 'shop' %}?cat=handicrafts" class="hover:text-[#2C4A3E] transition-colors">صنایع‌دستی و دکوری</a></li>
+          {% endfor %}
         </ul>
       </div>
 
       <!-- ستون ۳: راهنما و خدمات مشتریان -->
       <div>
-        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">خدمات و راهنما</h3>
+        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">راهنما و قوانین سایت</h3>
         <ul class="space-y-2.5 text-xs text-[#6B726E]">
-          <li><a href="./templates/pages/submit-art.html" class="hover:text-[#82533D] font-semibold transition-colors">فرایند فروش اثر در هنرکده</a></li>
-          <li><a href="#rules" class="hover:text-[#2C4A3E] transition-colors">شرایط بررسی و پذیرش اثر</a></li>
-          <li><a href="#shipping" class="hover:text-[#2C4A3E] transition-colors">شیوه‌های بسته‌بندی و ارسال</a></li>
-          <li><a href="#faq" class="hover:text-[#2C4A3E] transition-colors">پرسش‌های متداول خریداران</a></li>
-          <li><a href="#privacy" class="hover:text-[#2C4A3E] transition-colors">حفظ حریم خصوصی</a></li>
+          {% for page in footer_pages %}
+          <li><a href="{% url 'static_page' page.slug %}" class="hover:text-[#2C4A3E] transition-colors">{{ page.title }}</a></li>
+          {% empty %}
+          <li><a href="{% url 'static_page' 'about-us' %}" class="hover:text-[#2C4A3E]">درباره هنرکده</a></li>
+          <li><a href="{% url 'static_page' 'terms' %}" class="hover:text-[#2C4A3E]">شرایط و ضوابط</a></li>
+          <li><a href="{% url 'static_page' 'shipping-methods' %}" class="hover:text-[#2C4A3E]">شیوه‌های ارسال</a></li>
+          {% endfor %}
+          <li><a href="{% url 'login' %}" class="hover:text-[#82533D] font-semibold transition-colors">ثبت غرفه هنرمند</a></li>
         </ul>
       </div>
 
       <!-- ستون ۴: اطلاعات تماس و نمادها -->
       <div>
-        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">تماس با گالری</h3>
+        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">تماس با هنرکده</h3>
         <div class="space-y-3 text-xs text-[#6B726E]">
-          <p class="leading-relaxed">تهران، خیابان ولیعصر، نرسیده به میدان تجریش، بن‌بست هنر، پلاک ۱۲</p>
-          <p class="font-bold text-[#1E3329] dir-ltr text-right">تلفن: ۰۲۱-۸۸۸۸۴۳۲۱</p>
-          <p class="text-[#82533D]">پشتیبانی: شنبه تا پنج‌شنبه ۹ تا ۲۱</p>
+          <p class="leading-relaxed">{{ site_settings.address|default:"تهران، خیابان نجات‌اللهی، پلاک ۱۱۰" }}</p>
+          <p class="font-bold text-[#1E3329] dir-ltr text-right">تلفن: {{ site_settings.phone|default:"۰۲۱-۸۸۸۸۴۴۴۴" }}</p>
+          <p class="text-[#2C4A3E] dir-ltr text-right font-medium">ایمیل: {{ site_settings.email|default:"info@kadehonar.ir" }}</p>
           
           <!-- نمادهای اعتماد و استاندارد به صورت المان‌های مینیمال -->
           <div class="pt-2 flex items-center gap-2">
@@ -139,7 +145,7 @@
 
     <!-- کپی‌رایت نهایی -->
     <div class="border-t border-[#E8E3D9] mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#6B726E] gap-4">
-      <p>© کلیه حقوق مادی و معنوی این وب‌سایت متعلق به «هنرکده» می‌باشد.</p>
+      <p>© {{ site_settings.footer_copyright|default:"کلیه حقوق مادی و معنوی این وب‌سایت متعلق به «هنرکده» می‌باشد." }}</p>
       <div class="flex items-center gap-4 text-[11px] text-[#98A19C]">
         <span>طراحی شده با الهام از اصالت هنر ایرانی</span>
       </div>

@@ -1,109 +1,77 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
-{% block title %}هنرکده | گالری آنلاین آثار هنری و دست‌سازه‌ها{% endblock %}
+{% block title %}{{ site_settings.title|default:"هنرکده | گالری آنلاین آثار هنری و دست‌سازه‌ها" }}{% endblock %}
 
 {% block content %}
-<!-- ================= اسلایدر خودکار با عکس‌های اصیل و شاهکارهای هنری ================= -->
+<!-- ================= اسلایدر خودکار با عکس‌های زنده و داینامیک از پنل مدیریت ================= -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
-  <div id="hero-slider-container" class="relative rounded-3xl overflow-hidden shadow-2xl bg-[#15271E] h-[380px] sm:h-[480px] md:h-[540px] border border-[#E8E3D9]">
+  <div id="hero-slider-container" 
+       data-speed="{{ site_settings.slider_speed|default:7 }}" 
+       data-stop-at-end="{{ site_settings.slider_stop_at_end|yesno:'true,false' }}"
+       class="relative rounded-3xl overflow-hidden shadow-2xl bg-[#15271E] h-[340px] sm:h-[440px] md:h-[520px] border border-[#E8E3D9]">
     
-    <!-- اسلاید ۱: نقاشی اصیل رنگ‌روغن -->
-    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-100">
-      <img src="/static/images/hero/slide-1.jpg" 
-           alt="نقاشی اصیل ایرانی روی سه‌پایه" class="w-full h-full object-cover">
+    {% for slide in sliders %}
+    <!-- اسلاید پویا {{ forloop.counter }} -->
+    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out {% if forloop.first %}opacity-100 pointer-events-auto{% else %}opacity-0 pointer-events-none{% endif %}">
+      {% if slide.image %}
+      <img src="{{ slide.image.url }}" alt="{{ slide.title }}" class="w-full h-full object-cover">
+      {% else %}
+      <img src="/static/images/hero/slide-1.jpg" alt="{{ slide.title }}" class="w-full h-full object-cover">
+      {% endif %}
       <div class="absolute inset-0 bg-gradient-to-l from-black/85 via-black/55 to-transparent flex items-center">
-        <div class="max-w-xl px-6 sm:px-12 lg:px-16 text-white space-y-4">
-          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-[#C69A52] text-[#1E3329] shadow-md">
-            <span>شاهکارهای منتخب گالری</span>
+        <div class="max-w-2xl px-6 sm:px-14 lg:px-20 text-white space-y-3 sm:space-y-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[#C69A52] text-[#1E3329] shadow-md">
+            <span>آثار منتخب گالری</span>
           </span>
-          <h1 class="text-2xl sm:text-4xl md:text-5xl font-black leading-tight text-[#FAF7F2] drop-shadow-md">
-            اصالت هنر، در خلوت خانه شما
+          <h1 class="text-xl sm:text-3xl md:text-5xl font-black leading-tight text-[#FAF7F2] drop-shadow-md">
+            {{ slide.title }}
           </h1>
-          <p class="text-xs sm:text-base text-white/90 leading-relaxed font-light drop-shadow">
-            مجموعه‌ای بی‌نظیر از نقاشی‌های آبرنگ و رنگ‌روغن معاصر با امضای مستقیم هنرمندان مستقل و گواهی اصالت فیزیکی.
+          {% if slide.subtitle %}
+          <p class="text-xs sm:text-base text-white/90 leading-relaxed font-light drop-shadow line-clamp-2 sm:line-clamp-none">
+            {{ slide.subtitle }}
           </p>
-          <div class="pt-2 flex items-center gap-3">
-            <a href="#handicrafts-section" class="px-5 py-3 rounded-xl bg-[#2C4A3E] hover:bg-[#3D6756] text-white text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center gap-2">
-              <span>مشاهده گالری آثار</span>
+          {% endif %}
+          <div class="pt-2 flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
+            <a href="{{ slide.link|default:'/shop/' }}" class="px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-[#2C4A3E] hover:bg-[#3D6756] text-white text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center gap-2">
+              <span>{{ slide.button_text|default:"مشاهده گالری آثار" }}</span>
               <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </a>
-            <a href="/submit-art/" class="px-5 py-3 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur text-white text-xs sm:text-sm font-semibold transition-all">
-              معرفی اثر خودتان
+            <a href="{% url 'register' %}" class="px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur text-white text-xs sm:text-sm font-semibold transition-all">
+              معرفی و فروش اثر
             </a>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- اسلاید ۲: سفال و سرامیک فیروزه‌ای -->
-    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0 pointer-events-none">
-      <img src="/static/images/hero/slide-2.jpg" 
-           alt="گلدان سفال و سرامیک دست‌ساز فیروزه‌ای" class="w-full h-full object-cover">
-      <div class="absolute inset-0 bg-gradient-to-l from-black/85 via-black/55 to-transparent flex items-center">
-        <div class="max-w-xl px-6 sm:px-12 lg:px-16 text-white space-y-4">
-          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-[#82533D] text-white shadow-md">
-            <span>دست‌سازه‌های سرامیکی</span>
-          </span>
-          <h2 class="text-2xl sm:text-4xl md:text-5xl font-black leading-tight text-[#FAF7F2] drop-shadow-md">
-            روح خاک و آتش در دستان هنرمند
-          </h2>
-          <p class="text-xs sm:text-base text-white/90 leading-relaxed font-light drop-shadow">
-            ظروف، ماگ‌ها و مجسمه‌های سرامیکی با لعاب‌های ویژه و فرم‌های ارگانیک، ساخته شده با عشق و صبوری.
-          </p>
-          <div class="pt-2 flex items-center gap-3">
-            <a href="#handicrafts-section" class="px-5 py-3 rounded-xl bg-[#82533D] hover:bg-[#9C684F] text-white text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center gap-2">
-              <span>خرید دست‌سازه‌ها</span>
-              <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </a>
-          </div>
-        </div>
+    {% empty %}
+    <div class="hero-slide absolute inset-0 opacity-100 flex items-center justify-center bg-[#15271E] text-white">
+      <div class="text-center p-8">
+        <h2 class="text-2xl sm:text-3xl font-black mb-3">هنرکده | بازارچه آنلاین هنر و صنایع‌دستی</h2>
+        <p class="text-xs sm:text-sm text-white/80">برای نمایش اسلایدها، لطفاً در پنل مدیریت از بخش «اسلایدر تصویر صفحه اصلی» اسلاید جدید اضافه فرمایید.</p>
       </div>
     </div>
+    {% endfor %}
 
-    <!-- اسلاید ۳: خوشنویسی قدسی نستعلیق -->
-    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0 pointer-events-none">
-      <img src="/static/images/hero/slide-3.jpg" 
-           alt="خوشنویسی و خطاطی نفیس با تذهیب طلا" class="w-full h-full object-cover">
-      <div class="absolute inset-0 bg-gradient-to-l from-black/85 via-black/55 to-transparent flex items-center">
-        <div class="max-w-xl px-6 sm:px-12 lg:px-16 text-white space-y-4">
-          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-[#C69A52] text-[#1E3329] shadow-md">
-            <span>هنر قدسی خطاطی</span>
-          </span>
-          <h2 class="text-2xl sm:text-4xl md:text-5xl font-black leading-tight text-[#FAF7F2] drop-shadow-md">
-            کلام فاخر، نقش مانا
-          </h2>
-          <p class="text-xs sm:text-base text-white/90 leading-relaxed font-light drop-shadow">
-            تابلوهای نقاشی‌خط و کتیبه‌های نستعلیق از اشعار حافظ، مولانا و سعدی بر بوم و کاغذ دست‌ساز آهارمهره.
-          </p>
-          <div class="pt-2 flex items-center gap-3">
-            <a href="#handicrafts-section" class="px-5 py-3 rounded-xl bg-[#2C4A3E] hover:bg-[#3D6756] text-white text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center gap-2">
-              <span>مشاهده آثار خطاطی</span>
-              <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- دکمه‌های کنترل بعدی و قبلی -->
-    <button id="slider-prev" type="button" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur text-white flex items-center justify-center transition-all z-20 shadow-lg" title="قبلی">
+    <!-- دکمه‌های کنترل بعدی و قبلی اسلایدر -->
+    <button id="slider-prev" type="button" aria-label="اسلاید قبلی" class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all shadow-xl cursor-pointer" title="قبلی">
       <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
     </button>
-    <button id="slider-next" type="button" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur text-white flex items-center justify-center transition-all z-20 shadow-lg" title="بعدی">
+    <button id="slider-next" type="button" aria-label="اسلاید بعدی" class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all shadow-xl cursor-pointer" title="بعدی">
       <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
     </button>
 
-    <!-- دات‌های اسلایدر -->
-    <div class="absolute bottom-5 right-1/2 translate-x-1/2 flex items-center gap-2 z-20">
-      <button type="button" class="slider-dot h-2.5 rounded-full transition-all duration-300 bg-[#C69A52] w-8"></button>
-      <button type="button" class="slider-dot h-2.5 rounded-full transition-all duration-300 bg-white/60 w-2.5"></button>
-      <button type="button" class="slider-dot h-2.5 rounded-full transition-all duration-300 bg-white/60 w-2.5"></button>
+    <!-- دات‌های ناوبری اسلایدر -->
+    <div class="slider-dots-box">
+      {% for slide in sliders %}
+      <button type="button" class="slider-dot h-2 sm:h-2.5 rounded-full transition-all duration-300 {% if forloop.first %}bg-[#C69A52] w-6 sm:w-8{% else %}bg-white/60 w-2 sm:w-2.5{% endif %}"></button>
+      {% endfor %}
     </div>
 
   </div>
 </section>
 
-<!-- ================= بخش کارت‌های محصولات با عکس‌های دقیق و متمرکز ================= -->
+<!-- ================= بخش کارت‌های محصولات با لود کاملاً پویا از دیتابیس ================= -->
 <section id="handicrafts-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 pb-4 border-b border-[#E8E3D9]">
     <div>
@@ -112,227 +80,73 @@
         <span>ویترین گالری و دست‌سازه‌ها</span>
       </div>
       <h2 class="text-2xl sm:text-3xl font-extrabold text-[#1E3329]">
-        جدیدترین آثار هنری و صنایع‌دستی
+        {{ site_settings.hero_showcase_title|default:"جدیدترین آثار هنری و صنایع‌دستی" }}
       </h2>
       <p class="text-xs sm:text-sm text-[#6B726E] mt-1">
-        آثار اصیل با قیمت شفاف، شناسنامه معتبر و ارسال ایمن به تمام نقاط ایران
+        {{ site_settings.hero_showcase_subtitle|default:"آثار اصیل با قیمت شفاف، شناسنامه معتبر و ارسال ایمن به تمام نقاط ایران" }}
       </p>
     </div>
 
-    <div id="category-tabs" class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-medium">
+    <!-- تب‌های دسته‌بندی پویا از دیتابیس -->
+    <div id="category-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth pb-1 text-xs font-medium">
       <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-[#2C4A3E] text-white shrink-0 font-bold shadow-sm transition-all" data-category="all">همه آثار</button>
-      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="pottery">سفال و سرامیک</button>
-      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="painting">نقاشی و آبرنگ</button>
-      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="calligraphy">خوشنویسی</button>
-      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="decorative">شمع و دکوراتیو</button>
+      {% for cat in categories %}
+      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="{{ cat.slug }}">{{ cat.name }}</button>
+      {% endfor %}
     </div>
   </div>
 
-  <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- کارت ۱ -->
-    <article data-category="pottery" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
+  <!-- گرید محصولات پویا -->
+  <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+    {% for product in latest_products %}
+    <article data-category="{{ product.category.slug }}" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-        <img src="/static/images/products/product-1.jpg" alt="گلدان سرامیکی فیروزه‌ای" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">سفال و سرامیک</span>
+        <a href="{% url 'product_detail' product.slug %}" class="block w-full h-full">
+          {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          {% else %}
+          <img src="/static/images/products/product-1.jpg" alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          {% endif %}
+        </a>
+        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">{{ product.category.name }}</span>
+        {% if product.has_discount %}
+        <span class="absolute top-3 left-3 bg-[#C69A52] text-[#1E3329] text-[10px] font-bold px-2 py-0.5 rounded-md">تخفیف ویژه</span>
+        {% elif product.stock <= 2 %}
         <span class="absolute top-3 left-3 bg-[#2C4A3E] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">تک‌نسخه</span>
+        {% endif %}
       </div>
       <div class="p-5 flex flex-col flex-grow">
         <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <span>کارگاه: <strong class="text-[#1E3329]">استودیو کهن</strong></span>
-          <span class="text-[10px] text-[#82533D]">پخت ۱۲۰۰ درجه</span>
+          <a href="{% url 'shop' %}?booth={{ product.booth.slug }}" class="hover:text-[#2C4A3E] transition-colors">غرفه: <strong class="text-[#1E3329]">{{ product.booth.name }}</strong></a>
+          {% if product.sku %}<span class="text-[10px] text-[#82533D]">{{ product.sku }}</span>{% endif %}
         </div>
-        <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار</h3>
-        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">پوشش لعاب شیشه‌ای فیروزه‌ای اصیل، اسلیمی‌های قلم‌گیری‌شده با ورق طلای مات و پایه چوب گردو.</p>
+        <a href="{% url 'product_detail' product.slug %}" class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
+          {{ product.name }}
+        </a>
+        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
+          {{ product.short_description|default:product.description|truncatewords:12 }}
+        </p>
         <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
           <div>
             <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-            <span class="text-sm font-extrabold text-[#1E3329]">۱,۴۵۰,۰۰۰ تومان</span>
+            {% if product.has_discount %}
+            <span class="text-sm font-extrabold text-[#1E3329]">{{ product.discount_price|intcomma }} تومان</span>
+            <span class="text-[10px] text-[#98A19C] line-through block">{{ product.price|intcomma }} تومان</span>
+            {% else %}
+            <span class="text-sm font-extrabold text-[#1E3329]">{{ product.price|intcomma }} تومان</span>
+            {% endif %}
           </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
+          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
           </button>
         </div>
       </div>
     </article>
-
-    <!-- کارت ۲ -->
-    <article data-category="painting" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
-      <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-        <img src="/static/images/products/product-2.jpg" alt="تابلو نقاشی رنگ‌روغن" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full shadow-sm">نقاشی رنگ‌روغن</span>
-        <span class="absolute top-3 left-3 bg-[#82533D] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">بوم کتان</span>
-      </div>
-      <div class="p-5 flex flex-col flex-grow">
-        <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <span>هنرمند: <strong class="text-[#1E3329]">امیرحسین جلالی</strong></span>
-          <span class="text-[10px] text-[#2C4A3E]">۶۰×۸۰</span>
-        </div>
-        <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">تابلو رنگ‌روغن «کویر و گنبد فیروزه‌ای»</h3>
-        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">اجرا شده بر بوم کتان ضخیم با بافت برجسته کاردک و رنگ‌های روغنی با امضای هنرمند.</p>
-        <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-            <span class="text-sm font-extrabold text-[#1E3329]">۲,۸۰۰,۰۰۰ تومان</span>
-          </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- کارت ۳ -->
-    <article data-category="decorative" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
-      <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-        <img src="/static/images/products/product-3.jpg" alt="پالت چوبی نقاشی" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">صنایع‌دستی چوبی</span>
-        <span class="absolute top-3 left-3 bg-[#C69A52] text-[#1E3329] text-[10px] font-bold px-2 py-0.5 rounded-md">پرفروش</span>
-      </div>
-      <div class="p-5 flex flex-col flex-grow">
-        <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <span>کارگاه: <strong class="text-[#1E3329]">هنرکده افرا</strong></span>
-          <span class="text-[10px] text-[#82533D]">چوب گردو</span>
-        </div>
-        <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">پالت چوبی ارگونومیک نقاشی دست‌ساز</h3>
-        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">تراش خورده از چوب طبیعی با روغن بزرک خوراکی ضدجذب رنگ، ارگونومیک و سبک.</p>
-        <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-            <span class="text-sm font-extrabold text-[#1E3329]">۴۲۰,۰۰۰ تومان</span>
-          </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- کارت ۴ -->
-    <article data-category="calligraphy painting" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
-      <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-        <img src="/static/images/products/product-4.jpg" alt="تابلو نقاشی‌خط با ورق طلا" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#C69A52] font-bold px-2.5 py-1 rounded-full shadow-sm">خوشنویسی و تذهیب</span>
-        <span class="absolute top-3 left-3 bg-[#2C4A3E] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">ورق طلا ۲۴ عیار</span>
-      </div>
-      <div class="p-5 flex flex-col flex-grow">
-        <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <span>هنرمند: <strong class="text-[#1E3329]">مهدی کیان</strong></span>
-          <span class="text-[10px] text-[#C69A52]">لاجورد و طلا</span>
-        </div>
-        <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">کتیبه تذهیب و نقاشی‌خط نستعلیق زرین</h3>
-        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">ترکیب طلاکاری ظریف دست‌ساز با حواشی لاجوردی و تحریر شعر حضرت حافظ روی بوم.</p>
-        <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-            <span class="text-sm font-extrabold text-[#1E3329]">۳,۶۰۰,۰۰۰ تومان</span>
-          </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- کارت ۵ -->
-    <article data-category="decorative" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
-      <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-        <img src="/static/images/products/product-5.jpg" alt="شمع‌های موم طبیعی عسل" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">شمع دست‌ساز</span>
-      </div>
-      <div class="p-5 flex flex-col flex-grow">
-        <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <span>سازنده: <strong class="text-[#1E3329]">کارگاه کهربا</strong></span>
-          <span class="text-[10px] text-[#82533D]">۱۰۰٪ موم زنبور</span>
-        </div>
-        <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">شمع‌های استوانه‌ای موم عسل با شعله آرام</h3>
-        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">رایحه طبیعی عسل و موم کوهستان با سوخت کاملاً پاک و بدون دود، مناسب مدیتیشن.</p>
-        <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-            <span class="text-sm font-extrabold text-[#1E3329]">۲۹۰,۰۰۰ تومان</span>
-          </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- کارت ۶ -->
-    <article data-category="pottery decorative" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
-      <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-        <img src="/static/images/products/product-6.jpg" alt="کوزه سفالی فیروزه" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full shadow-sm">سرامیک دست‌ساز</span>
-      </div>
-      <div class="p-5 flex flex-col flex-grow">
-        <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <span>استاد: <strong class="text-[#1E3329]">مرتضی حیدری</strong></span>
-          <span class="text-[10px] text-[#2C4A3E]">لعاب فیروزه</span>
-        </div>
-        <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">کوزه دست‌ساز سفالی با نقوش طلایی قجری</h3>
-        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">پوشش لعاب مات سنتی با رگه‌های طلایی و مسینه، یادآور سفالینه‌های صفویه.</p>
-        <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-            <span class="text-sm font-extrabold text-[#1E3329]">۱,۸۵۰,۰۰۰ تومان</span>
-          </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- کارت ۷ -->
-    <article data-category="painting" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
-      <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-        <img src="/static/images/products/product-7.jpg" alt="ست قلم‌موهای نگارگری" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">ابزار هنر سنتی</span>
-      </div>
-      <div class="p-5 flex flex-col flex-grow">
-        <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <span>هنرمند: <strong class="text-[#1E3329]">نیلوفر راد</strong></span>
-          <span class="text-[10px] text-[#82533D]">موی طبیعی سمور</span>
-        </div>
-        <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">ست ۴ تایی قلم‌موی دست‌ساز نگارگری و تذهیب</h3>
-        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">دسته چوبی دست‌تراش با موی طبیعی مناسب قلم‌گیری‌های مویی بسیار ظریف.</p>
-        <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-            <span class="text-sm font-extrabold text-[#1E3329]">۵۶۰,۰۰۰ تومان</span>
-          </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- کارت ۸ -->
-    <article data-category="calligraphy" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
-      <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-        <img src="/static/images/products/product-8.jpg" alt="قطعه خوشنویسی آهارمهره" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#C69A52] font-bold px-2.5 py-1 rounded-full shadow-sm">خوشنویسی اصیل</span>
-        <span class="absolute top-3 left-3 bg-[#1E3329] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">آهارمهره</span>
-      </div>
-      <div class="p-5 flex flex-col flex-grow">
-        <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <span>استاد: <strong class="text-[#1E3329]">کاظم رضایی</strong></span>
-          <span class="text-[10px] text-[#C69A52]">مرکب سنتی سنندج</span>
-        </div>
-        <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">قطعه سیاه‌مشق نستعلیق روی کاغذ دست‌ساز</h3>
-        <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">تحریر شده با قلم‌نی دزفولی روی کاغذ سنتی آهارمهره با دوات و مرکب دوده اصیل ایرانی.</p>
-        <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-            <span class="text-sm font-extrabold text-[#1E3329]">۱,۲۰۰,۰۰۰ تومان</span>
-          </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </button>
-        </div>
-      </div>
-    </article>
+    {% empty %}
+    <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-[#E8E3D9] p-8">
+      <p class="text-gray-500 text-sm">هیچ اثری در حال حاضر ثبت نشده است. از پنل مدیریت می‌توانید آثار جدید اضافه فرمایید.</p>
+    </div>
+    {% endfor %}
   </div>
 
   <!-- دکمه مشاهده بیشتر در گالری -->
@@ -349,14 +163,14 @@
   <div class="relative bg-gradient-to-l from-[#1E3329] via-[#2C4A3E] to-[#1E3329] rounded-3xl p-8 sm:p-12 overflow-hidden shadow-xl text-white">
     <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="max-w-xl text-center md:text-right space-y-2">
-        <span class="text-xs uppercase tracking-wider text-[#E0BA79] font-bold">حمایت از هنرمندان مستقل</span>
-        <h3 class="text-2xl sm:text-3xl font-black">هنرمند گرامی، اثر خودت را به هنرکده بسپار</h3>
+        <span class="text-xs uppercase tracking-wider text-[#E0BA79] font-bold">{{ site_settings.call_to_action_badge|default:"حمایت از هنرمندان مستقل" }}</span>
+        <h3 class="text-2xl sm:text-3xl font-black">{{ site_settings.call_to_action_title|default:"هنرمند گرامی، اثر خودت را به هنرکده بسپار" }}</h3>
         <p class="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
-          عکس و مشخصات اثر خود را ثبت کنید؛ پس از بررسی، اثر با نام شما در ویترین اختصاصی گالری به تمام کشور عرضه می‌شود.
+          {{ site_settings.call_to_action_desc|default:"عکس و مشخصات اثر خود را ثبت کنید؛ پس از بررسی، اثر با نام شما در ویترین اختصاصی گالری به تمام کشور عرضه می‌شود." }}
         </p>
       </div>
-      <a href="{% url 'register' %}" class="px-6 py-3.5 rounded-2xl bg-[#C69A52] hover:bg-[#E0BA79] text-[#1E3329] font-black text-xs sm:text-sm transition-all shrink-0 shadow-lg flex items-center gap-2">
-        <span>فرم ارسال اثر برای بررسی</span>
+      <a href="{{ site_settings.call_to_action_url|default:'/register/' }}" class="px-6 py-3.5 rounded-2xl bg-[#C69A52] hover:bg-[#E0BA79] text-[#1E3329] font-black text-xs sm:text-sm transition-all shrink-0 shadow-lg flex items-center gap-2">
+        <span>{{ site_settings.call_to_action_btn|default:"فرم ارسال اثر برای بررسی" }}</span>
       </a>
     </div>
   </div>

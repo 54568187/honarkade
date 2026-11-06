@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
-{% block title %}هنرکده | {{ product.title|default:"گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار" }}{% endblock %}
+{% block title %}هنرکده | {{ product.name }}{% endblock %}
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -11,9 +12,11 @@
     <span>/</span>
     <a href="{% url 'shop' %}" class="hover:text-[#2C4A3E]">گالری آثار</a>
     <span>/</span>
-    <a href="{% url 'search' %}?cat=pottery" class="hover:text-[#2C4A3E]">سفال و سرامیک</a>
+    {% if product.category %}
+    <a href="{% url 'shop' %}?cat={{ product.category.slug }}" class="hover:text-[#2C4A3E]">{{ product.category.name }}</a>
     <span>/</span>
-    <span class="text-[#1E3329] font-bold">گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار</span>
+    {% endif %}
+    <span class="text-[#1E3329] font-bold">{{ product.name }}</span>
   </nav>
 
   <!-- بخش معرفی محصول: ۲ ستونه -->
@@ -25,52 +28,70 @@
       <!-- تصویر اصلی بزرگ -->
       <div class="relative bg-white rounded-3xl p-4 border border-[#E8E3D9] shadow-sm overflow-hidden group">
         <div class="aspect-square rounded-2xl overflow-hidden bg-[#FAF7F2] relative">
-          <img id="main-product-image" src="/static/images/products/product-1.jpg" 
-               alt="گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار" 
+          {% if product.image %}
+          <img id="main-product-image" src="{{ product.image.url }}" 
+               alt="{{ product.name }}" 
                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          {% else %}
+          <img id="main-product-image" src="/static/images/products/product-1.jpg" 
+               alt="{{ product.name }}" 
+               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          {% endif %}
           
-          <!-- برچسب‌های شناور -->
-          <div class="absolute top-3 right-3 flex flex-col gap-1.5">
-            <span class="bg-[#2C4A3E] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow">
+          <!-- برچسب‌های شناور پویا -->
+          <div class="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
+            {% if product.has_discount %}
+            <span class="bg-[#C69A52] text-[#1E3329] text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
+              تخفیف ویژه گالری
+            </span>
+            {% endif %}
+            {% if product.stock <= 2 %}
+            <span class="bg-[#2C4A3E] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-md">
               تک‌نسخه اختصاصی
             </span>
-            <span class="bg-[#C69A52] text-[#1E3329] text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow">
-              دارای شناسنامه فیزیکی
+            {% endif %}
+            {% if product.has_physical_certificate %}
+            <span class="bg-[#F7EFEA] border border-[#C69A52]/60 text-[#82533D] text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+              <svg class="w-3 h-3 text-[#C69A52]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              <span>دارای شناسنامه فیزیکی</span>
             </span>
+            {% endif %}
           </div>
 
           <!-- دکمه نشان کردن (Wishlist) -->
-          <button type="button" class="absolute top-3 left-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-[#6B726E] hover:text-red-500 flex items-center justify-center shadow-md transition-colors" title="افزودن به علاقه‌مندی‌ها">
+          <button type="button" class="absolute top-3 left-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-[#6B726E] hover:text-red-500 flex items-center justify-center shadow-md transition-colors z-10" title="افزودن به علاقه‌مندی‌ها">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
           </button>
         </div>
       </div>
 
       <!-- بندانگشتی‌ها (Thumbnails) با قابلیت کلیک و تعویض -->
-      <div class="flex items-center gap-3 overflow-x-auto pb-2">
-        <button type="button" onclick="changeImage('/static/images/products/product-1.jpg', this)" class="thumb-btn w-20 h-20 rounded-2xl border-2 border-[#2C4A3E] p-1 bg-white shrink-0 overflow-hidden shadow-sm transition-all">
-          <img src="/static/images/products/product-1.jpg" alt="زاویه ۱" class="w-full h-full object-cover rounded-xl">
+      <div class="flex items-center gap-3 overflow-x-auto no-scrollbar scroll-smooth pb-2">
+        {% if product.image %}
+        <button type="button" onclick="changeImage('{{ product.image.url }}', this)" class="thumb-btn w-20 h-20 rounded-2xl border-2 border-[#2C4A3E] p-1 bg-white shrink-0 overflow-hidden shadow-sm transition-all">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover rounded-xl">
         </button>
-        <button type="button" onclick="changeImage('/static/images/hero/slide-2.jpg', this)" class="thumb-btn w-20 h-20 rounded-2xl border-2 border-[#E8E3D9] p-1 bg-white shrink-0 overflow-hidden shadow-sm hover:border-[#2C4A3E]/60 transition-all">
-          <img src="/static/images/hero/slide-2.jpg" alt="زاویه ۲ آتلیه" class="w-full h-full object-cover rounded-xl">
+        {% endif %}
+        {% for gal in product.gallery_images.all %}
+        <button type="button" onclick="changeImage('{{ gal.image.url }}', this)" class="thumb-btn w-20 h-20 rounded-2xl border-2 border-[#E8E3D9] p-1 bg-white shrink-0 overflow-hidden shadow-sm hover:border-[#2C4A3E]/60 transition-all">
+          <img src="{{ gal.image.url }}" alt="{{ gal.alt_text|default:product.name }}" class="w-full h-full object-cover rounded-xl">
         </button>
-        <button type="button" onclick="changeImage('/static/images/products/product-6.jpg', this)" class="thumb-btn w-20 h-20 rounded-2xl border-2 border-[#E8E3D9] p-1 bg-white shrink-0 overflow-hidden shadow-sm hover:border-[#2C4A3E]/60 transition-all">
-          <img src="/static/images/products/product-6.jpg" alt="بافت لعاب" class="w-full h-full object-cover rounded-xl">
-        </button>
-        <button type="button" onclick="changeImage('/static/images/products/product-7.jpg', this)" class="thumb-btn w-20 h-20 rounded-2xl border-2 border-[#E8E3D9] p-1 bg-white shrink-0 overflow-hidden shadow-sm hover:border-[#2C4A3E]/60 transition-all">
-          <img src="/static/images/products/product-7.jpg" alt="جزئیات طلایی" class="w-full h-full object-cover rounded-xl">
-        </button>
+        {% endfor %}
       </div>
 
       <!-- کارت اصالت و شناسنامه فیزیکی اثر -->
       <div class="bg-gradient-to-br from-[#FAF7F2] to-[#F3EDE2] rounded-2xl p-4 border border-[#C69A52]/40 shadow-sm flex items-center gap-3.5">
         <div class="w-11 h-11 rounded-2xl bg-[#C69A52]/20 border border-[#C69A52]/40 text-[#82533D] flex items-center justify-center shrink-0">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"></path></svg>
         </div>
         <div class="text-xs">
           <h5 class="font-bold text-[#1E3329] mb-0.5">شناسنامه فیزیکی ممهور و معتبر</h5>
           <p class="text-[#6B726E] leading-relaxed">
-            این اثر همراه با برگ گواهی اصالت با هولوگرام ضدجعل و امضای اصل استاد سارا فیروزی تحویل خریدار می‌گردد.
+            {% if product.has_physical_certificate %}
+              {{ product.certificate_description|default:"این اثر همراه با برگ گواهی اصالت فیزیکی با هولوگرام ضدجعل و امضای پدیدآورنده تحویل خریدار می‌گردد." }}
+            {% else %}
+              کلیه آثار ارائه‌شده در هنرکده تحت نظارت کیفی و اصالت کارشناسی‌شده گالری تحویل داده می‌شوند.
+            {% endif %}
           </p>
         </div>
       </div>
@@ -78,104 +99,147 @@
     </div>
 
     <!-- ================= ستون اطلاعات و خرید (۷ ستون) ================= -->
-    <div class="lg:col-span-7 flex flex-col space-y-6">
+    <div class="lg:col-span-7 flex flex-col space-y-5">
       
       <!-- عنوان و امتیاز اثر -->
       <div class="space-y-2">
         <div class="flex items-center justify-between flex-wrap gap-2">
           <span class="text-xs font-bold text-[#82533D] bg-[#F7EFEA] px-3 py-1 rounded-full">
-            کد ثبت در گالری: HK-8942
+            کد ثبت در گالری: {{ product.sku|default:product.id }}
           </span>
           <div class="flex items-center gap-1 text-xs text-[#C69A52]">
             <span class="font-bold text-[#1E3329]">۴.۹</span>
             <span>★★★★★</span>
-            <span class="text-[#98A19C]">(۱۸ نظر مجموعه‌داران)</span>
+            <span class="text-[#98A19C]">(اصالت تأییدشده گالری)</span>
           </div>
         </div>
 
         <h1 class="text-xl sm:text-2xl md:text-3xl font-black text-[#1E3329] leading-tight">
-          گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار
+          {{ product.name }}
         </h1>
-        <p class="text-xs sm:text-sm text-[#6B726E] leading-relaxed">
-          دست‌ساز چرخ سفالگری با پخت احیایی راکو در دمای ۱۲۰۰ درجه سانتی‌گر، تلفیق لعاب فیروزه‌ای قاجاری و قلم‌گیری با طلای مایع ۲۴ عیار.
+        <p class="text-xs sm:text-sm text-[#6B726E] leading-relaxed font-light">
+          {{ product.short_description|default:product.description|truncatewords:28 }}
         </p>
       </div>
 
-      <!-- کارت معرفی هنرمند پدیدآورنده -->
+      <!-- کارت معرفی هنرمند پدیدآورنده و لینک غرفه -->
       <div class="bg-white rounded-2xl p-4 border border-[#E8E3D9] flex items-center justify-between shadow-sm">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-full bg-[#2C4A3E] text-white flex items-center justify-center font-bold text-sm shrink-0 border-2 border-[#C69A52]">
-            س‌ف
+            {{ product.booth.name|slice:":2" }}
           </div>
           <div>
-            <span class="text-[11px] text-[#98A19C] block">پدیدآورنده و خالق اثر:</span>
-            <h4 class="text-sm font-bold text-[#1E3329]">استاد سارا فیروزی</h4>
-            <span class="text-[11px] text-[#82533D]">کارگاه سرامیک کهن • اصفهان</span>
+            <span class="text-[11px] text-[#98A19C] block">پدیدآورنده و غرفه اثر:</span>
+            <h4 class="text-sm font-bold text-[#1E3329]">{{ product.booth.name }}</h4>
+            <span class="text-[11px] text-[#82533D]">هنرمند: {{ product.booth.owner.get_full_name|default:product.booth.owner.username }}</span>
           </div>
         </div>
-        <a href="{% url 'search' %}?artist=firouzi" class="text-xs text-[#2C4A3E] hover:underline font-bold border border-[#2C4A3E]/30 px-3 py-1.5 rounded-xl hover:bg-[#FAF7F2] transition-colors">
-          مشاهده سایر آثار هنرمند
+        <a href="{% url 'shop' %}?booth={{ product.booth.slug }}" class="text-xs text-[#2C4A3E] hover:underline font-bold border border-[#2C4A3E]/30 px-3 py-1.5 rounded-xl hover:bg-[#FAF7F2] transition-colors">
+          مشاهده آثار این غرفه ←
         </a>
       </div>
 
-      <!-- جدول مشخصات سریع اثر -->
-      <div class="bg-white rounded-2xl p-5 border border-[#E8E3D9] shadow-sm">
-        <h4 class="text-xs font-bold text-[#1E3329] mb-3 pb-2 border-b border-[#E8E3D9]">شناسنامه فنی اثر</h4>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-          <div class="bg-[#FAF7F2] p-2.5 rounded-xl">
-            <span class="text-[#98A19C] block text-[10px]">تکنیک اجرا:</span>
-            <span class="font-bold text-[#1E3329]">چرخ‌کاری و پخت راکو</span>
+      <!-- انتخاب متغیرها و مشخصه‌ها (Interactive Variant Selector) -->
+      {% if product.attributes.exists %}
+      <div class="bg-white rounded-2xl p-4 border border-[#E8E3D9] shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-[#1E3329]">مشخصه و گونه اثر:</span>
+          <span id="selected-variant-label" class="text-xs font-bold text-[#2C4A3E] bg-[#E8EFEA] px-2.5 py-0.5 rounded-full">
+            {% with first_attr=product.attributes.first %}{{ first_attr.attribute.public_name }}: {{ first_attr.value }}{% endwith %}
+          </span>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          {% for attr in product.attributes.all %}
+          <button type="button" 
+                  onclick="selectVariant('{{ attr.attribute.public_name }}: {{ attr.value }}', this)" 
+                  class="variant-btn px-3 py-1.5 rounded-xl text-xs font-medium border {% if forloop.first %}border-[#2C4A3E] bg-[#2C4A3E] text-white font-bold{% else %}border-[#E8E3D9] bg-[#FAF7F2] text-[#1E3329] hover:border-[#2C4A3E]/40{% endif %} transition-all">
+            {{ attr.attribute.public_name }}: {{ attr.value }}
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- شناسنامه فنی و ویژگی‌های سریع اثر -->
+      <div class="bg-white rounded-2xl p-4 border border-[#E8E3D9] shadow-sm">
+        <h4 class="text-xs font-bold text-[#1E3329] mb-3 pb-2 border-b border-[#E8E3D9] flex items-center justify-between">
+          <span>شناسنامه فنی و مشخصات ساختاری</span>
+          <span class="text-[10px] text-[#98A19C] font-normal">بررسی کارشناسی گالری</span>
+        </h4>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
+          <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
+            <span class="text-[#98A19C] block text-[10px]">دسته‌بندی اثر:</span>
+            <span class="font-bold text-[#1E3329]">{{ product.category.name }}</span>
           </div>
-          <div class="bg-[#FAF7F2] p-2.5 rounded-xl">
-            <span class="text-[#98A19C] block text-[10px]">متریال پایه:</span>
-            <span class="font-bold text-[#1E3329]">گل کائولن سفید و طلا</span>
+          <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
+            <span class="text-[#98A19C] block text-[10px]">نشان تجاری / مکتب:</span>
+            <span class="font-bold text-[#1E3329]">{{ product.brand.name|default:"هنرمند مستقل" }}</span>
           </div>
-          <div class="bg-[#FAF7F2] p-2.5 rounded-xl">
-            <span class="text-[#98A19C] block text-[10px]">ابعاد (سانتی‌متر):</span>
-            <span class="font-bold text-[#1E3329]">ارتفاع ۲۸ × قطر ۱۶</span>
-          </div>
-          <div class="bg-[#FAF7F2] p-2.5 rounded-xl">
+          <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
             <span class="text-[#98A19C] block text-[10px]">وزن تقریبی:</span>
-            <span class="font-bold text-[#1E3329]">۱۱۵۰ گرم</span>
+            <span class="font-bold text-[#1E3329]">{{ product.weight }} گرم</span>
           </div>
-          <div class="bg-[#FAF7F2] p-2.5 rounded-xl">
-            <span class="text-[#98A19C] block text-[10px]">سال خلق اثر:</span>
-            <span class="font-bold text-[#1E3329]">تابستان ۱۴۰۳</span>
+          {% for feat in product.features.all %}
+          <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
+            <span class="text-[#98A19C] block text-[10px]">{{ feat.feature.name }}:</span>
+            <span class="font-bold text-[#1E3329]">{{ feat.value }}</span>
           </div>
-          <div class="bg-[#FAF7F2] p-2.5 rounded-xl">
-            <span class="text-[#98A19C] block text-[10px]">امضای پدیدآورنده:</span>
-            <span class="font-bold text-emerald-700">دارد (حکاکی کف پایه)</span>
+          {% endfor %}
+          <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
+            <span class="text-[#98A19C] block text-[10px]">شناسنامه فیزیکی:</span>
+            {% if product.has_physical_certificate %}
+            <span class="font-bold text-emerald-700">دارد (ممهور)</span>
+            {% else %}
+            <span class="font-bold text-[#82533D]">فاقد شناسنامه</span>
+            {% endif %}
           </div>
         </div>
       </div>
 
-      <!-- باکس قیمت و خرید -->
-      <div class="bg-white rounded-3xl p-6 border-2 border-[#2C4A3E]/30 shadow-md space-y-4">
+      <!-- باکس قیمت و رزرو سبد خرید -->
+      <div class="bg-white rounded-3xl p-5 sm:p-6 border-2 border-[#2C4A3E]/30 shadow-md space-y-4">
         <div class="flex items-center justify-between">
           <div>
-            <span class="text-xs text-[#98A19C] block">ارزش‌گذاری رسمی گالری:</span>
+            <span class="text-xs text-[#98A19C] block">ارزش‌گذاری اثر در گالری:</span>
             <div class="flex items-baseline gap-2">
-              <span class="text-2xl sm:text-3xl font-black text-[#1E3329]">۱,۴۵۰,۰۰۰</span>
+              {% if product.discount_price %}
+              <span class="text-sm line-through text-[#98A19C]">{{ product.price|intcomma }}</span>
+              <span class="text-2xl sm:text-3xl font-black text-[#1E3329]">{{ product.discount_price|intcomma }}</span>
+              {% else %}
+              <span class="text-2xl sm:text-3xl font-black text-[#1E3329]">{{ product.price|intcomma }}</span>
+              {% endif %}
               <span class="text-xs font-bold text-[#6B726E]">تومان</span>
             </div>
           </div>
           <div class="text-left">
+            {% if product.stock > 0 %}
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#E8EFEA] text-[#2C4A3E]">
               <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>فقط ۱ عدد موجود در گالری</span>
+              <span>موجودی: {{ product.stock }} عدد</span>
             </span>
+            {% else %}
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700">
+              <span>ناموجود در گالری</span>
+            </span>
+            {% endif %}
           </div>
         </div>
 
         <!-- دکمه‌های اکشن -->
         <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
+          {% if product.stock > 0 %}
           <button type="button" class="add-to-cart-btn w-full sm:flex-grow py-3.5 px-6 rounded-2xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs sm:text-sm font-bold text-center transition-all shadow-md flex items-center justify-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
             <span>افزودن به سبد خرید و رزرو اثر</span>
           </button>
-          <button type="button" onclick="navigator.clipboard.writeText(window.location.href); alert('لینک اثر با موفقیت کپی شد!');" class="w-full sm:w-auto py-3.5 px-4 rounded-2xl border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] text-[#1E3329] text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0" title="اشتراک‌گذاری">
+          {% else %}
+          <button type="button" disabled class="w-full sm:flex-grow py-3.5 px-6 rounded-2xl bg-gray-300 text-gray-600 text-xs sm:text-sm font-bold text-center cursor-not-allowed">
+            اثر در حال حاضر فروخته شده است
+          </button>
+          {% endif %}
+          <button type="button" id="share-btn" onclick="shareProduct()" class="w-full sm:w-auto py-3.5 px-4 rounded-2xl border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] text-[#1E3329] text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0" title="اشتراک‌گذاری">
             <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-            <span>اشتراک اثر</span>
+            <span id="share-text">اشتراک اثر</span>
           </button>
         </div>
 
@@ -183,7 +247,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-3 border-t border-[#E8E3D9] text-[11px] text-[#6B726E]">
           <div class="flex items-center gap-1.5">
             <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-            <span>۷ روز ضمانت بازگشت وجه</span>
+            <span>۷ روز ضمانت اصالت</span>
           </div>
           <div class="flex items-center gap-1.5">
             <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
@@ -204,30 +268,27 @@
   <div class="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E3D9] shadow-sm mb-16">
     
     <!-- سربرگ تب‌ها -->
-    <div class="flex items-center gap-4 sm:gap-8 border-b border-[#E8E3D9] pb-4 mb-6 overflow-x-auto">
+    <div class="flex items-center gap-4 sm:gap-8 border-b border-[#E8E3D9] pb-4 mb-6 overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap">
       <button type="button" onclick="switchTab('tab-story', this)" class="product-tab-btn active text-sm sm:text-base font-bold text-[#2C4A3E] border-b-2 border-[#2C4A3E] pb-2 px-1 transition-all">
-        داستان و مفهوم اثر
+        داستان و پیشینه اثر
       </button>
       <button type="button" onclick="switchTab('tab-specs', this)" class="product-tab-btn text-sm sm:text-base font-medium text-[#6B726E] hover:text-[#1E3329] pb-2 px-1 transition-all">
-        مشخصات فنی و شرایط نگهداری
+        مشخصات کامل و راهنمای نگهداری
       </button>
       <button type="button" onclick="switchTab('tab-reviews', this)" class="product-tab-btn text-sm sm:text-base font-medium text-[#6B726E] hover:text-[#1E3329] pb-2 px-1 transition-all">
-        نظرات مجموعه‌داران (۱۸)
+        دیدگاه مجموعه‌داران
       </button>
     </div>
 
     <!-- محتوای تب ۱: داستان اثر -->
     <div id="tab-story" class="tab-content space-y-4 text-xs sm:text-sm text-[#6B726E] leading-loose">
-      <p>
-        این گلدان حاصل ماه‌ها تحقیق بر روی فرم‌های اسطوره‌ای هنر سلجوقی و قاجاری در ترکیب با تکنیک‌های مدرن سرامیک معاصر است. استاد سارا فیروزی در خلق این اثر، خاک رس کائولن الک شده را در ۳ مرحله چرخ‌کاری و فرم‌دهی نموده تا به تناسبات هندسی طلایی دست یابد.
-      </p>
-      <p>
-        رنگ فیروزه‌ای چشم‌نواز بدنه از فرمول اختصاصی اکسید مس و قلع استخراج گردیده که در کوره راکو تحت فرآیند احیا و در اوج حرارت ۱۲۰۰ درجه سانتی‌گراد پخته شده است. نقوش اسلیمی اطراف دهانه گلدان نیز تماماً با دست و به وسیله قلم‌موهای موی گربه با آب طلای ۲۴ عیار قلم‌گیری شده و برای ماندگاری مادام‌العمر در کوره ثانویه تثبیت شده‌اند.
-      </p>
+      <div class="text-[#1E3329] font-medium leading-relaxed">
+        {{ product.description|linebreaks }}
+      </div>
       <div class="bg-[#FAF7F2] rounded-2xl p-4 border border-[#E8E3D9] flex items-center gap-3 mt-4">
         <span class="text-2xl text-[#82533D]">❝</span>
         <p class="text-xs text-[#1E3329] italic font-medium">
-          «هدف من در ساخت این گلدان، بازآفرینی آرامش کویر و خنکای کاشی‌کاری‌های اصفهان در بطن زندگی پرشتاب شهری امروزی بوده است.» — سارا فیروزی
+          «هر اثر دست‌ساز، بخشی از روح و زمان هنرمند آفریننده را در دل خود به همراه دارد.» — غرفه {{ product.booth.name }}
         </p>
       </div>
     </div>
@@ -236,32 +297,48 @@
     <div id="tab-specs" class="tab-content hidden space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
         <div class="border border-[#E8E3D9] rounded-2xl p-4 space-y-2">
-          <h5 class="font-bold text-[#1E3329] mb-2 text-sm">ویژگی‌های ساختاری</h5>
-          <div class="flex justify-between py-1 border-b border-[#FAF7F2]">
-            <span class="text-[#98A19C]">نوع اثر:</span>
-            <span class="font-semibold text-[#1E3329]">دست‌ساز منفرد (Single Edition)</span>
+          <h5 class="font-bold text-[#1E3329] mb-2 text-sm">جدول کامل مشخصات ساختاری</h5>
+          <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
+            <span class="text-[#98A19C]">کد ثبت کاتالوگ (SKU):</span>
+            <span class="font-semibold text-[#1E3329]">{{ product.sku|default:product.id }}</span>
           </div>
-          <div class="flex justify-between py-1 border-b border-[#FAF7F2]">
-            <span class="text-[#98A19C]">لعاب بدنه:</span>
-            <span class="font-semibold text-[#1E3329]">لعاب قلیایی کریستالین فیروزه‌ای</span>
+          <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
+            <span class="text-[#98A19C]">وزن خالص اثر:</span>
+            <span class="font-semibold text-[#1E3329]">{{ product.weight }} گرم</span>
           </div>
-          <div class="flex justify-between py-1 border-b border-[#FAF7F2]">
-            <span class="text-[#98A19C]">پوشش طلایی:</span>
-            <span class="font-semibold text-[#1E3329]">طلای مایع مایورکا اسپانیا</span>
+          <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
+            <span class="text-[#98A19C]">پدیدآورنده و کارگاه:</span>
+            <span class="font-semibold text-[#1E3329]">{{ product.booth.name }}</span>
           </div>
-          <div class="flex justify-between py-1">
-            <span class="text-[#98A19C]">مقاومت حرارتی:</span>
-            <span class="font-semibold text-[#1E3329]">کاملاً ضدآب و قابل شست‌وشو</span>
+          {% for attr in product.attributes.all %}
+          <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
+            <span class="text-[#98A19C]">{{ attr.attribute.public_name }}:</span>
+            <span class="font-semibold text-[#1E3329]">{{ attr.value }}</span>
+          </div>
+          {% endfor %}
+          {% for feat in product.features.all %}
+          <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
+            <span class="text-[#98A19C]">{{ feat.feature.name }}:</span>
+            <span class="font-semibold text-[#1E3329]">{{ feat.value }}</span>
+          </div>
+          {% endfor %}
+          <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
+            <span class="text-[#98A19C]">شناسنامه فیزیکی:</span>
+            {% if product.has_physical_certificate %}
+            <span class="font-semibold text-emerald-700">دارد (ممهور به هولوگرام ضدجعل)</span>
+            {% else %}
+            <span class="font-semibold text-[#82533D]">فاقد شناسنامه فیزیکی</span>
+            {% endif %}
           </div>
         </div>
 
         <div class="border border-[#E8E3D9] rounded-2xl p-4 space-y-2">
-          <h5 class="font-bold text-[#1E3329] mb-2 text-sm">دستورالعمل نگهداری اثر هنری</h5>
-          <ul class="space-y-2 text-[#6B726E] list-disc list-inside leading-relaxed">
-            <li>از تماس با مواد شوینده اسیدی و سیم ظرفشویی زبر خودداری فرمایید.</li>
-            <li>شست‌وشو با دست و با دستمال نرم و آب ولرم توصیه می‌گردد.</li>
-            <li>به دلیل وجود طلا در بافت لعاب، در مایکروویو قرار نگیرد.</li>
-            <li>برای تمیز کردن گرد و غبار، از دستمال میکروفیبر نم‌دار استفاده شود.</li>
+          <h5 class="font-bold text-[#1E3329] mb-2 text-sm">دستورالعمل نگهداری و اصالت اثر هنری</h5>
+          <ul class="space-y-2.5 text-[#6B726E] list-disc list-inside leading-relaxed">
+            <li>از قرار دادن اثر در معرض تابش مستقیم و مداوم خورشید جهت حفظ ثبات رنگدانه‌ها خودداری شود.</li>
+            <li>برای تمیز کردن گرد و غبار، از دستمال نرم میکروفیبر خشک یا کمی نمدار استفاده کنید.</li>
+            <li>از مصرف شوینده‌های شیمیایی اسیدی قوی یا حلال‌ها بر روی سطح کار پرهیز نمایید.</li>
+            <li>اثر به همراه جعبه محافظ ۵ لایه ضدضربه و شناسنامه فیزیکی ممهور ارسال خواهد شد.</li>
           </ul>
         </div>
       </div>
@@ -272,7 +349,7 @@
       <div class="flex items-center justify-between pb-4 border-b border-[#E8E3D9]">
         <div>
           <h5 class="text-sm font-bold text-[#1E3329]">دیدگاه خریداران و مجموعه‌داران</h5>
-          <p class="text-xs text-[#6B726E]">تجربه دوست‌داران هنر از این اثر</p>
+          <p class="text-xs text-[#6B726E]">تجربه اصیل دوست‌داران هنر از این اثر</p>
         </div>
         <button type="button" class="px-4 py-2 rounded-xl bg-[#2C4A3E] text-white text-xs font-bold hover:bg-[#1E3329] transition-all">
           ثبت دیدگاه جدید
@@ -282,12 +359,12 @@
       <div class="space-y-4">
         <div class="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E8E3D9] space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-xs text-[#1E3329]">مهندس کاوه راد</span>
-            <span class="text-[10px] text-[#98A19C]">۳ روز پیش • خریدار تاییدشده</span>
+            <span class="font-bold text-xs text-[#1E3329]">خریدار تاییدشده هنرکده</span>
+            <span class="text-[10px] text-[#98A19C]">دارای گواهی شناسنامه فیزیکی</span>
           </div>
           <div class="text-[#C69A52] text-xs">★★★★★</div>
           <p class="text-xs text-[#6B726E] leading-relaxed">
-            بسته‌بندی گالری فوق‌العاده حرفه‌ای و مطمئن بود. وقتی جعبه رو باز کردم از درخشش و ظرافت لعاب و شناسنامه ممهور اثر شگفت‌زده شدم. واقعاً روی میز پذیرایی جلوه بی‌نظیری دارد.
+            بسته‌بندی گالری کاملاً ایمن و حرفه‌ای بود. شناسنامه اثر نیز بسیار تمیز و با مهر رسمی همراه جعبه ارسال شده بود. کیفیت کار فراتر از تصاویر بود.
           </p>
         </div>
       </div>
@@ -295,31 +372,111 @@
 
   </div>
 
+  {% if related_products %}
+  <!-- آثار مرتبط در همان دسته‌بندی -->
+  <section class="mb-12">
+    <div class="flex items-center justify-between mb-6 pb-3 border-b border-[#E8E3D9]">
+      <h3 class="text-lg font-black text-[#1E3329]">سایر آثار مرتبط با این مجموعه</h3>
+      <a href="{% url 'shop' %}?cat={{ product.category.slug }}" class="text-xs text-[#2C4A3E] font-bold hover:underline">مشاهده همه آثار این شاخه ←</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for rel in related_products %}
+      <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
+        <a href="{% url 'product_detail' rel.slug %}" class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+          {% if rel.image %}
+          <img src="{{ rel.image.url }}" alt="{{ rel.name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          {% else %}
+          <img src="/static/images/products/product-1.jpg" alt="{{ rel.name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          {% endif %}
+          <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">{{ rel.category.name }}</span>
+        </a>
+        <div class="p-4 flex flex-col flex-grow">
+          <h4 class="text-xs font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-1">
+            <a href="{% url 'product_detail' rel.slug %}">{{ rel.name }}</a>
+          </h4>
+          <span class="text-[10px] text-[#6B726E] mb-3">{{ rel.booth.name }}</span>
+          <div class="mt-auto flex items-center justify-between pt-2 border-t border-[#E8E3D9]">
+            <div>
+              {% if rel.discount_price %}
+              <div class="flex items-baseline gap-1">
+                <span class="text-[10px] line-through text-[#98A19C]">{{ rel.price|intcomma }}</span>
+                <span class="text-xs font-extrabold text-[#1E3329]">{{ rel.discount_price|intcomma }} <span class="text-[9px] font-normal text-[#6B726E]">تومان</span></span>
+              </div>
+              {% else %}
+              <span class="text-xs font-extrabold text-[#1E3329]">{{ rel.price|intcomma }} <span class="text-[9px] font-normal text-[#6B726E]">تومان</span></span>
+              {% endif %}
+            </div>
+            <a href="{% url 'product_detail' rel.slug %}" class="text-[11px] text-[#2C4A3E] font-bold hover:underline">مشاهده اثر</a>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
   function changeImage(src, btn) {
-    document.getElementById('main-product-image').src = src;
+    const mainImg = document.getElementById('main-product-image');
+    if (mainImg) mainImg.src = src;
     document.querySelectorAll('.thumb-btn').forEach(b => {
       b.classList.remove('border-[#2C4A3E]');
       b.classList.add('border-[#E8E3D9]');
     });
-    btn.classList.add('border-[#2C4A3E]');
-    btn.classList.remove('border-[#E8E3D9]');
+    if (btn) {
+      btn.classList.add('border-[#2C4A3E]');
+      btn.classList.remove('border-[#E8E3D9]');
+    }
+  }
+
+  function selectVariant(label, btn) {
+    const display = document.getElementById('selected-variant-label');
+    if (display) display.textContent = label;
+    document.querySelectorAll('.variant-btn').forEach(b => {
+      b.classList.remove('border-[#2C4A3E]', 'bg-[#2C4A3E]', 'text-white', 'font-bold');
+      b.classList.add('border-[#E8E3D9]', 'bg-[#FAF7F2]', 'text-[#1E3329]');
+    });
+    if (btn) {
+      btn.classList.add('border-[#2C4A3E]', 'bg-[#2C4A3E]', 'text-white', 'font-bold');
+      btn.classList.remove('border-[#E8E3D9]', 'bg-[#FAF7F2]', 'text-[#1E3329]');
+    }
+  }
+
+  function shareProduct() {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const shareText = document.getElementById('share-text');
+        const shareBtn = document.getElementById('share-btn');
+        if (shareText && shareBtn) {
+          const original = shareText.textContent;
+          shareText.textContent = '✓ لینک کپی شد!';
+          shareBtn.classList.add('!border-emerald-600', '!text-emerald-700', 'bg-emerald-50');
+          setTimeout(() => {
+            shareText.textContent = original;
+            shareBtn.classList.remove('!border-emerald-600', '!text-emerald-700', 'bg-emerald-50');
+          }, 2000);
+        }
+      });
+    }
   }
 
   function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-    document.getElementById(tabId).classList.remove('hidden');
+    const target = document.getElementById(tabId);
+    if (target) target.classList.remove('hidden');
     
     document.querySelectorAll('.product-tab-btn').forEach(b => {
       b.classList.remove('active', 'text-[#2C4A3E]', 'border-b-2', 'border-[#2C4A3E]', 'font-bold');
       b.classList.add('text-[#6B726E]', 'font-medium');
     });
-    btn.classList.add('active', 'text-[#2C4A3E]', 'border-b-2', 'border-[#2C4A3E]', 'font-bold');
-    btn.classList.remove('text-[#6B726E]', 'font-medium');
+    if (btn) {
+      btn.classList.add('active', 'text-[#2C4A3E]', 'border-b-2', 'border-[#2C4A3E]', 'font-bold');
+      btn.classList.remove('text-[#6B726E]', 'font-medium');
+    }
   }
 </script>
 {% endblock %}

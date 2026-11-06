@@ -1,0 +1,34 @@
+{% load i18n static %}
+
+{% if cl.search_fields %}
+    <div id="toolbar" class="mb-4 flex items-center justify-start">
+        <form {% if not cl.is_dataset %}id="changelist-search" x-data="searchForm()"{% endif %} method="get" role="search" class="w-full sm:w-auto">
+            <div class="bg-white dark:bg-base-900 border border-slate-200 dark:border-base-700 flex flex-row items-center px-3.5 py-1 rounded-2xl relative shadow-sm w-full sm:w-96 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/20 transition-all">
+                <button type="submit" class="flex items-center text-teal-600 dark:text-teal-400 pl-2 focus:outline-hidden" id="searchbar-submit" title="جستجو">
+                    <span class="material-symbols-outlined text-xl">search</span>
+                </button>
+
+                <input type="text"
+                       x-ref="searchInput"
+                       {% if not cl.is_dataset %}x-on:keydown.window="applyShortcut($event)"{% endif %}
+                       class="grow font-medium min-w-0 text-xs py-1.5 px-2 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-hidden bg-transparent text-right"
+                       name="{{ search_var }}"
+                       value="{{ cl.query }}"
+                       {% if not cl.is_dataset %}id="searchbar"{% endif %}
+                       placeholder="{% if cl.search_help_text %}{{ cl.search_help_text }}{% else %}جستجو در این جدول...{% endif %}" />
+
+                {% if not cl.is_dataset %}
+                    <span class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-mono text-slate-500 font-bold" title="کلید میانبر اسلش">
+                        /
+                    </span>
+                {% endif %}
+            </div>
+
+            {% for pair in cl.filter_params.items %}
+                {% for val in pair.1 %}
+                    {% if pair.0 != search_var %}<input type="hidden" name="{{ pair.0 }}" value="{{ val }}">{% endif %}
+                {% endfor %}
+            {% endfor %}
+        </form>
+    </div>
+{% endif %}

@@ -1,0 +1,598 @@
+/* ==========================================================================
+   Honarkadeh Admin Custom Modern UI & Luxury Theme Styling
+   kadehonar.ir | 100% Offline-Ready & High Performance
+   ========================================================================== */
+
+/* ۱. فونت‌های اصیل وزیرمتن */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/static/fonts/vazirmatn-arabic-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/static/fonts/vazirmatn-arabic-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/static/fonts/vazirmatn-arabic-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/static/fonts/vazirmatn-arabic-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ۲. فونت محلی Material Symbols */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 900;
+  src: url('/static/fonts/Material-Symbols-Outlined.woff2') format('woff2');
+  font-display: block;
+}
+
+/* اعمال فونت وزیرمتن تنها بر متون معمولی */
+html, body, input, select, textarea, button, p, h1, h2, h3, h4, h5, h6, label, table, tr, th, td, a {
+  font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* حفاظت قطعی و صددرصدی از فونت آیکون‌های متریال */
+.material-symbols-outlined,
+span.material-symbols-outlined,
+i.material-symbols-outlined,
+div.material-symbols-outlined,
+[class*="material-symbols"] {
+  font-family: "Material Symbols Outlined" !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  word-wrap: normal !important;
+  direction: ltr !important;
+  -webkit-font-feature-settings: 'liga' 1 !important;
+  font-feature-settings: 'liga' 1 !important;
+  -webkit-font-smoothing: antialiased !important;
+  vertical-align: middle !important;
+}
+
+/* ==========================================================================
+   ۳. اصلاح ریشه‌ای و ۱۰۰٪ راست‌چینی (RTL) جداول و لایه‌ها
+   ========================================================================== */
+html, body, #page, #main, #content, table, thead, tbody, tr, th, td, form {
+  direction: rtl !important;
+}
+
+.text-left,
+[class*="text-left"],
+.lg\:table-cell.text-left,
+td.text-left,
+th.text-left {
+  text-align: right !important;
+}
+
+td[data-label]::before,
+.result-list td::before,
+#result_list td::before,
+.before\:mr-auto::before {
+  margin-right: 0 !important;
+  margin-left: auto !important;
+  text-align: right !important;
+}
+
+table#result_list,
+.result-list {
+  display: table !important;
+  width: 100% !important;
+  direction: rtl !important;
+  border-collapse: collapse !important;
+}
+
+table#result_list thead,
+.result-list thead {
+  display: table-header-group !important;
+}
+
+table#result_list tbody,
+.result-list tbody {
+  display: table-row-group !important;
+}
+
+table#result_list tr,
+.result-list tr,
+.data-row {
+  display: table-row !important;
+}
+
+table#result_list th,
+.result-list th,
+table#result_list td,
+.result-list td,
+.data-row td,
+th.field-__str__,
+td.field-__str__,
+th[class*="field-"],
+td[class*="field-"] {
+  display: table-cell !important;
+  text-align: right !important;
+  direction: rtl !important;
+  vertical-align: middle !important;
+  padding: 12px 14px !important;
+}
+
+table#result_list td::before,
+.result-list td::before {
+  display: none !important;
+}
+
+table thead th > div,
+#result_list thead th > div,
+.result-list thead th > div {
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  text-align: right !important;
+}
+
+th.action-checkbox-column,
+td.action-checkbox,
+.action-checkbox {
+  text-align: center !important;
+  width: 44px !important;
+  min-width: 44px !important;
+  max-width: 44px !important;
+}
+
+#searchbar,
+input[name="q"],
+input[type="search"],
+.search-form input,
+input[placeholder*="search" i] {
+  text-align: right !important;
+  direction: rtl !important;
+  font-family: 'Vazirmatn', sans-serif !important;
+}
+
+/* ==========================================================================
+   ۴. سایدبار لوکس تیره و حل قطعی شکستن متن‌ها (Fix Text Wrapping)
+   ========================================================================== */
+#nav-sidebar,
+#nav-sidebar-inner,
+div[class*="navigation_wrapper"] > div,
+div[class*="navigation"] {
+  background: #0d131a !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-right: none !important;
+  color: #94a3b8 !important;
+  width: 288px !important;
+  min-width: 288px !important;
+}
+
+#nav-sidebar h2,
+#nav-sidebar-inner h2,
+#nav-sidebar [class*="text-font-subtle"] {
+  color: #38bdf8 !important;
+  font-weight: 700 !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.05em !important;
+  padding-right: 0.85rem !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.4rem !important;
+  text-align: right !important;
+}
+
+/* جلوگیری قطعی از شکستن متن به ۲ خط در سایدبار */
+#nav-sidebar a,
+#nav-sidebar-inner a {
+  color: #cbd5e1 !important;
+  border-radius: 12px !important;
+  margin: 3px 10px !important;
+  padding: 9px 12px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 0.82rem !important;
+  gap: 8px !important;
+}
+
+#nav-sidebar a:hover,
+#nav-sidebar-inner a:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  transform: translateX(-4px) !important;
+}
+
+#nav-sidebar a[class*="bg-primary"],
+#nav-sidebar a.active,
+#nav-sidebar-inner a[class*="bg-primary"],
+#nav-sidebar-inner a.active {
+  background: linear-gradient(90deg, rgba(13, 148, 136, 0.3), rgba(6, 182, 212, 0.15)) !important;
+  color: #2dd4bf !important;
+  border-right: 4px solid #00A4BE !important;
+  font-weight: 700 !important;
+}
+
+#nav-sidebar a .material-symbols-outlined,
+#nav-sidebar-inner a .material-symbols-outlined {
+  color: #00A4BE !important;
+  margin-left: 8px !important;
+  margin-right: 0 !important;
+  font-size: 20px !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+#nav-sidebar a:hover .material-symbols-outlined,
+#nav-sidebar-inner a:hover .material-symbols-outlined {
+  color: #38bdf8 !important;
+  transform: scale(1.15) !important;
+}
+
+/* ==========================================================================
+   ۵. اصلاح نمایش کارت‌های ویترین محصولات در پیشخوان (Fix Image Overlap)
+   ========================================================================== */
+.product-showcase-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 12px 14px !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  min-height: 86px !important;
+  overflow: hidden !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+}
+
+.dark .product-showcase-card {
+  background: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+.product-showcase-card:hover {
+  border-color: #00A4BE !important;
+  box-shadow: 0 8px 20px -4px rgba(0, 164, 190, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+.product-thumb-box {
+  width: 62px !important;
+  min-width: 62px !important;
+  max-width: 62px !important;
+  height: 62px !important;
+  min-height: 62px !important;
+  max-height: 62px !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  background-color: #f1f5f9 !important;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05) !important;
+}
+
+.product-thumb-img {
+  width: 62px !important;
+  height: 62px !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.product-info-box {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  text-align: right !important;
+}
+
+/* ==========================================================================
+   ۶. دکمه‌های کنشی و نوار ذخیره شناور
+   ========================================================================== */
+.object-tools a,
+.btn-primary,
+button[type="submit"].default,
+input[type="submit"].default {
+  font-family: 'Vazirmatn', sans-serif !important;
+  font-weight: 600 !important;
+  background: linear-gradient(135deg, #00A4BE, #008a9f) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 164, 190, 0.3) !important;
+  border-radius: 12px !important;
+  padding: 0.55rem 1.25rem !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.object-tools a:hover,
+.btn-primary:hover,
+button[type="submit"].default:hover,
+input[type="submit"].default:hover {
+  background: linear-gradient(135deg, #008a9f, #045b6a) !important;
+  box-shadow: 0 6px 18px rgba(0, 164, 190, 0.45) !important;
+  transform: translateY(-2px) !important;
+}
+
+.submit-row,
+.submit-line,
+div[class*="submit-row"] {
+  position: sticky !important;
+  bottom: 1.25rem !important;
+  z-index: 45 !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(0, 164, 190, 0.3) !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 18px !important;
+  padding: 0.85rem 1.5rem !important;
+  margin-top: 2rem !important;
+  transition: all 0.2s ease-in-out !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.75rem !important;
+}
+
+.dark .submit-row,
+.dark .submit-line,
+.dark div[class*="submit-row"] {
+  background: rgba(17, 24, 39, 0.94) !important;
+  border-color: rgba(0, 164, 190, 0.4) !important;
+}
+
+/* ==========================================================================
+   ۷. پلاک‌های شیک وضعیت
+   ========================================================================== */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.badge-status-green {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-status-amber {
+  background-color: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.badge-status-red {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.badge-status-cyan {
+  background-color: #e6f9fc;
+  color: #007082;
+  border: 1px solid #99e5f0;
+}
+
+/* ==========================================================================
+   ۸. کارت‌ها و ردیف‌های پیشخوان مدیریت (فاصله‌بندی استاندارد، باز و خوانا)
+   ========================================================================== */
+.admin-app-card {
+  margin-bottom: 28px !important;
+  border-radius: 16px !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden !important;
+}
+
+.dark .admin-app-card {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+.admin-app-header {
+  padding: 16px 24px !important;
+  background-color: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.dark .admin-app-header {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+.admin-model-row {
+  padding: 18px 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.admin-model-row:last-child {
+  border-bottom: none !important;
+}
+
+.admin-model-row:hover {
+  background-color: #f8fafc !important;
+}
+
+.dark .admin-model-row {
+  border-color: #1e293b !important;
+}
+
+.dark .admin-model-row:hover {
+  background-color: #1e293b !important;
+}
+
+.admin-row-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+.admin-row-actions > * + * {
+  margin-right: 12px !important;
+}
+
+.admin-add-btn,
+a.admin-add-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 18px !important;
+  border-radius: 9px !important;
+  background-color: #00A4BE !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  border: 1px solid #008ba3 !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(0, 164, 190, 0.25) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+.admin-add-btn:hover,
+a.admin-add-btn:hover {
+  background-color: #008a9f !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(0, 164, 190, 0.35) !important;
+}
+
+.admin-add-btn .material-symbols-outlined,
+a.admin-add-btn .material-symbols-outlined {
+  font-size: 16px !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+}
+
+.admin-edit-btn,
+a.admin-edit-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 18px !important;
+  border-radius: 9px !important;
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  border: 1px solid #cbd5e1 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+.admin-edit-btn:hover,
+a.admin-edit-btn:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+  transform: translateY(-1px) !important;
+}
+
+.admin-edit-btn .material-symbols-outlined,
+a.admin-edit-btn .material-symbols-outlined {
+  font-size: 16px !important;
+  color: #64748b !important;
+  line-height: 1 !important;
+}
+
+.dark .admin-edit-btn,
+.dark a.admin-edit-btn {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+  border-color: #334155 !important;
+}
+
+.dark .admin-edit-btn:hover,
+.dark a.admin-edit-btn:hover {
+  background-color: #334155 !important;
+  color: #ffffff !important;
+  border-color: #475569 !important;
+}
+
+.dark .admin-edit-btn .material-symbols-outlined,
+.dark a.admin-edit-btn .material-symbols-outlined {
+  color: #94a3b8 !important;
+}
+/* ================= انیمیشن جابه‌جایی نرم ستون‌های ورود و ثبت‌نام ================= */
+.auth-panel-transition {
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.65s ease;
+  will-change: transform;
+}
+
+.auth-fade-layer {
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.interest-chip.active {
+  background-color: #2C4A3E !important;
+  color: #ffffff !important;
+  border-color: #2C4A3E !important;
+}
+
+@media (min-width: 768px) {
+  /* حالت خریدار: فرم در راست (۰)، تصویر در چپ (۰) */
+  #auth-card.mode-buyer #form-panel {
+    transform: translateX(0);
+    z-index: 10;
+  }
+  #auth-card.mode-buyer #image-panel {
+    transform: translateX(0);
+    z-index: 20;
+    box-shadow: 15px 0 35px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  /* حالت هنرمند: فرم جابه‌جا شده به چپ (-100%)، تصویر جابه‌جا شده به راست (+100%) */
+  #auth-card.mode-artist #form-panel {
+    transform: translateX(-100%);
+    z-index: 10;
+  }
+  #auth-card.mode-artist #image-panel {
+    transform: translateX(100%);
+    z-index: 20;
+    box-shadow: -15px 0 35px -5px rgba(0, 0, 0, 0.25);
+  }
+}
+

@@ -1,0 +1,132 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list unfold_list %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/admin_custom.css' %}?v=2.2">
+
+    <script src="{% url 'admin:jsi18n' %}"></script>
+
+    {{ media.css }}
+
+    {% if not actions_on_top and not actions_on_bottom %}
+        <style>
+            #changelist table thead th:first-child {width: inherit}
+        </style>
+    {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ media.js }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
+
+{% block coltype %}{% endblock %}
+
+{% block nav-global-side %}
+    {# دکمه افزودن فقط یکبار در نوار ابزار جستجو و فیلترها نمایش داده می‌شود تا از تکرار ۳ تایی جلوگیری شود #}
+{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+        {% if cl.formset and cl.formset.errors %}
+            {% include "unfold/helpers/messages/errornote.html" with errors=cl.formset.errors %}
+
+            {{ cl.formset.non_form_errors }}
+        {% endif %}
+
+        <!-- هدر اختصاصی بالای صفحه با اطلاعات ماژول -->
+        <div class="mb-5 p-4 sm:p-5 rounded-2xl bg-white dark:bg-base-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-2xl">grid_view</span>
+                </span>
+                <div>
+                    <h1 class="text-base font-black text-slate-900 dark:text-white">
+                        {{ cl.opts.verbose_name_plural|capfirst }}
+                    </h1>
+                    <p class="text-xs text-slate-400">
+                        مدیریت، ویرایش و حذف رکوردهای ثبت‌شده در بازارچه • تعداد کل: <span class="font-bold text-teal-600 dark:text-teal-400 font-mono">{{ cl.result_count }}</span> مورد
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex -mx-4 module{% if cl.has_filters %} filtered{% endif %}" id="changelist" x-data="{ changeListWidth: 0 }">
+            <div class="result-list-wrapper changelist-form-container flex flex-row grow gap-4 min-w-0 px-4">
+                <div class="grow min-w-0" x-resize="changeListWidth = $width">
+                    {% block date_hierarchy %}
+                        {% if cl.date_hierarchy %}
+                            {% date_hierarchy cl %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% if cl.model_admin.list_before_template and not is_popup %}
+                        {% include cl.model_admin.list_before_template %}
+                    {% endif %}
+
+                    {% spaceless %}
+                        <!-- نوار جستجو، فیلترها و دکمه مستقیم افزودن در سمت چپ (دقیقاً محل خط قرمز کاربر) -->
+                        <div class="flex flex-col gap-4 mb-4 sm:flex-row sm:items-center justify-between empty:hidden lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
+                            <div class="flex items-center gap-3 grow">
+                                {% block search %}
+                                    {% search_form cl %}
+                                {% endblock %}
+
+                                {% block filters %}
+                                    {% if cl.has_filters %}
+                                        <a class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white border-base-200 hover:text-primary-600 dark:bg-base-900 dark:border-base-700 dark:hover:text-primary-500{% endif %} border cursor-pointer flex font-medium gap-2 group items-center px-3 py-2 rounded-default shadow-xs text-sm {% if not cl.model_admin.list_filter_sheet %}2xl:hidden{% endif %}" x-on:click="filterOpen = true" x-on:keydown.escape.window="filterOpen = false">
+                                            {% trans "Filters" %}
+
+                                            <span class="material-symbols-outlined md-18 ml-auto">filter_list</span>
+                                        </a>
+                                    {% endif %}
+                                {% endblock %}
+                            </div>
+
+                            {% if has_add_permission and not is_popup %}
+                            {% url cl.opts|admin_urlname:"add" as add_url %}
+                            <div class="flex items-center mr-auto flex-shrink-0 relative z-10">
+                                <a href="{% add_preserved_filters add_url is_popup to_field %}" class="btn-primary-add" title="افزودن {{ cl.opts.verbose_name }} جدید">
+                                    <span class="material-symbols-outlined">add</span>
+                                    <span>افزودن {{ cl.opts.verbose_name }} جدید</span>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endspaceless %}
+
+                    <form id="changelist-form" class="group" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
+                        {% csrf_token %}
+
+                        {% if cl.formset %}
+                            {{ cl.formset.management_form }}
+                        {% endif %}
+
+                        {% block result_list %}
+                            {% include "unfold/helpers/change_list_actions.html" %}
+
+                            {% unfold_result_list cl %}
+                        {% endblock %}
+                    </form>
+
+                    {% if cl.model_admin.list_after_template and not is_popup %}
+                        {% include cl.model_admin.list_after_template %}
+                    {% endif %}
+                </div>
+
+                {% if cl.has_filters %}
+                    {% include "unfold/helpers/change_list_filter.html" %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% block pagination %}
+        {% include "unfold/helpers/pagination.html" %}
+    {% endblock %}
+{% endblock %}

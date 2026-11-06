@@ -1,0 +1,29 @@
+{% load unfold %}
+
+<div class="border-b border-slate-700/60 flex items-center gap-3 px-4 py-4 mb-2">
+    <!-- نشان طلایی و فیروزه‌ای اصیل هنرکده -->
+    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-teal-500 to-cyan-400 p-[2px] shadow-lg shadow-teal-500/25 flex-shrink-0">
+        <div class="w-full h-full bg-[#0d131a] rounded-[14px] flex items-center justify-center text-teal-300">
+            <span class="material-symbols-outlined text-2xl">palette</span>
+        </div>
+    </div>
+
+    <!-- عناوین برند پلتفرم -->
+    <div class="flex flex-col min-w-0">
+        <div class="flex items-center gap-1.5">
+            <h1 class="text-sm font-black text-white tracking-tight truncate">پنل مدیریت هنرکده</h1>
+        </div>
+        <div class="flex items-center gap-1.5 mt-0.5">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span class="text-[11px] font-medium text-emerald-400 truncate">شعبه سوپرادمین | دسترسی کامل</span>
+        </div>
+    </div>
+
+    <!-- دکمه بستن در موبایل -->
+    <span class="material-symbols-outlined block cursor-pointer mr-auto text-slate-400 hover:text-white xl:hidden!" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+        close
+    </span>
+</div>

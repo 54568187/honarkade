@@ -1,0 +1,93 @@
+{% extends 'admin/base.html' %}
+{% load i18n static %}
+
+{% block title %}پیشخوان مدیریت | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="w-full pb-12">
+
+    <!-- ماژول‌های مدیریتی بازارچه: فاصله‌بندی باز و تفکیک‌شده طبق منطق استاندارد جنگو -->
+    <div class="w-full">
+        {% if app_list %}
+            {% for app in app_list %}
+            <div class="admin-app-card app-{{ app.app_label }}">
+                <!-- سربرگ اپلیکیشن با فاصله‌گذاری استاندارد -->
+                <div class="admin-app-header">
+                    <a href="{{ app.app_url }}" class="text-sm font-black text-slate-800 dark:text-slate-100 hover:text-cyan-700 transition-colors flex items-center gap-2.5" title="مشاهده بخش‌های {{ app.name }}">
+                        <span class="w-2.5 h-2.5 rounded-full" style="background-color: #00A4BE;"></span>
+                        <span>{{ app.name }}</span>
+                    </a>
+                    <span class="text-xs font-mono font-bold text-slate-400 bg-white dark:bg-base-900 px-3 py-1 rounded-lg border border-slate-200/80 dark:border-slate-700/80 shadow-2xs">
+                        {{ app.models|length }} بخش
+                    </span>
+                </div>
+
+                <!-- فهرست زیرمجموعه‌ها و مدل‌ها با دکمه‌های واضح افزودن و مدیریت/ویرایش/حذف -->
+                <div>
+                    {% for model in app.models %}
+                    <div class="admin-model-row model-{{ model.object_name|lower }}">
+                        <!-- عنوان مدل و لینک مستقیم به فهرست رکوردها -->
+                        <div class="min-w-0 flex items-center gap-2">
+                            {% if model.admin_url %}
+                            <a href="{{ model.admin_url }}" class="font-bold text-sm text-slate-800 dark:text-slate-100 hover:text-cyan-700 transition-colors">
+                                {{ model.name }}
+                            </a>
+                            {% else %}
+                            <span class="font-bold text-sm text-slate-700 dark:text-slate-300">
+                                {{ model.name }}
+                            </span>
+                            {% endif %}
+                        </div>
+
+                        <!-- دکمه‌های عملیاتی: افزودن + مدیریت/ویرایش/حذف با فاصله منظم -->
+                        <div class="admin-row-actions">
+                            {% if model.add_url %}
+                            <a href="{{ model.add_url }}" class="admin-add-btn" title="افزودن {{ model.name }} جدید">
+                                <span class="material-symbols-outlined">add</span>
+                                <span>افزودن</span>
+                            </a>
+                            {% endif %}
+
+                            {% if model.admin_url %}
+                            <a href="{{ model.admin_url }}" class="admin-edit-btn" title="مشاهده فهرست، ویرایش و حذف رکوردها">
+                                <span class="material-symbols-outlined">edit_note</span>
+                                <span>مدیریت و ویرایش</span>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="p-8 text-center text-slate-500 bg-white dark:bg-base-900 rounded-2xl border border-slate-200 dark:border-slate-800">
+                شما دسترسی لازم برای ویرایش یا مشاهده اطلاعات را ندارید.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- لاگ آخرین اقدامات و تغییرات مدیران (در بخش پایین برای حفظ فضای باز و کامل ماژول‌ها) -->
+    <div class="w-full mt-10 pt-6 border-t border-slate-200 dark:border-slate-800">
+        <details class="group bg-white dark:bg-base-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs" open>
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-sm text-slate-800 dark:text-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-slate-400">history</span>
+                    <span>آخرین اقدامات و تغییرات ثبت‌شده در سامانه</span>
+                </div>
+                <span class="text-xs text-slate-400 group-open:rotate-180 transition-transform material-symbols-outlined">
+                    expand_more
+                </span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                {% include "unfold/helpers/history.html" %}
+            </div>
+        </details>
+    </div>
+
+</div>
+{% endblock %}

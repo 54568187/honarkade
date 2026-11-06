@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block title %}هنرکده | گالری جامع کلیه آثار هنری و صنایع‌دستی اصیل{% endblock %}
 
@@ -14,25 +15,25 @@
         مجموعه جامع گالری هنرکده
       </span>
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-[#FAF7F2]">
-        آثار هنری، نقاشی، سرامیک و صنایع‌دستی اصیل
+        {% if current_category %}{{ current_category.name }}{% else %}آثار هنری، نقاشی، سرامیک و صنایع‌دستی اصیل{% endif %}
       </h1>
       <p class="text-xs sm:text-sm text-white/80 max-w-2xl leading-relaxed">
-        تمامی آثار این بخش مستقیماً از کارگاه‌ها و آتلیه‌های هنرمندان مستقل انتخاب شده و با گواهی شناسنامه فیزیکی و بسته‌بندی ایمن ارسال می‌گردند.
+        {% if current_category and current_category.description %}{{ current_category.description }}{% else %}تمامی آثار این بخش مستقیماً از کارگاه‌ها و آتلیه‌های هنرمندان مستقل انتخاب شده و با گواهی شناسنامه فیزیکی و بسته‌بندی ایمن ارسال می‌گردند.{% endif %}
       </p>
     </div>
 
-    <div class="flex items-center gap-4 text-xs font-medium shrink-0">
-      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15 text-center">
-        <span class="text-xl font-black text-[#C69A52] block">۱۰۰٪</span>
-        <span class="text-white/80 text-[11px]">اصالت دست‌ساز</span>
+    <div class="grid grid-cols-3 gap-2.5 sm:flex sm:items-center sm:gap-4 text-xs font-medium shrink-0 w-full sm:w-auto">
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-2.5 sm:p-4 border border-white/15 text-center">
+        <span class="text-base sm:text-xl font-black text-[#C69A52] block">۱۰۰٪</span>
+        <span class="text-white/80 text-[10px] sm:text-[11px]">اصالت دست‌ساز</span>
       </div>
-      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15 text-center">
-        <span class="text-xl font-black text-[#C69A52] block">تک‌نسخه</span>
-        <span class="text-white/80 text-[11px]">آثار منحصربه‌فرد</span>
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-2.5 sm:p-4 border border-white/15 text-center">
+        <span class="text-base sm:text-xl font-black text-[#C69A52] block">تک‌نسخه</span>
+        <span class="text-white/80 text-[10px] sm:text-[11px]">آثار منحصربه‌فرد</span>
       </div>
-      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15 text-center">
-        <span class="text-xl font-black text-[#C69A52] block">۷ روز</span>
-        <span class="text-white/80 text-[11px]">ضمانت بازگشت</span>
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-2.5 sm:p-4 border border-white/15 text-center">
+        <span class="text-base sm:text-xl font-black text-[#C69A52] block">۷ روز</span>
+        <span class="text-white/80 text-[10px] sm:text-[11px]">ضمانت بازگشت</span>
       </div>
     </div>
   </div>
@@ -42,58 +43,62 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
   
   <!-- دسته‌بندی‌های سریع (Pill Navigation) -->
-  <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 text-xs font-bold">
-    <a href="{% url 'shop' %}" class="px-4 py-2 rounded-xl bg-[#2C4A3E] text-white shadow-sm shrink-0">همه آثار گالری</a>
-    <a href="{% url 'search' %}?cat=pottery" class="px-4 py-2 rounded-xl bg-white border border-[#E8E3D9] text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors shrink-0">سفال و سرامیک</a>
-    <a href="{% url 'search' %}?cat=painting" class="px-4 py-2 rounded-xl bg-white border border-[#E8E3D9] text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors shrink-0">نقاشی و نگارگری</a>
-    <a href="{% url 'search' %}?cat=calligraphy" class="px-4 py-2 rounded-xl bg-white border border-[#E8E3D9] text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors shrink-0">خوشنویسی و تذهیب</a>
-    <a href="{% url 'search' %}?cat=wood" class="px-4 py-2 rounded-xl bg-white border border-[#E8E3D9] text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors shrink-0">دست‌سازه‌های چوبی</a>
-    <a href="{% url 'search' %}?cat=candle" class="px-4 py-2 rounded-xl bg-white border border-[#E8E3D9] text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors shrink-0">شمع موم عسل</a>
+  <div class="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth pb-4 mb-6 sm:mb-8 text-xs font-bold">
+    <a href="{% url 'shop' %}" class="px-4 py-2 rounded-xl {% if not selected_cat %}bg-[#2C4A3E] text-white{% else %}bg-white border border-[#E8E3D9] text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2]{% endif %} shadow-sm shrink-0">همه آثار گالری</a>
+    {% for cat in categories %}
+    <a href="{% url 'shop' %}?cat={{ cat.slug }}" class="px-4 py-2 rounded-xl {% if selected_cat == cat.slug %}bg-[#2C4A3E] text-white{% else %}bg-white border border-[#E8E3D9] text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2]{% endif %} transition-colors shrink-0">{{ cat.name }}</a>
+    {% endfor %}
+  </div>
+
+  <!-- دکمه باز و بسته کردن فیلترها در موبایل و تبلت -->
+  <div class="lg:hidden mb-4">
+    <button type="button" onclick="document.getElementById('shop-filters-aside').classList.toggle('hidden')" 
+            class="w-full py-3 px-4 bg-white border border-[#E8E3D9] hover:border-[#2C4A3E] rounded-2xl flex items-center justify-between text-xs font-bold text-[#1E3329] shadow-sm transition-all cursor-pointer">
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+        <span>فیلترها و مرتب‌سازی پیشرفته آثار</span>
+      </span>
+      <span class="text-[#82533D] text-[11px] bg-[#F7EFEA] px-2.5 py-0.5 rounded-full font-bold">نمایش / پنهان فیلترها</span>
+    </button>
   </div>
 
   <!-- دو ستونه: فیلترها در راست + گرید در چپ -->
   <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
     
     <!-- ستون کناری فیلترها (۱ ستون) -->
-    <aside class="space-y-6">
+    <aside id="shop-filters-aside" class="hidden lg:block space-y-6">
       <div class="bg-white rounded-3xl p-6 border border-[#E8E3D9] shadow-sm space-y-6">
         <h3 class="text-sm font-bold text-[#1E3329] pb-3 border-b border-[#E8E3D9]">فیلتر بر اساس هنر</h3>
         
         <!-- دسته‌ها -->
         <div class="space-y-2 text-xs text-[#6B726E]">
-          <a href="{% url 'shop' %}" class="flex items-center justify-between py-1 text-[#2C4A3E] font-bold">
+          <a href="{% url 'shop' %}" class="flex items-center justify-between py-1 {% if not selected_cat %}text-[#2C4A3E] font-bold{% else %}hover:text-[#1E3329]{% endif %}">
             <span>کلیه آثار</span>
-            <span class="bg-[#E8EFEA] text-[#2C4A3E] px-2 py-0.5 rounded-full text-[10px]">۲۴</span>
+            <span class="bg-[#E8EFEA] text-[#2C4A3E] px-2 py-0.5 rounded-full text-[10px]">{{ products.count }}</span>
           </a>
-          <a href="{% url 'search' %}?cat=pottery" class="flex items-center justify-between py-1 hover:text-[#1E3329]">
-            <span>سفال و سرامیک معاصر</span>
-            <span class="bg-[#FAF7F2] px-2 py-0.5 rounded-full text-[10px]">۸</span>
+          {% for cat in categories %}
+          <a href="{% url 'shop' %}?cat={{ cat.slug }}" class="flex items-center justify-between py-1 {% if selected_cat == cat.slug %}text-[#2C4A3E] font-bold{% else %}hover:text-[#1E3329]{% endif %}">
+            <span>{{ cat.name }}</span>
+            <span class="bg-[#FAF7F2] px-2 py-0.5 rounded-full text-[10px]">{{ cat.products.count }}</span>
           </a>
-          <a href="{% url 'search' %}?cat=painting" class="flex items-center justify-between py-1 hover:text-[#1E3329]">
-            <span>نقاشی رنگ‌روغن و آبرنگ</span>
-            <span class="bg-[#FAF7F2] px-2 py-0.5 rounded-full text-[10px]">۶</span>
-          </a>
-          <a href="{% url 'search' %}?cat=calligraphy" class="flex items-center justify-between py-1 hover:text-[#1E3329]">
-            <span>خوشنویسی و کتیبه زرین</span>
-            <span class="bg-[#FAF7F2] px-2 py-0.5 rounded-full text-[10px]">۴</span>
-          </a>
+          {% endfor %}
         </div>
 
         <!-- چک‌باکس‌های ویژه -->
         <div class="pt-4 border-t border-[#E8E3D9] space-y-2.5 text-xs text-[#6B726E]">
           <h4 class="font-bold text-[#1E3329]">ویژگی‌های ممتاز</h4>
-          <label class="flex items-center gap-2 cursor-pointer hover:text-[#1E3329]">
-            <input type="checkbox" checked class="rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
-            <span>دارای شناسنامه فیزیکی معتبر</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer hover:text-[#1E3329]">
-            <input type="checkbox" class="rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
-            <span>فقط آثار تک‌نسخه و منحصربه‌فرد</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer hover:text-[#1E3329]">
-            <input type="checkbox" checked class="rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
-            <span>فقط آثار موجود و آماده ارسال فوری</span>
-          </label>
+          <a href="?{% if selected_cat %}cat={{ selected_cat }}&{% endif %}{% if current_booth %}booth={{ current_booth.slug }}&{% endif %}{% if has_cert == '1' %}has_cert=0{% else %}has_cert=1{% endif %}" class="flex items-center gap-2 cursor-pointer hover:text-[#1E3329]">
+            <input type="checkbox" {% if has_cert == '1' %}checked{% endif %} class="rounded border-[#E8E3D9] text-[#2C4A3E] pointer-events-none">
+            <span class="{% if has_cert == '1' %}font-bold text-[#1E3329]{% endif %}">دارای شناسنامه فیزیکی معتبر</span>
+          </a>
+          <a href="?{% if selected_cat %}cat={{ selected_cat }}&{% endif %}{% if current_booth %}booth={{ current_booth.slug }}&{% endif %}{% if unique_only == '1' %}unique=0{% else %}unique=1{% endif %}" class="flex items-center gap-2 cursor-pointer hover:text-[#1E3329]">
+            <input type="checkbox" {% if unique_only == '1' %}checked{% endif %} class="rounded border-[#E8E3D9] text-[#2C4A3E] pointer-events-none">
+            <span class="{% if unique_only == '1' %}font-bold text-[#1E3329]{% endif %}">فقط آثار تک‌نسخه و منحصربه‌فرد</span>
+          </a>
+          <a href="?{% if selected_cat %}cat={{ selected_cat }}&{% endif %}{% if current_booth %}booth={{ current_booth.slug }}&{% endif %}{% if in_stock == '1' %}in_stock=0{% else %}in_stock=1{% endif %}" class="flex items-center gap-2 cursor-pointer hover:text-[#1E3329]">
+            <input type="checkbox" {% if in_stock == '1' %}checked{% endif %} class="rounded border-[#E8E3D9] text-[#2C4A3E] pointer-events-none">
+            <span class="{% if in_stock == '1' %}font-bold text-[#1E3329]{% endif %}">فقط آثار موجود و آماده ارسال فوری</span>
+          </a>
         </div>
 
         <!-- بنر ثبت‌نام هنرمند -->
@@ -117,108 +122,66 @@
       
       <!-- نوار بالایی آمار و سورت -->
       <div class="bg-white rounded-2xl p-4 border border-[#E8E3D9] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
-        <div class="flex items-center gap-3 text-xs">
+        <div class="flex items-center gap-2 sm:gap-3 text-xs flex-wrap">
           <span class="font-bold text-[#1E3329]">مرتب‌سازی:</span>
-          <button class="px-3 py-1.5 rounded-xl bg-[#2C4A3E] text-white font-bold">منتخب گالری</button>
-          <button class="px-3 py-1.5 rounded-xl text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors">جدیدترین</button>
-          <button class="px-3 py-1.5 rounded-xl text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors">قیمت: کم به زیاد</button>
-          <button class="px-3 py-1.5 rounded-xl text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors">قیمت: زیاد به کم</button>
+          <a href="?{% if selected_cat %}cat={{ selected_cat }}&{% endif %}sort=-created_at" class="px-3 py-1.5 rounded-xl bg-[#2C4A3E] text-white font-bold">جدیدترین</a>
+          <a href="?{% if selected_cat %}cat={{ selected_cat }}&{% endif %}sort=price" class="px-3 py-1.5 rounded-xl text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors">قیمت: کم به زیاد</a>
+          <a href="?{% if selected_cat %}cat={{ selected_cat }}&{% endif %}sort=-price" class="px-3 py-1.5 rounded-xl text-[#6B726E] hover:text-[#1E3329] hover:bg-[#FAF7F2] transition-colors">قیمت: زیاد به کم</a>
         </div>
-        <span class="text-xs text-[#98A19C]">۸ اثر به نمایش درآمده</span>
+        <span class="text-xs text-[#98A19C]">{{ products.count }} اثر به نمایش درآمده</span>
       </div>
 
-      <!-- گرید محصولات -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- اثر ۱ -->
+      <!-- گرید محصولات پویا -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {% for product in products %}
         <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
-          <a href="{% url 'product_detail' 1 %}" class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-            <img src="/static/images/products/product-1.jpg" alt="گلدان سرامیکی فیروزه‌ای" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full">سفال و سرامیک</span>
+          <a href="{% url 'product_detail' product.slug %}" class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            {% else %}
+            <img src="/static/images/products/product-1.jpg" alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            {% endif %}
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full shadow-sm">{{ product.category.name }}</span>
+            {% if product.stock == 1 %}
             <span class="absolute top-3 left-3 bg-[#2C4A3E] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">تک‌نسخه</span>
+            {% endif %}
           </a>
           <div class="p-5 flex flex-col flex-grow">
             <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-              <span>کارگاه: <strong class="text-[#1E3329]">استودیو کهن</strong></span>
-              <span class="text-[10px] text-[#82533D]">پخت راکو</span>
+              <span>غرفه: <strong class="text-[#1E3329]">{{ product.booth.name|default:"هنرکده" }}</strong></span>
+              <span class="text-[10px] text-[#82533D]">{{ product.brand.name|default:"" }}</span>
             </div>
             <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
-              <a href="{% url 'product_detail' 1 %}">گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار</a>
+              <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
             </h3>
             <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
-              پخت راکو در دمای ۱۲۰۰ درجه با طلای مایع ۲۴ عیار، دارای شناسنامه فیزیکی ممهور.
+              {{ product.short_description|default:product.description|truncatewords:15 }}
             </p>
             <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
               <div>
                 <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-                <span class="text-sm font-extrabold text-[#1E3329]">۱,۴۵۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+                {% if product.discount_price %}
+                <div class="flex items-baseline gap-1.5">
+                  <span class="text-xs line-through text-[#98A19C]">{{ product.price|intcomma }}</span>
+                  <span class="text-sm font-extrabold text-[#1E3329]">{{ product.discount_price|intcomma }} <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+                </div>
+                {% else %}
+                <span class="text-sm font-extrabold text-[#1E3329]">{{ product.price|intcomma }} <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+                {% endif %}
               </div>
-              <a href="{% url 'product_detail' 1 %}" class="p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-              </a>
+              </button>
             </div>
           </div>
         </article>
-
-        <!-- اثر ۲ -->
-        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
-          <a href="{% url 'product_detail' 2 %}" class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-            <img src="/static/images/products/product-2.jpg" alt="تابلو نقاشی کویر" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full">نقاشی رنگ‌روغن</span>
-            <span class="absolute top-3 left-3 bg-[#C69A52] text-[#1E3329] text-[10px] font-bold px-2 py-0.5 rounded-md">بوم کتان</span>
-          </a>
-          <div class="p-5 flex flex-col flex-grow">
-            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-              <span>هنرمند: <strong class="text-[#1E3329]">امیرحسین جلالی</strong></span>
-              <span class="text-[10px] text-[#82533D]">ابعاد ۶۰×۸۰</span>
-            </div>
-            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
-              <a href="{% url 'product_detail' 2 %}">تابلو رنگ‌روغن «کویر و گنبد فیروزه‌ای»</a>
-            </h3>
-            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
-              نقاشی چشم‌انداز معماری اصیل کویری با بافت ضخیم رنگ و امضای استاد جلالی.
-            </p>
-            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-              <div>
-                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-                <span class="text-sm font-extrabold text-[#1E3329]">۲,۸۰۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
-              </div>
-              <a href="{% url 'product_detail' 2 %}" class="p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- اثر ۳ -->
-        <article class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col">
-          <a href="{% url 'product_detail' 3 %}" class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
-            <img src="/static/images/products/product-4.jpg" alt="کتیبه تذهیب زرین" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#C69A52] font-bold px-2.5 py-1 rounded-full">خوشنویسی و تذهیب</span>
-            <span class="absolute top-3 left-3 bg-[#2C4A3E] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">طلا ۲۴ عیار</span>
-          </a>
-          <div class="p-5 flex flex-col flex-grow">
-            <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-              <span>هنرمند: <strong class="text-[#1E3329]">مهدی کیان</strong></span>
-              <span class="text-[10px] text-[#C69A52]">لاجورد و طلا</span>
-            </div>
-            <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
-              <a href="{% url 'product_detail' 3 %}">کتیبه تذهیب و نقاشی‌خط نستعلیق زرین</a>
-            </h3>
-            <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
-              ترکیب طلاکاری ظریف دست‌ساز با حواشی لاجوردی و تحریر شعر حافظ.
-            </p>
-            <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
-              <div>
-                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
-                <span class="text-sm font-extrabold text-[#1E3329]">۳,۶۰۰,۰۰۰ <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
-              </div>
-              <a href="{% url 'product_detail' 3 %}" class="p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-              </a>
-            </div>
-          </div>
-        </article>
+        {% empty %}
+        <div class="col-span-full py-16 text-center text-[#6B726E] bg-white rounded-3xl border border-[#E8E3D9] p-8">
+          <p class="text-base font-bold text-[#1E3329] mb-2">هیچ اثری در این دسته‌بندی یافت نشد.</p>
+          <a href="{% url 'shop' %}" class="inline-block mt-3 px-5 py-2.5 bg-[#2C4A3E] text-white rounded-xl text-xs font-bold hover:bg-[#1E3329] transition-all">مشاهده کلیه آثار گالری</a>
+        </div>
+        {% endfor %}
+      </div>
 
       </div>
 

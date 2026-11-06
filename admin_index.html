@@ -1,0 +1,1774 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fa-ir" dir="rtl"  x-data="theme()" x-bind="themeBindings" x-cloak>
+    <head>
+        <title> مدیریت وب‌گاه | پنل مدیریت بازارچه هنرکده</title>
+
+        <link href="/static/unfold/fonts/inter/styles.css" rel="stylesheet">
+        <link href="/static/unfold/fonts/material-symbols/styles.css" rel="stylesheet">
+
+        
+            <link href="/static/css/admin_custom.css" rel="stylesheet">
+        
+
+        
+
+        <link href="/static/unfold/css/styles.css" rel="stylesheet">
+        <link href="/static/unfold/css/simplebar/simplebar.css" rel="stylesheet">
+
+        <script src="/static/unfold/js/alpine/alpine.anchor.js" defer></script>
+        <script src="/static/unfold/js/alpine/alpine.persist.js" defer></script>
+        <script src="/static/unfold/js/alpine/alpine.sort.js" defer></script>
+        <script src="/static/unfold/js/alpine/alpine.resize.js" defer></script>
+        <script src="/static/unfold/js/alpine/alpine.js" defer></script>
+        <script src="/static/unfold/js/htmx/htmx.js"></script>
+        <script src="/static/unfold/js/chart/chart.js"></script>
+
+        
+            <script src="/static/js/admin_custom.js"></script>
+        
+
+        
+
+        
+
+        <script src="/static/unfold/js/app.js"></script>
+
+        
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+
+        
+            <meta name="robots" content="NONE,NOARCHIVE">
+        
+    </head>
+
+    <body class="antialiased bg-base-50 font-sans text-font-default-light text-sm dark:bg-base-900 dark:text-font-default-dark " data-admin-utc-offset="12600"
+          x-data="{
+                  
+                  sidebarMobileOpen: false,
+                  sidebarDesktopOpen: (localStorage.getItem('sidebarDesktopOpen') !== null) ? (localStorage.getItem('sidebarDesktopOpen') == '1') : true
+                  }"
+          x-init="
+                  activeTab = '';
+                  $watch('sidebarDesktopOpen', value => localStorage.setItem('sidebarDesktopOpen', value ? '1' : '0'));
+                 "
+    >
+        
+            <style id="unfold-theme-colors">
+                :root {
+                    
+
+                    
+                        
+                            --color-base-50: oklch(98.5% .002 247.839);
+                        
+                            --color-base-100: oklch(96.7% .003 264.542);
+                        
+                            --color-base-200: oklch(92.8% .006 264.531);
+                        
+                            --color-base-300: oklch(87.2% .01 258.338);
+                        
+                            --color-base-400: oklch(70.7% .022 261.325);
+                        
+                            --color-base-500: oklch(55.1% .027 264.364);
+                        
+                            --color-base-600: oklch(44.6% .03 256.802);
+                        
+                            --color-base-700: oklch(37.3% .034 259.733);
+                        
+                            --color-base-800: oklch(27.8% .033 256.848);
+                        
+                            --color-base-900: oklch(21% .034 264.665);
+                        
+                            --color-base-950: oklch(13% .028 261.692);
+                        
+                    
+                        
+                            --color-primary-50: oklch(97.7% .014 308.299);
+                        
+                            --color-primary-100: oklch(94.6% .033 307.174);
+                        
+                            --color-primary-200: oklch(90.2% .063 306.703);
+                        
+                            --color-primary-300: oklch(82.7% .119 306.383);
+                        
+                            --color-primary-400: oklch(71.4% .203 305.504);
+                        
+                            --color-primary-500: oklch(62.7% .265 303.9);
+                        
+                            --color-primary-600: oklch(55.8% .288 302.321);
+                        
+                            --color-primary-700: oklch(49.6% .265 301.924);
+                        
+                            --color-primary-800: oklch(43.8% .218 303.724);
+                        
+                            --color-primary-900: oklch(38.1% .176 304.987);
+                        
+                            --color-primary-950: oklch(29.1% .149 302.717);
+                        
+                    
+                        
+                            --color-font-subtle-light: var(--color-base-500);
+                        
+                            --color-font-subtle-dark: var(--color-base-400);
+                        
+                            --color-font-default-light: var(--color-base-600);
+                        
+                            --color-font-default-dark: var(--color-base-300);
+                        
+                            --color-font-important-light: var(--color-base-900);
+                        
+                            --color-font-important-dark: var(--color-base-100);
+                        
+                    
+                }
+            </style>
+        
+
+        
+    <div id="page" class="flex max-w-full min-h-screen ">
+        
+            
+                
+
+<div class="relative z-60">
+    <div class="fixed hidden xl:relative xl:block w-[288px] " x-bind:class="{'xl:hidden!': !sidebarDesktopOpen, 'block!': sidebarMobileOpen}">
+        <div class="bg-base-50 relative z-30 dark:bg-base-900">
+            <div id="nav-sidebar" class="bg-base-50 border-r border-base-200 bottom-0 fixed max-h-screen top-0 w-[288px] dark:border-base-800 dark:bg-base-900 ">
+                
+                    
+
+<nav id="nav-sidebar-inner" class="bg-base-50 flex flex-col min-h-screen dark:text-font-default-dark dark:bg-base-950/20 ">
+    
+
+<div class="border-b border-base-200 flex gap-3 items-center h-[65px] mb-6 dark:border-base-800 px-3 " >
+    <div class="bg-transparent flex font-semibold gap-3 grow min-w-0 h-[64px] items-center px-3 "
+         
+    >
+        
+            
+
+
+    <a href="/admin/" class="bg-primary-600 flex h-[38px] items-center justify-center rounded-default shrink-0 text-white text-xs w-[38px]">
+    <span class="material-symbols-outlined md-18">palette</span>
+    </a>
+
+
+<div class="flex flex-col grow justify-center min-w-0">
+    <div class="text-important tracking-tight *:truncate xl:text-base">
+        
+    <div id="site-name">
+    
+        <a href="/admin/">
+            سامانه مدیریت جامع هنرکده (kadehonar.ir)
+        </a>
+    
+</div>
+
+
+    </div>
+
+    
+</div>
+
+        
+
+        
+    </div>
+
+    <span class="material-symbols-outlined block cursor-pointer h-[18px] xl:hidden! hover:text-base-700 dark:hover:text-base-200" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+        close
+    </span>
+
+    
+
+
+
+</div>
+
+
+    
+
+
+    
+        <div class="mb-2.5 mx-3 relative" x-data="searchDropdown()" x-on:keydown.window="applyShortcut($event)" x-on:click.outside="openSearchResults = false">
+            <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">
+                <span class="material-symbols-outlined md-18 text-base-400">manage_search</span>
+
+                <input type="search"
+                       id="nav-filter"
+                       name="s"
+                       x-ref="searchInput"
+                       x-on:focus="openSearchResults = true; currentIndex = 0"
+                       x-on:keydown="openSearchResults = true;"
+                       x-on:keydown.arrow-down.prevent="nextItem()"
+                       x-on:keydown.arrow-up.prevent="prevItem()"
+                       x-on:keydown.escape.prevent="openSearchResults = false; if ($refs.searchInput.value === '') { $refs.searchInput.blur() } else { $refs.searchInput.value = '' }"
+                       x-on:keydown.enter.prevent="selectItem()"
+                       x-on:search="currentIndex = 0"
+                       hx-get="/admin/search/"
+                       hx-trigger="keyup changed delay:500ms"
+                       hx-target="#search-results"
+                       class="grow font-medium min-w-0 overflow-hidden p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                       placeholder="Search apps and models..."
+                       aria-label="فیلتر کردن آیتم های مسیریابی">
+
+                <kbd class="bg-base-50 border border-base-200 font-sans text-xs text-font-subtle-light rounded-xs px-1 whitespace-nowrap dark:bg-white/[.04] dark:border-base-700 dark:text-font-subtle-dark">
+    t
+</kbd>
+
+            </div>
+
+            <div id="search-results" x-show="openSearchResults"></div>
+        </div>
+    
+
+
+
+    
+        
+
+
+    <div id="nav-sidebar-apps" class="h-0 grow overflow-auto" data-simplebar>
+        
+            
+                
+
+                <div class="hidden mb-1.5 has-[ol]:has-[li]:block" >
+                    
+                        <hr class="border-t border-base-200 mx-6 my-2 dark:border-base-800" />
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark " >
+                            تنظیمات و هویت فروشگاه
+
+                            
+
+
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-0.5 px-6" >
+                        
+                            
+                                <li>
+                                    <a href="/admin/core/sitesetting/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                settings
+                                            </span>
+                                        
+
+                                        <span>تنظیمات عمومی، لوگو و حالت تعمیرات</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+            
+                
+
+                <div class="hidden mb-1.5 has-[ol]:has-[li]:block" >
+                    
+                        <hr class="border-t border-base-200 mx-6 my-2 dark:border-base-800" />
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark " >
+                            مدیریت کاتالوگ و محصولات
+
+                            
+
+
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-0.5 px-6" >
+                        
+                            
+                                <li>
+                                    <a href="/admin/catalog/product/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                palette
+                                            </span>
+                                        
+
+                                        <span>محصولات و آثار هنری</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/catalog/category/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                category
+                                            </span>
+                                        
+
+                                        <span>شاخه‌ها و دسته‌بندی‌ها</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/catalog/attribute/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                tune
+                                            </span>
+                                        
+
+                                        <span>مشخصه‌های متغیر (سایز، رنگ، طرح)</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/catalog/feature/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                featured_play_list
+                                            </span>
+                                        
+
+                                        <span>ویژگی‌های فنی (جنس، بافت، تکنیک)</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/catalog/brand/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                verified
+                                            </span>
+                                        
+
+                                        <span>برندها و نشان‌های تجاری</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/catalog/supplier/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                inventory
+                                            </span>
+                                        
+
+                                        <span>تأمین‌کنندگان کالا</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+            
+                
+
+                <div class="hidden mb-1.5 has-[ol]:has-[li]:block" >
+                    
+                        <hr class="border-t border-base-200 mx-6 my-2 dark:border-base-800" />
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark " >
+                            بازارچه و هنرمندان
+
+                            
+
+
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-0.5 px-6" >
+                        
+                            
+                                <li>
+                                    <a href="/admin/catalog/booth/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                storefront
+                                            </span>
+                                        
+
+                                        <span>غرفه‌های اختصاصی هنرمندان</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+            
+                
+
+                <div class="hidden mb-1.5 has-[ol]:has-[li]:block" >
+                    
+                        <hr class="border-t border-base-200 mx-6 my-2 dark:border-base-800" />
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark " >
+                            طراحی پویا و بازاریابی
+
+                            
+
+
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-0.5 px-6" >
+                        
+                            
+                                <li>
+                                    <a href="/admin/core/slider/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                view_carousel
+                                            </span>
+                                        
+
+                                        <span>اسلایدر تصویر صفحه اصلی</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/core/banner/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                ad_units
+                                            </span>
+                                        
+
+                                        <span>بنرهای تبلیغاتی و اطلاعیه‌ها</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/core/menuitem/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                menu
+                                            </span>
+                                        
+
+                                        <span>منوی ناوبری تارنما</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/core/staticpage/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                article
+                                            </span>
+                                        
+
+                                        <span>صفحات ایستا و راهنما</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+            
+                
+
+                <div class="hidden mb-1.5 has-[ol]:has-[li]:block" >
+                    
+                        <hr class="border-t border-base-200 mx-6 my-2 dark:border-base-800" />
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark " >
+                            ارسال و لجستیک
+
+                            
+
+
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-0.5 px-6" >
+                        
+                            
+                                <li>
+                                    <a href="/admin/shipping/carrier/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                local_shipping
+                                            </span>
+                                        
+
+                                        <span>حامل‌ها و روش‌های ارسال</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/shipping/province/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                map
+                                            </span>
+                                        
+
+                                        <span>استان‌های تحت پوشش</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/shipping/region/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                public
+                                            </span>
+                                        
+
+                                        <span>منطقه‌بندی توزیع</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+            
+                
+
+                <div class="hidden mb-1.5 has-[ol]:has-[li]:block" >
+                    
+                        <hr class="border-t border-base-200 mx-6 my-2 dark:border-base-800" />
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark " >
+                            فروش، تخفیف و مالی
+
+                            
+
+
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-0.5 px-6" >
+                        
+                            
+                                <li>
+                                    <a href="/admin/orders/order/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                shopping_cart
+                                            </span>
+                                        
+
+                                        <span>سفارش‌های مشتریان و کارمزد</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/orders/cartrule/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                confirmation_number
+                                            </span>
+                                        
+
+                                        <span>قوانین سبد خرید و کدهای تخفیف</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+            
+                
+
+                <div class="hidden mb-1.5 has-[ol]:has-[li]:block" >
+                    
+                        <hr class="border-t border-base-200 mx-6 my-2 dark:border-base-800" />
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark " >
+                            کاربران و پرسنل
+
+                            
+
+
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-0.5 px-6" >
+                        
+                            
+                                <li>
+                                    <a href="/admin/auth/user/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                person
+                                            </span>
+                                        
+
+                                        <span>حساب‌های کاربری و کارمندان</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/admin/auth/group/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                badge
+                                            </span>
+                                        
+
+                                        <span>نقش‌ها و گروه‌های دسترسی</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+    </div>
+
+    
+
+
+
+
+
+    
+
+    <div class="border-t border-base-200 px-6 py-3 relative dark:border-base-800" x-data="{ openUserLinks: false }">
+    <nav class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 rounded-default shadow-lg bottom-[73px] left-3 right-3 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openUserLinks" x-transition x-on:click.outside="openUserLinks = false">
+        
+
+
+    <div class="border-b border-base-200 flex flex-row gap-1 mb-1 pb-1 px-2 dark:border-base-700">
+        <a class="cursor-pointer flex flex-row grow px-2 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+           x-on:click="switchTheme('light')"
+           x-bind:class="adminTheme == 'light'  && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+            <span class="material-symbols-outlined mr-2">light_mode</span>
+            <span class="leading-none self-center">Light</span>
+        </a>
+
+        <a class="cursor-pointer flex flex-row grow leading-none -ml-1 px-2 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+           x-on:click="switchTheme('dark')"
+           x-bind:class="adminTheme == 'dark' && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+            <span class="material-symbols-outlined mr-2">dark_mode</span>
+            <span class="leading-none self-center">Dark</span>
+        </a>
+
+        <a class="cursor-pointer flex flex-row grow -mr-1 px-2 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+           x-on:click="switchTheme('auto')"
+           x-bind:class="adminTheme == 'auto' && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+            <span class="material-symbols-outlined mr-2">computer</span>
+            <span class="leading-none self-center">System</span>
+        </a>
+    </div>
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+
+        
+
+
+    <a href="/" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+        نمایش وبگاه
+    </a>
+
+
+
+    
+        <a href="/admin/password_change/" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+            تغییر گذرواژه
+        </a>
+    
+
+
+<div class="border-t border-base-200 mt-1 pt-1 dark:border-base-700">
+    <form id="logout-form" method="post" action="/admin/logout/" class="mx-1">
+        <input type="hidden" name="csrfmiddlewaretoken" value="W9QwoGU6XQR4zwDoXY4XWYSq9NAxRe27x3A6Cl36bQJDpeO4k7bEQar88AGhO17X">
+
+        <button type="submit" class="bg-none flex cursor-pointer items-center px-3 py-1.5 text-left text-red-700 rounded-default w-full hover:bg-red-100 dark:hover:bg-red-500/20 dark:text-red-400 dark:hover:text-red-400">
+            خروج <span class="ml-auto material-symbols-outlined text-red-700 dark:text-red-400">logout</span>
+        </button>
+    </form>
+</div>
+
+    </nav>
+
+    <div class="cursor-pointer flex flex-row gap-3 items-center min-h-[64px] -mx-6 -my-3 px-6 py-3 hover:bg-base-100 dark:hover:bg-base-800" x-on:click="openUserLinks = !openUserLinks" x-bind:class="{'bg-base-100 dark:bg-base-800': openUserLinks}">
+        
+    <div class="bg-base-200 bg-cover font-semibold flex items-center justify-center relative select-none text-important dark:bg-base-700 after:absolute after:inset-0 after:inset-ring after:inset-ring-base-800/10 dark:after:inset-ring-base-200/10
+                
+                    h-[38px] min-w-[38px] w-[38px]
+                
+                rounded-default after:rounded-default"
+         >
+        
+            م
+        
+    </div>
+
+
+
+        <div class="flex flex-col select-none min-w-0">
+            <div class="font-semibold text-important tracking-tight truncate">
+                مدیر کل سامانه
+            </div>
+
+            
+                <div class="text-subtle text-xs truncate">
+                    admin@kadehonar.ir
+                </div>
+            
+        </div>
+
+        <span class="material-symbols-outlined ml-auto select-none text-font-default-light dark:text-font-default-dark">
+            unfold_more
+        </span>
+    </div>
+</div>
+
+</nav>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+        
+
+        <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 ">
+            
+                
+
+<div class="bg-white border-b border-base-200 mb-6 px-4 z-40 dark:bg-base-900 dark:border-base-800 dark:text-font-default-dark ">
+    <div class="container flex items-center h-16 mx-auto py-4 ">
+        <div id="header-inner" class="flex items-center relative w-full">
+            <div class="flex items-center w-full">
+                
+                    
+                        
+                            
+
+<div class="flex flex-row grow font-semibold items-center min-w-0 mr-3">
+    
+        <span class="cursor-pointer flex flex-row items-center">
+            <span class="material-symbols-outlined hidden! xl:block!" x-on:click="sidebarDesktopOpen = !sidebarDesktopOpen; localStorage.setItem('sidebarDesktopOpen', sidebarDesktopOpen ? '1' : '0');">
+                dock_to_right
+            </span>
+
+            <span class="material-symbols-outlined block! xl:hidden!" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+                dock_to_right
+            </span>
+        </span>
+
+        <span class="block bg-base-200 h-5 mx-3 w-px dark:bg-base-700"></span>
+    
+
+    
+
+
+    
+
+
+
+    <h1 class="overflow-hidden leading-5 text-important flex items-center whitespace-nowrap xl:text-base">
+        <span class="align-middle inline-block leading-5 min-w-0 truncate tracking-tight">
+        مدیریت وب‌گاه
+        </span >
+
+
+        
+    </h1>
+</div>
+
+                        
+
+                        
+                            
+
+<div class="flex flex-row gap-4 items-center ml-auto">
+    
+
+    
+
+
+
+
+    
+</div>
+
+                        
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+
+            
+                <div class="px-4">
+                    <div class="container mx-auto ">
+                        
+
+                    </div>
+                </div>
+            
+
+            <div class="@container px-4 pb-4 grow">
+                <div id="content" class="container mx-auto colM ">
+                    
+
+                    
+    <div class="flex flex-col lg:flex-row lg:gap-8">
+        <div class="grow">
+            
+
+
+    
+        <div class="app-catalog module">
+            <div class="bg-base-50 mb-6 rounded-default p-3 dark:bg-base-800">
+                <table class="border border-base-400/10 border-spacing-none border-separate rounded-default overflow-hidden shadow-xs w-full dark:border-base-800">
+                    <caption class="font-semibold mb-3 text-base-900 text-left dark:text-base-100">
+                        <a href="/admin/catalog/" class="section" title="مدلها در برنامه Catalog ">
+                            Catalog
+                        </a>
+                    </caption>
+
+                    
+                        <tr class="bg-white dark:bg-base-900 model-brand">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/catalog/brand/">
+                                        برندها و نشان‌های تجاری
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/catalog/brand/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-supplier">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/catalog/supplier/">
+                                        تأمین‌کنندگان کالا
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/catalog/supplier/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-category">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/catalog/category/">
+                                        شاخه‌ها و دسته‌بندی‌ها
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/catalog/category/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-booth">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/catalog/booth/">
+                                        غرفه‌های اختصاصی هنرمندان
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/catalog/booth/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-product">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/catalog/product/">
+                                        محصولات و آثار هنری
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/catalog/product/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-attribute">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/catalog/attribute/">
+                                        مشخصه‌های متغیر (سایز، رنگ، طرح)
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/catalog/attribute/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-feature">
+                            
+                                <th scope="row" class="font-normal p-3 text-left ">
+                                    <a href="/admin/catalog/feature/">
+                                        ویژگی‌های فنی محصول
+                                    </a>
+                                </th>
+                            
+
+                            <td class=" p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/catalog/feature/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                </table>
+            </div>
+        </div>
+    
+        <div class="app-core module">
+            <div class="bg-base-50 mb-6 rounded-default p-3 dark:bg-base-800">
+                <table class="border border-base-400/10 border-spacing-none border-separate rounded-default overflow-hidden shadow-xs w-full dark:border-base-800">
+                    <caption class="font-semibold mb-3 text-base-900 text-left dark:text-base-100">
+                        <a href="/admin/core/" class="section" title="مدلها در برنامه Core ">
+                            Core
+                        </a>
+                    </caption>
+
+                    
+                        <tr class="bg-white dark:bg-base-900 model-slider">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/core/slider/">
+                                        اسلایدر صفحه اصلی
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/core/slider/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-banner">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/core/banner/">
+                                        بنرهای تبلیغاتی
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/core/banner/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-sitesetting">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/core/sitesetting/">
+                                        تنظیمات کلی و پیکربندی فروشگاه
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-staticpage">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/core/staticpage/">
+                                        صفحات ایستا و قوانین
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/core/staticpage/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-menuitem">
+                            
+                                <th scope="row" class="font-normal p-3 text-left ">
+                                    <a href="/admin/core/menuitem/">
+                                        منوی ناوبری تارنما
+                                    </a>
+                                </th>
+                            
+
+                            <td class=" p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/core/menuitem/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                </table>
+            </div>
+        </div>
+    
+        <div class="app-orders module">
+            <div class="bg-base-50 mb-6 rounded-default p-3 dark:bg-base-800">
+                <table class="border border-base-400/10 border-spacing-none border-separate rounded-default overflow-hidden shadow-xs w-full dark:border-base-800">
+                    <caption class="font-semibold mb-3 text-base-900 text-left dark:text-base-100">
+                        <a href="/admin/orders/" class="section" title="مدلها در برنامه Orders ">
+                            Orders
+                        </a>
+                    </caption>
+
+                    
+                        <tr class="bg-white dark:bg-base-900 model-order">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/orders/order/">
+                                        سفارش‌های مشتریان
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/orders/order/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-cartrule">
+                            
+                                <th scope="row" class="font-normal p-3 text-left ">
+                                    <a href="/admin/orders/cartrule/">
+                                        قوانین سبد خرید و تخفیف‌ها
+                                    </a>
+                                </th>
+                            
+
+                            <td class=" p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/orders/cartrule/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                </table>
+            </div>
+        </div>
+    
+        <div class="app-shipping module">
+            <div class="bg-base-50 mb-6 rounded-default p-3 dark:bg-base-800">
+                <table class="border border-base-400/10 border-spacing-none border-separate rounded-default overflow-hidden shadow-xs w-full dark:border-base-800">
+                    <caption class="font-semibold mb-3 text-base-900 text-left dark:text-base-100">
+                        <a href="/admin/shipping/" class="section" title="مدلها در برنامه Shipping ">
+                            Shipping
+                        </a>
+                    </caption>
+
+                    
+                        <tr class="bg-white dark:bg-base-900 model-province">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/shipping/province/">
+                                        استان‌های تحت پوشش
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/shipping/province/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-carrier">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/shipping/carrier/">
+                                        حامل‌ها و روش‌های ارسال
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/shipping/carrier/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-region">
+                            
+                                <th scope="row" class="font-normal p-3 text-left ">
+                                    <a href="/admin/shipping/region/">
+                                        منطقه‌های حمل‌ونقل و توزیع
+                                    </a>
+                                </th>
+                            
+
+                            <td class=" p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/shipping/region/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                </table>
+            </div>
+        </div>
+    
+        <div class="app-auth module">
+            <div class="bg-base-50 mb-6 rounded-default p-3 dark:bg-base-800">
+                <table class="border border-base-400/10 border-spacing-none border-separate rounded-default overflow-hidden shadow-xs w-full dark:border-base-800">
+                    <caption class="font-semibold mb-3 text-base-900 text-left dark:text-base-100">
+                        <a href="/admin/auth/" class="section" title="مدلها در برنامه بررسی اصالت و اجازه‌ها ">
+                            بررسی اصالت و اجازه‌ها
+                        </a>
+                    </caption>
+
+                    
+                        <tr class="bg-white dark:bg-base-900 model-user">
+                            
+                                <th scope="row" class="font-normal p-3 text-left border-b border-base-100 dark:border-base-800">
+                                    <a href="/admin/auth/user/">
+                                        کاربرها
+                                    </a>
+                                </th>
+                            
+
+                            <td class="border-b border-base-100 dark:border-base-800 p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/auth/user/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                        <tr class="bg-white dark:bg-base-900 model-group">
+                            
+                                <th scope="row" class="font-normal p-3 text-left ">
+                                    <a href="/admin/auth/group/">
+                                        گروه‌ها
+                                    </a>
+                                </th>
+                            
+
+                            <td class=" p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    
+                                        <a href="/admin/auth/group/add/" class="addlink block leading-none text-base-400 transition-colors dark:text-base-500 " title="اضافه کردن">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    
+
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    
+                </table>
+            </div>
+        </div>
+    
+
+
+        </div>
+
+        
+
+
+
+
+    <div id="content-related" class="lg:w-96">
+        <div id="recent-actions-module" class="module bg-base-50 rounded-default p-3 dark:bg-base-800">
+            <h2 class="mb-3 font-semibold text-base-900 dark:text-base-100">
+                فعالیتهای اخیر
+            </h2>
+
+            <ul class="actionlist">
+                
+                    <li class="deletelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                استان‌های غیرهمجوار
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    منطقه
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 23:34
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="changelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/catalog/supplier/1/change/">مجموعه هنرکده</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    تأمین‌کننده
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 23:34
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="changelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/catalog/brand/1/change/">هنرکده</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    برند (نشان تجاری)
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 23:17
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="changelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/core/slider/1/change/">اصالت هنر، در خلوت خانه شما (اولویت: 1)</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    اسلاید تصویر
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 23:16
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="changelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/core/slider/1/change/">اصالت هنر، در خلوت خانه شما (اولویت: 1)</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    اسلاید تصویر
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 23:15
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="addlink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/auth/group/4/change/">مدیر عمومی</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    گروه
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 23:14
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="changelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/core/sitesetting/1/change/">هنرکده | گالری و فروشگاه آنلاین آثار هنری و دست‌سازه‌ها (پیکربندی فروشگاه)</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    تنظیمات کلی و پیکربندی فروشگاه
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 23:12
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="changelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/catalog/category/7/change/">خوشنویسی و خطاطی</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    شاخه (دسته‌بندی)
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 22:24
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="changelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/catalog/category/7/change/">خوشنویسی و خطاطی</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    شاخه (دسته‌بندی)
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 22:24
+                            </div>
+                        </div>
+                    </li>
+                
+                    <li class="changelink border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                            
+                                <a href="/admin/core/slider/2/change/">روح خاک و آتش در دستان هنرمند (اولویت: 3)</a>
+                            
+                        </div>
+
+                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
+                            <div>
+                                
+                                    اسلاید تصویر
+                                
+                            </div>
+
+                            <div class="ml-auto">
+                                3 نوامبر 2026، ساعت 21:56
+                            </div>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    </div>
+
+
+                    
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+
+        <div id="modal-overlay" class="backdrop-blur-xs bg-base-900/20 bottom-0 fixed left-0 mr-1 right-0 top-0 z-60 dark:bg-base-900/80"
+     x-cloak
+     x-show="openModal"
+     x-on:keydown.escape.window="openModal = false">
+</div>
+
+<div class="bottom-0 flex items-center justify-center left-0 right-0 fixed top-0 z-70"
+     x-cloak
+     x-show="openModal"
+     x-on:keydown.escape.window="openModal = false">
+    <div id="modal-content" class="bg-white relative rounded-default p-6 w-md dark:bg-base-800" x-on:click.outside="openModal = false"></div>
+</div>
+
+
+        
+
+
+    <div class="backdrop-blur-xs bg-base-900/20 flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000] dark:bg-base-900/80"
+         x-data="searchCommand()"
+         x-on:opencommand.window="handleOpen()"
+         x-on:keydown.window="handleShortcut($event)"
+         x-show="openCommandResults">
+        <div class="bg-white flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full dark:bg-base-800" x-on:click.outside="handleOutsideClick()">
+            <div class="flex flex-row items-center px-4 w-full">
+                <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">
+                    <span class="block material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:hidden">
+                        search
+                    </span>
+
+                    <span class="hidden material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:block animate-spin">
+                        progress_activity
+                    </span>
+                </button>
+
+                <input
+                    autocomplete="off"
+                    type="search"
+                    placeholder="Type to search"
+                    class="font-medium grow px-2 py-4 placeholder-font-subtle-light text-font-default-light focus:outline-hidden dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                    name="s"
+                    id="search-input-command"
+                    x-ref="searchInputCommand"
+                    hx-indicator="#command-submit"
+                    x-on:keydown.escape.prevent="handleEscape()"
+                    x-on:keydown.arrow-down.prevent="nextItem()"
+                    x-on:keydown.arrow-up.prevent="prevItem()"
+                    x-on:keydown.meta.enter.prevent="selectItem(false, true)"
+                    x-on:keydown.ctrl.enter.prevent="selectItem(false, true)"
+                    x-on:keydown.enter.prevent="if (!$event.metaKey && !$event.ctrlKey) selectItem(false, false)"
+                    hx-get="/admin/search/?extended=1"
+                    hx-trigger="keyup changed delay:500ms"
+                    hx-select="#command-results-list"
+                    hx-select-oob="#command-results-note"
+                    hx-target="#command-results">
+
+                <kbd class="bg-base-50 border border-base-200 font-sans text-xs text-font-subtle-light rounded-xs px-1 whitespace-nowrap dark:bg-white/[.04] dark:border-base-700 dark:text-font-subtle-dark">
+    esc
+</kbd>
+
+            </div>
+
+            <div class="grow h-full overflow-auto w-full dark:border-base-700" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)" x-bind:class="{'border-t border-base-200': items !== undefined && items.length > 0}">
+                <div id="command-results"></div>
+
+                
+
+                <div id="command-results-note"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <script src="/static/unfold/js/simplebar/simplebar.js"></script>
+    </body>
+</html>

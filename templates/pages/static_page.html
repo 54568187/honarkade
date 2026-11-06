@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}هنرکده | {{ page.meta_title|default:page.title }}{% endblock %}
+{% block meta_description %}{{ page.meta_description|default:page.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+  
+  <nav class="flex items-center gap-2 text-xs text-[#6B726E] mb-8">
+    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">صفحه اصلی</a>
+    <span>/</span>
+    <span class="text-[#1E3329] font-bold">{{ page.title }}</span>
+  </nav>
+
+  <article class="bg-white rounded-3xl p-6 sm:p-10 border border-[#E8E3D9] shadow-sm space-y-6">
+    <header class="border-b border-[#E8E3D9] pb-6">
+      <h1 class="text-2xl sm:text-3xl font-black text-[#1E3329]">{{ page.title }}</h1>
+    </header>
+
+    <div class="prose prose-emerald max-w-none text-[#333] leading-relaxed text-sm sm:text-base space-y-4">
+      {{ page.content|linebreaks }}
+    </div>
+  </article>
+
+</div>
+{% endblock %}

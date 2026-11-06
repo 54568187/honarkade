@@ -18,12 +18,101 @@
   <!-- استایل‌های بیلد شده تیلویند به همراه فونت‌های محلی بدون نیاز به اینترنت -->
   <link rel="stylesheet" href="/static/css/style.css">
 
+  <style>
+    /* کلاس کمکی مخفی‌سازی اسکرول‌بار در اسکرول‌های افقی لمسی موبایل */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* ارتفاع ریسپانسیو اسلایدر صفحه اصلی در کلیه ابعاد */
+    #hero-slider-container {
+      height: 360px;
+      min-height: 360px;
+      position: relative;
+    }
+    @media (min-width: 640px) {
+      #hero-slider-container {
+        height: 460px;
+        min-height: 460px;
+      }
+    }
+    @media (min-width: 1024px) {
+      #hero-slider-container {
+        height: 520px;
+        min-height: 520px;
+      }
+    }
+
+    /* مکان ثابت و دقیق دکمه‌های کنترل قبلی/بعدی در دو سمت اسلایدر */
+    #slider-prev {
+      position: absolute !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      right: 20px !important;
+      left: auto !important;
+      z-index: 30 !important;
+    }
+    #slider-next {
+      position: absolute !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      left: 20px !important;
+      right: auto !important;
+      z-index: 30 !important;
+    }
+    @media (max-width: 640px) {
+      #slider-prev {
+        right: 10px !important;
+        width: 36px !important;
+        height: 36px !important;
+      }
+      #slider-next {
+        left: 10px !important;
+        width: 36px !important;
+        height: 36px !important;
+      }
+    }
+    @media (min-width: 641px) {
+      #slider-prev {
+        right: 24px !important;
+        width: 48px !important;
+        height: 48px !important;
+      }
+      #slider-next {
+        left: 24px !important;
+        width: 48px !important;
+        height: 48px !important;
+      }
+    }
+    .slider-dots-box {
+      position: absolute !important;
+      bottom: 20px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      z-index: 30 !important;
+    }
+  </style>
+
   {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex flex-col font-['Vazirmatn'] selection:bg-[#2C4A3E] selection:text-[#FAF7F2] antialiased">
+<body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex flex-col font-['Vazirmatn'] selection:bg-[#2C4A3E] selection:text-[#FAF7F2] antialiased overflow-x-hidden">
 
   <!-- نوبار و هدر سایت -->
   {% include 'components/navbar.html' %}
+
+  <!-- پیام‌ها و اعلانات سیستم جنگو -->
+  {% if messages %}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-3 w-full">
+    {% for message in messages %}
+    <div class="p-3.5 mb-2 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-between shadow-sm {% if message.tags == 'error' %}bg-rose-100 text-rose-800 border border-rose-200{% elif message.tags == 'success' %}bg-emerald-100 text-emerald-800 border border-emerald-200{% else %}bg-blue-100 text-blue-800 border border-blue-200{% endif %}">
+      <span>{{ message }}</span>
+      <button onclick="this.parentElement.remove()" class="text-sm font-bold px-2 py-0.5 opacity-70 hover:opacity-100 cursor-pointer">✕</button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 
   <!-- محتوای اصلی صفحات -->
   <main class="flex-grow">

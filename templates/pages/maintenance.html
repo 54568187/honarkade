@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فروشگاه در حال به‌روزرسانی است | {{ site_settings.title|default:"هنرکده" }}</title>
+  <link rel="icon" type="image/svg+xml" href="{% if site_settings and site_settings.favicon %}{{ site_settings.favicon.url }}{% else %}/static/images/favicon.svg{% endif %}">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex items-center justify-center font-['Vazirmatn'] p-4 selection:bg-[#2C4A3E] selection:text-white">
+  
+  <div class="max-w-xl w-full bg-white rounded-3xl shadow-xl border border-[#E8E3D9] p-8 sm:p-10 text-center relative overflow-hidden">
+    <!-- حاشیه هنری بالا -->
+    <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#2C4A3E] via-[#C69A52] to-[#82533D]"></div>
+
+    <!-- آیکون حالت تعمیرات -->
+    <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-[#C69A52]/15 text-[#C69A52] border border-[#C69A52]/30 flex items-center justify-center shadow-inner">
+      <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+      </svg>
+    </div>
+
+    <!-- نشان هنرکده -->
+    <div class="flex items-center justify-center gap-2 mb-4">
+      <img src="{% if site_settings and site_settings.header_logo %}{{ site_settings.header_logo.url }}{% else %}/static/images/favicon.svg{% endif %}" alt="لوگو" class="w-8 h-8">
+      <span class="text-xl font-black text-[#1E3329]">هُنَـرکَـده</span>
+    </div>
+
+    <h1 class="text-2xl sm:text-3xl font-black text-[#1E3329] mb-4">فروشگاه در حال به‌روزرسانی است</h1>
+
+    <!-- پیام سفارشی ثبت شده توسط مدیر در پنل ادمین -->
+    <div class="bg-[#F6F2EA] rounded-2xl p-5 mb-6 border border-[#E8E3D9] text-[#4A4843] leading-relaxed text-sm sm:text-base">
+      {{ site_settings.maintenance_message|default:"در حال ارتقا و بهبود تجربه شما هستیم؛ به زودی با آثار و دست‌سازه‌های جدید در دسترس خواهیم بود." }}
+    </div>
+
+    <div class="space-y-2 text-xs text-[#82533D]">
+      <p>نشانی رایانامه پشتیبانی: <a href="mailto:{{ site_settings.email }}" class="font-bold text-[#2C4A3E]">{{ site_settings.email }}</a></p>
+      <p>تلفن تماس: <span class="font-bold text-[#2C4A3E]">{{ site_settings.phone }}</span></p>
+      <p class="text-gray-400 mt-4 text-[11px]">شناسه IP شما: {{ client_ip }}</p>
+    </div>
+
+    <!-- دکمه ورود برای مدیران -->
+    <div class="mt-8 pt-6 border-t border-[#E8E3D9]">
+      <a href="/admin/" class="inline-flex items-center gap-2 text-xs font-bold text-[#2C4A3E] hover:text-[#C69A52] transition-colors">
+        <span>ورود به پنل مدیریت فروشگاه</span>
+        <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

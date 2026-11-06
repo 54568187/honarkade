@@ -1,0 +1,40 @@
+{% load i18n static unfold %}
+
+<div class="flex flex-wrap items-center gap-2.5 mr-auto">
+    <!-- دکمه مستقیم افزودن رکورد جدید (Object Tools) -->
+    {% if nav_global_side %}
+        <div class="flex items-center">
+            {{ nav_global_side }}
+        </div>
+    {% endif %}
+
+    <!-- منوی اقدامات و اکشن‌های سربرگ -->
+    {% action_list %}
+
+    <!-- پلاک نشانگر وضعیت زنده سامانه -->
+    <div class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-xs text-emerald-800 dark:text-emerald-200 font-medium shadow-xs">
+        <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+        </span>
+        <span>سامانه برخط</span>
+    </div>
+
+    <!-- پلاک تاریخ زنده سرور -->
+    <div class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 font-medium">
+        <span class="material-symbols-outlined text-sm text-teal-600 dark:text-teal-400">calendar_month</span>
+        <span>۱۴۰۵ آبان ۱۴</span>
+    </div>
+
+    <!-- پلاک نقش سوپرادمین -->
+    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-50 dark:bg-teal-950/50 border border-teal-300 dark:border-teal-700 text-xs text-teal-800 dark:text-teal-200 font-semibold shadow-xs">
+        <span class="material-symbols-outlined text-sm text-teal-600 dark:text-teal-400">verified_user</span>
+        <span>مدیر ارشد</span>
+    </div>
+
+    <!-- دکمه مستقیم مشاهده وب‌سایت -->
+    <a href="/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold text-xs shadow-md shadow-teal-500/20 transition-all hover:scale-105">
+        <span class="material-symbols-outlined text-sm">visibility</span>
+        <span class="hidden sm:inline">مشاهده فروشگاه</span>
+    </a>
+</div>
