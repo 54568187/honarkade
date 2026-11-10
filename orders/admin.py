@@ -13,16 +13,24 @@ class OrderItemInline(TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(ModelAdmin):
-    list_display = ("id", "customer", "total_price_display", "commission_display", "status", "carrier", "created_at", "action_buttons")
-    list_filter = ("status", "created_at", "carrier")
+    list_display = ("id", "customer", "total_price_display", "payment_method_display", "status", "carrier", "is_gift_display", "created_at", "action_buttons")
+    list_filter = ("status", "payment_method", "is_gift_wrapped", "is_recycled_packaging", "created_at", "carrier")
     list_editable = ("status",)
-    search_fields = ("id", "customer__username", "customer__first_name", "customer__last_name", "phone", "address")
+    search_fields = ("id", "customer__username", "customer__first_name", "customer__last_name", "phone", "address", "bank_tracking_code")
     readonly_fields = ("total_products_price", "shipping_cost", "total_price", "commission_amount", "created_at", "updated_at")
     inlines = [OrderItemInline]
 
     fieldsets = (
         ("مشخصات خریدار و سفارش", {
             "fields": ("customer", "status", "created_at", "updated_at")
+        }),
+        ("روش پرداخت و فیش بانکی (کارگاه ۱۷)", {
+            "fields": ("payment_method", "bank_tracking_code", "bank_receipt_image"),
+            "description": "پیکربندی پرداخت از طریق درگاه الکترونیک یا ثبت فیش بانکی (کارت به کارت)"
+        }),
+        ("خدمات بسته‌بندی ویژه (کتاب درسی)", {
+            "fields": ("is_gift_wrapped", "gift_message", "is_recycled_packaging"),
+            "description": "کادوپیچی محصول و استفاده از بسته‌بندی قابل بازیافت دوستدار محیط زیست"
         }),
         ("اطلاعات ارسال و حامل انتخابی", {
             "fields": ("carrier", "province", "city", "address", "postal_code", "phone", "notes")
@@ -32,6 +40,14 @@ class OrderAdmin(ModelAdmin):
             "description": "محاسبه خودکار کارمزد و درآمد پلتفرم از سفارش بر اساس درصد تعریف‌شده."
         }),
     )
+
+    @display(description="روش پرداخت")
+    def payment_method_display(self, obj):
+        return obj.get_payment_method_display()
+
+    @display(description="کادوپیچی", boolean=True)
+    def is_gift_display(self, obj):
+        return obj.is_gift_wrapped
 
     @display(description="عملیات")
     def action_buttons(self, obj):

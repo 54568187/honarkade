@@ -509,3 +509,45 @@ def profile_view(request):
     return render(request, "pages/profile.html", context)
 
 
+
+
+from django.http import HttpResponse
+
+def robots_txt_view(request):
+    """فایل راهنمای خزنده‌های موتورهای جست‌وجو (کارگاه ۲۵ و ۲۶ کتاب درسی)"""
+    content = """User-agent: *
+Disallow: /admin/
+Disallow: /profile/
+Disallow: /dashboard/
+Allow: /
+
+Sitemap: https://kadehonar.ir/sitemap.xml
+"""
+    return HttpResponse(content, content_type="text/plain")
+
+
+def sitemap_xml_view(request):
+    """نقشه سایت XML جهت ثبت در گوگل سرچ کنسول (کارگاه ۲۶ کتاب درسی)"""
+    from catalog.models import Product
+    from core.models import StaticPage
+
+    products = Product.objects.filter(is_approved=True, status="published")
+    pages = StaticPage.objects.filter(is_active=True)
+
+    xml_lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        '  <url><loc>https://kadehonar.ir/</loc><priority>1.0</priority><changefreq>daily</changefreq></url>',
+        '  <url><loc>https://kadehonar.ir/shop/</loc><priority>0.9</priority><changefreq>daily</changefreq></url>',
+        '  <url><loc>https://kadehonar.ir/artists/</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>',
+        '  <url><loc>https://kadehonar.ir/cart/</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>',
+    ]
+
+    for p in products:
+        xml_lines.append(f'  <url><loc>https://kadehonar.ir/product/{p.slug}/</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>')
+
+    for pg in pages:
+        xml_lines.append(f'  <url><loc>https://kadehonar.ir/page/{pg.slug}/</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>')
+
+    xml_lines.append('</urlset>')
+    return HttpResponse('\n'.join(xml_lines), content_type="application/xml")

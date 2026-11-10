@@ -78,6 +78,33 @@ class SiteSetting(models.Model):
         verbose_name=_("توقف بعد از نمایش آخرین اسلاید")
     )
 
+    # اطلاعات حساب بانکی جهت پرداخت با فیش بانکی (کارگاه ۱۷ کتاب درسی)
+    bank_name = models.CharField(
+        max_length=100,
+        default="بانک ملی ایران",
+        verbose_name=_("نام بانک جهت واریز فیش")
+    )
+    bank_card_number = models.CharField(
+        max_length=30,
+        default="۶۰۳۷-۹۹۷۵-۱۲۳۴-۵۶۷۸",
+        verbose_name=_("شماره کارت بانکی فروشگاه")
+    )
+    bank_account_number = models.CharField(
+        max_length=30,
+        default="۰۱۱۴۵۸۷۲۲۹۰۰۱",
+        verbose_name=_("شماره حساب بانکی")
+    )
+    bank_shaba_number = models.CharField(
+        max_length=40,
+        default="IR540170000000114587229001",
+        verbose_name=_("شماره شبا (IBAN)")
+    )
+    bank_owner_name = models.CharField(
+        max_length=100,
+        default="فروشگاه صنایع‌دستی و آثار هنری هنرکده",
+        verbose_name=_("نام صاحب حساب بانکی")
+    )
+
     footer_copyright = models.CharField(
         max_length=300,
         default="تمامی حقوق مادی و معنوی متعلق به بازارچه آنلاین هنرکده است.",

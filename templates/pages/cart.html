@@ -128,14 +128,78 @@
           </div>
         </div>
 
-        <!-- کد تخفیف -->
+        <!-- کد تخفیف (کارگاه ۲۳ کتاب درسی) -->
         <div class="pt-3 border-t border-[#E8E3D9]">
-          <label class="block text-xs font-bold text-[#1E3329] mb-1.5">کد تخفیف یا کارت هدیه</label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-bold text-[#1E3329]">کد تخفیف (قوانین سبد خرید)</label>
+            <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-bold">کد کتاب: 970725</span>
+          </div>
           <div class="flex items-center gap-2">
-            <input type="text" value="HONAR15" class="bg-[#FAF7F2] text-xs rounded-xl px-3 py-2.5 border border-[#E8E3D9] flex-grow focus:outline-none focus:border-[#2C4A3E] font-mono tracking-wider font-bold">
-            <button class="bg-[#FAF7F2] hover:bg-[#2C4A3E] hover:text-white text-[#2C4A3E] text-xs font-bold px-3 py-2.5 rounded-xl border border-[#2C4A3E] transition-all shrink-0">
-              اعمال
+            <input type="text" id="coupon-input" value="970725" placeholder="مثلاً: 970725" class="bg-[#FAF7F2] text-xs rounded-xl px-3 py-2.5 border border-[#E8E3D9] flex-grow focus:outline-none focus:border-[#2C4A3E] font-mono tracking-wider font-bold">
+            <button type="button" id="apply-coupon-btn" class="bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shrink-0">
+              اعمال کد
             </button>
+          </div>
+          <p id="coupon-msg" class="text-[11px] text-emerald-700 mt-1.5 font-bold">✓ کد ۹۷۰۷۲۵ اعمال شد: ۱۰٪ تخفیف ویژه صنایع دستی</p>
+        </div>
+
+        <!-- خدمات بسته‌بندی ویژه (کتاب درسی: کادوپیچی و بسته‌بندی بازیافتی) -->
+        <div class="pt-3 border-t border-[#E8E3D9] space-y-2.5">
+          <label class="block text-xs font-bold text-[#1E3329]">خدمات بسته‌بندی سفارش:</label>
+          
+          <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-[#E8E3D9] bg-[#FAF7F2]/60 hover:bg-[#FAF7F2] cursor-pointer transition-all">
+            <input type="checkbox" id="gift-wrap-toggle" class="mt-0.5 rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
+            <div class="text-right">
+              <span class="text-xs font-bold text-[#1E3329] block">🎁 کادوپیچی اثر همراه با روبان و کارت تبریک</span>
+              <span class="text-[10px] text-[#6B726E]">مناسب جهت ارسال مستقیم به عنوان هدیه</span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-[#E8E3D9] bg-[#FAF7F2]/60 hover:bg-[#FAF7F2] cursor-pointer transition-all">
+            <input type="checkbox" id="eco-pack-toggle" checked class="mt-0.5 rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
+            <div class="text-right">
+              <span class="text-xs font-bold text-[#1E3329] block">♻️ بسته‌بندی دوستدار محیط‌زیست (قابل بازیافت)</span>
+              <span class="text-[10px] text-[#6B726E]">استفاده از کارتن‌های کرافت تجزیه‌پذیر و بدون نایلون غیرضروری</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- روش پرداخت (کارگاه ۱۷ کتاب درسی: درگاه آنلاین یا فیش بانکی) -->
+        <div class="pt-3 border-t border-[#E8E3D9] space-y-2">
+          <label class="block text-xs font-bold text-[#1E3329]">روش پرداخت (کارگاه ۱۷):</label>
+          
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl border-2 border-[#2C4A3E] bg-[#FAF7F2] cursor-pointer">
+              <input type="radio" name="payment_method" value="online" checked onchange="togglePaymentMethod('online')" class="text-[#2C4A3E] focus:ring-[#2C4A3E]">
+              <div class="text-right">
+                <span class="text-xs font-bold text-[#1E3329] block">💳 درگاه پرداخت اینترنتی شاپرک</span>
+                <span class="text-[10px] text-[#6B726E]">پرداخت آنلاین آنی با تمامی کارت‌های عضو شتاب</span>
+              </div>
+            </label>
+
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-[#E8E3D9] hover:bg-[#FAF7F2] cursor-pointer transition-all">
+              <input type="radio" name="payment_method" value="bank" onchange="togglePaymentMethod('bank')" class="text-[#2C4A3E] focus:ring-[#2C4A3E]">
+              <div class="text-right">
+                <span class="text-xs font-bold text-[#1E3329] block">🏦 پرداخت از طریق فیش بانکی (کارت به کارت)</span>
+                <span class="text-[10px] text-[#6B726E]">واریز به شماره حساب/کارت گالری و ثبت شماره فیش</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- باکس مشخصات فیش بانکی (کارگاه ۱۷) -->
+          <div id="bank-info-box" class="hidden p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-2 text-right">
+            <div class="text-[11px] font-bold text-amber-900 border-b border-amber-200/60 pb-1.5">
+              مشخصات حساب بانکی هنرکده (بانک ملی ایران):
+            </div>
+            <div class="text-[11px] space-y-1 text-amber-950 font-mono">
+              <div class="flex justify-between font-sans"><span>شماره کارت:</span> <strong class="font-mono">۶۰۳۷-۹۹۷۵-۱۲۳۴-۵۶۷۸</strong></div>
+              <div class="flex justify-between font-sans"><span>شماره شبا:</span> <strong class="font-mono">IR540170000000114587229001</strong></div>
+              <div class="flex justify-between font-sans"><span>صاحب حساب:</span> <strong>فروشگاه صنایع‌دستی هنرکده</strong></div>
+            </div>
+            <div class="pt-2 border-t border-amber-200/60">
+              <label class="block text-[10px] font-bold text-amber-900 mb-1">شماره پیگیری فیش واریزی:</label>
+              <input type="text" placeholder="مثلاً: ۹۸۴۵۱۲" class="w-full bg-white text-xs rounded-xl px-2.5 py-1.5 border border-amber-300 focus:outline-none focus:border-[#2C4A3E]">
+            </div>
           </div>
         </div>
 
@@ -166,4 +230,34 @@
   </div>
 
 </div>
+
+<script>
+function togglePaymentMethod(method) {
+  const bankBox = document.getElementById('bank-info-box');
+  if (method === 'bank') {
+    bankBox.classList.remove('hidden');
+  } else {
+    bankBox.classList.add('hidden');
+  }
+}
+
+document.getElementById('apply-coupon-btn')?.addEventListener('click', function() {
+  const code = document.getElementById('coupon-input').value.trim();
+  const msg = document.getElementById('coupon-msg');
+  if (code === '970725') {
+    msg.textContent = '✓ کد ۹۷۰۷۲۵ اعمال شد: ۱۰٪ تخفیف ویژه صنایع دستی (کارگاه ۲۳)';
+    msg.className = 'text-[11px] text-emerald-700 mt-1.5 font-bold';
+    document.getElementById('cart-summary-discount').textContent = '۴۲۵,۰۰۰- تومان';
+    document.getElementById('cart-summary-total').textContent = '۳,۸۲۵,۰۰۰ تومان';
+  } else if (code === 'HONAR15') {
+    msg.textContent = '✓ کد HONAR15 اعمال شد: ۱۵٪ تخفیف اولین سفارش';
+    msg.className = 'text-[11px] text-emerald-700 mt-1.5 font-bold';
+    document.getElementById('cart-summary-discount').textContent = '۶۳۷,۵۰۰- تومان';
+    document.getElementById('cart-summary-total').textContent = '۳,۶۱۲,۵۰۰ تومان';
+  } else {
+    msg.textContent = 'کد وارد شده نامعتبر یا منقضی است.';
+    msg.className = 'text-[11px] text-red-600 mt-1.5 font-bold';
+  }
+});
+</script>
 {% endblock %}

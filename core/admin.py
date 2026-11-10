@@ -14,6 +14,10 @@ class SiteSettingAdmin(ModelAdmin):
             "fields": ("title", "tagline", "email", "phone", "address", "currency"),
             "description": "پیکربندی هویت پایه فروشگاه که به بازدیدکنندگان و در فاکتورها نمایش داده می‌شود."
         }),
+        ("پیکربندی حساب بانکی و فیش واریزی (کارگاه ۱۷)", {
+            "fields": ("bank_name", "bank_card_number", "bank_account_number", "bank_shaba_number", "bank_owner_name"),
+            "description": "اطلاعات حساب بانکی فروشگاه جهت واریز وجه از طریق فیش بانکی / کارت‌به‌کارت طبق سرفصل کتاب درسی."
+        }),
         ("لوگو و نشان‌های تصویری", {
             "fields": ("header_logo", "invoice_logo", "favicon"),
             "description": "نشان تصویری سربرگ سایت، لوگوی فاکتور و آیکون مرورگر (Favicon)."

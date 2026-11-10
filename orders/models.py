@@ -9,10 +9,16 @@ class Order(models.Model):
     """سفارش‌های مشتریان و ثبت کارمزد پلتفرم"""
     STATUS_CHOICES = (
         ("pending", _("در انتظار پرداخت")),
+        ("remote_paid", _("پرداخت از راه دور تأیید شده (فیش بانکی)")),
         ("processing", _("در حال آماده‌سازی توسط هنرمند")),
         ("shipped", _("تحویل به شرکت حمل‌ونقل و ارسال")),
         ("delivered", _("تحویل مرسوله به مشتری")),
         ("canceled", _("لغو شده")),
+    )
+
+    PAYMENT_METHOD_CHOICES = (
+        ("online", _("درگاه پرداخت اینترنتی")),
+        ("bank_transfer", _("پرداخت از طریق فیش بانکی (کارت به کارت)")),
     )
 
     customer = models.ForeignKey(
@@ -68,6 +74,39 @@ class Order(models.Model):
         choices=STATUS_CHOICES,
         default="pending",
         verbose_name=_("وضعیت سفارش")
+    )
+
+    # روش پرداخت و فیش بانکی (کارگاه ۱۷ کتاب درسی)
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHOD_CHOICES,
+        default="online",
+        verbose_name=_("روش پرداخت")
+    )
+    bank_tracking_code = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name=_("شماره پیگیری فیش بانکی")
+    )
+    bank_receipt_image = models.ImageField(
+        upload_to="receipts/",
+        blank=True,
+        null=True,
+        verbose_name=_("تصویر فیش واریزی")
+    )
+
+    # بسته‌بندی هدیه و بسته‌بندی بازیافتی (مبحث بسته‌بندی کتاب درسی)
+    is_gift_wrapped = models.BooleanField(
+        default=False,
+        verbose_name=_("کادوپیچی محصول (بسته‌بندی هدیه)")
+    )
+    gift_message = models.TextField(
+        blank=True,
+        verbose_name=_("پیام تبریک روی کارت هدیه")
+    )
+    is_recycled_packaging = models.BooleanField(
+        default=False,
+        verbose_name=_("بسته‌بندی بازیافتی (دوستدار محیط زیست)")
     )
     
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("زمان ثبت سفارش"))
