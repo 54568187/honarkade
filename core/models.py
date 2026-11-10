@@ -123,6 +123,20 @@ class SiteSetting(models.Model):
         verbose_name=_("توضیحات کوتاه بخش ویترین")
     )
 
+    # ترجمه قالب و عبارات متنی فروشگاه (کارگاه ۱۹ کتاب درسی)
+    popular_products_title = models.CharField(
+        max_length=150,
+        default="محصولات پیشنهادی",
+        verbose_name=_("ترجمه عبارت «محصولات پرطرفدار» (Popular Products)"),
+        help_text=_("طبق کارگاه ۱۹ کتاب: جایگزین کردن «محصولات پرطرفدار» با «محصولات پیشنهادی» یا «محصولات پرفروش»")
+    )
+    special_offers_title = models.CharField(
+        max_length=150,
+        default="پیشنهاد شگفت‌انگیز",
+        verbose_name=_("ترجمه عبارت «کاهش قیمت‌ها» (Special Offers)"),
+        help_text=_("طبق فعالیت کارگاهی صفحه ۸۸ کتاب: جایگزین کردن «کاهش قیمت‌ها» با «پیشنهاد شگفت‌انگیز»")
+    )
+
     # بنر فراخوان جذب و معرفی هنرمندان در صفحه اصلی
     call_to_action_badge = models.CharField(
         max_length=150,

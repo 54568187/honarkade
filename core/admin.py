@@ -33,6 +33,10 @@ class SiteSettingAdmin(ModelAdmin):
             "fields": ("hero_showcase_title", "hero_showcase_subtitle"),
             "description": "تغییر عنوان و زیرعنوان ویترین دست‌سازه‌ها در صفحه نخست."
         }),
+        ("ترجمه قالب و عبارات متنی فروشگاه (کارگاه ۱۹)", {
+            "fields": ("popular_products_title", "special_offers_title"),
+            "description": "اصلاح و ترجمه عبارات پیش‌فرض قالب طبق کارگاه ۱۹ کتاب درسی (مثلاً تغییر «محصولات پرطرفدار» به «محصولات پیشنهادی» و «کاهش قیمت‌ها» به «پیشنهاد شگفت‌انگیز»)."
+        }),
         ("بنر فراخوان و جذب هنرمندان (صفحه اصلی)", {
             "fields": ("call_to_action_badge", "call_to_action_title", "call_to_action_desc", "call_to_action_btn", "call_to_action_url"),
             "description": "متون و دکمه بنر انتهای صفحه اصلی جهت دعوت و ثبت‌نام هنرمندان."

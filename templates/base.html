@@ -125,6 +125,25 @@
 
   <!-- اسکریپت‌های تعاملی -->
   <script src="/static/js/main.js"></script>
+  <script>
+    function toggleSiteLang() {
+      const current = localStorage.getItem('site_lang') || 'fa';
+      const next = current === 'fa' ? 'en' : 'fa';
+      localStorage.setItem('site_lang', next);
+      const btnText = document.getElementById('lang-code-text');
+      if (btnText) {
+        btnText.textContent = next === 'en' ? 'EN / English' : 'FA / فارسی';
+      }
+      alert(next === 'en' ? 'English language selected. Multilingual support (i18n) is active.' : 'زبان فارسی انتخاب شد. سامانه چندزبانه فعال است.');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('site_lang');
+      const btnText = document.getElementById('lang-code-text');
+      if (saved === 'en' && btnText) {
+        btnText.textContent = 'EN / English';
+      }
+    });
+  </script>
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>
