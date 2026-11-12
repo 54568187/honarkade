@@ -1,10 +1,10 @@
 <!-- ================= فوتر پیشرفته و جامع هنرکده ================= -->
-<footer class="bg-white border-t border-[#E8E3D9] mt-16 text-[#242826]">
+<footer class="bg-white border-t border-[#E8E3D9] mt-16 text-[#242826] {% if is_en %}text-left{% else %}text-right{% endif %}">
   
   <!-- ردیف مزایای خرید از هنرکده (ویژگی‌های اعتماد) -->
   <div class="border-b border-[#E8E3D9] bg-[#FAF7F2]/60 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center sm:text-right">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 {% if is_en %}text-left{% else %}text-right{% endif %}">
         
         <!-- مزیت ۱: ضمانت اصالت اثر -->
         <div class="flex flex-col sm:flex-row items-center gap-3">
@@ -15,7 +15,7 @@
           </div>
           <div>
             <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ t.trust_1_title|default:site_settings.benefit_1_title|default:"شناسنامه و گواهی اصالت" }}</h4>
-            <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_1_desc|default:"امضای مستقیم هنرمند و گواهی معتبر" }}</p>
+            <p class="text-[11px] text-[#6B726E] mt-0.5">{% if is_en %}Direct artist signature and official certificate{% else %}{{ site_settings.benefit_1_desc|default:"امضای مستقیم هنرمند و گواهی معتبر" }}{% endif %}</p>
           </div>
         </div>
 
@@ -28,7 +28,7 @@
           </div>
           <div>
             <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ t.trust_2_title|default:site_settings.benefit_2_title|default:"بسته‌بندی تخصصی هنری" }}</h4>
-            <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_2_desc|default:"ارسال ضدضربه با بیمه کامل مرسوله" }}</p>
+            <p class="text-[11px] text-[#6B726E] mt-0.5">{% if is_en %}5-layer shockproof packaging with transit insurance{% else %}{{ site_settings.benefit_2_desc|default:"ارسال ضدضربه با بیمه کامل مرسوله" }}{% endif %}</p>
           </div>
         </div>
 
@@ -41,7 +41,7 @@
           </div>
           <div>
             <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ t.trust_3_title|default:site_settings.benefit_3_title|default:"۷ روز ضمانت بازگشت" }}</h4>
-            <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_3_desc|default:"تضمین سلامت فیزیکی و تطابق اثر" }}</p>
+            <p class="text-[11px] text-[#6B726E] mt-0.5">{% if is_en %}100% money-back condition and delivery guarantee{% else %}{{ site_settings.benefit_3_desc|default:"تضمین سلامت فیزیکی و تطابق اثر" }}{% endif %}</p>
           </div>
         </div>
 
@@ -54,7 +54,7 @@
           </div>
           <div>
             <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ t.trust_4_title|default:site_settings.benefit_4_title|default:"مشاوره رایگان دکوراسیون" }}</h4>
-            <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_4_desc|default:"پاسخگویی و هماهنگی کارشناسان گالری" }}</p>
+            <p class="text-[11px] text-[#6B726E] mt-0.5">{% if is_en %}Free interior art advisory and gallery support{% else %}{{ site_settings.benefit_4_desc|default:"پاسخگویی و هماهنگی کارشناسان گالری" }}{% endif %}</p>
           </div>
         </div>
 
@@ -73,17 +73,21 @@
           <span class="text-2xl font-black text-[#1E3329]">{{ t.brand_name|default:site_settings.title|default:"هنرکده" }}</span>
         </a>
         <p class="text-xs leading-relaxed text-[#6B726E] max-w-sm">
+          {% if is_en %}
+          Honarkadeh bridges authentic Iranian artisans with contemporary art collectors. Every piece is curated and verified for provenance, craftsmanship, and artistic value.
+          {% else %}
           «هنرکده» پلی میان خلاقیت هنرمندان معاصر ایران و علاقمندان به هنر اصیل است. تمامی آثار با بررسی و نظارت دقیق کارشناسان هنری در گالری عرضه می‌شوند تا ارزش، کیفیت و اصالت هر اثر حفظ شود.
+          {% endif %}
         </p>
 
         <!-- باکس خبرنامه هنری -->
         <div class="pt-2">
-          <span class="block text-xs font-bold text-[#1E3329] mb-2">عضویت در حلقه دوستان هنرکده (اطلاع از حراج‌ها):</span>
+          <span class="block text-xs font-bold text-[#1E3329] mb-2">{% if is_en %}Join the Collector Circle (Receive Private Auction Catalogs):{% else %}عضویت در حلقه دوستان هنرکده (اطلاع از حراج‌ها):{% endif %}</span>
           <div class="flex items-center gap-2 max-w-sm">
-            <input type="email" placeholder="ایمیل یا شماره همراه خود را وارد کنید..." 
+            <input type="email" placeholder="{% if is_en %}Enter your email or mobile...{% else %}ایمیل یا شماره همراه خود را وارد کنید...{% endif %}" 
                    class="bg-[#FAF7F2] text-xs rounded-xl px-3.5 py-2.5 border border-[#E8E3D9] flex-grow focus:outline-none focus:border-[#2C4A3E]">
             <button class="bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors shrink-0">
-              ثبت
+              {% if is_en %}Subscribe{% else %}ثبت{% endif %}
             </button>
           </div>
         </div>
@@ -91,51 +95,63 @@
 
       <!-- ستون ۲: دسته‌بندی آثار -->
       <div>
-        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">دسته‌بندی‌های گالری</h3>
+        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">{% if is_en %}Gallery Collections{% else %}دسته‌بندی‌های گالری{% endif %}</h3>
         <ul class="space-y-2.5 text-xs text-[#6B726E]">
           {% for cat in header_categories %}
-          <li><a href="{% url 'shop' %}?cat={{ cat.slug }}" class="hover:text-[#2C4A3E] transition-colors">{{ cat.name }}</a></li>
+          <li><a href="{% url 'shop' %}?cat={{ cat.slug }}" class="hover:text-[#2C4A3E] transition-colors">
+            {% if is_en %}
+              {% if "نقاشی" in cat.name %}Fine Paintings{% elif "سفال" in cat.name %}Pottery & Ceramics{% elif "خوشنویسی" in cat.name %}Persian Calligraphy{% elif "دستباف" in cat.name %}Handwoven Rugs{% else %}Handicrafts{% endif %}
+            {% else %}
+              {{ cat.name }}
+            {% endif %}
+          </a></li>
           {% empty %}
-          <li><a href="{% url 'shop' %}?cat=painting" class="hover:text-[#2C4A3E] transition-colors">نقاشی و نگارگری</a></li>
-          <li><a href="{% url 'shop' %}?cat=pottery" class="hover:text-[#2C4A3E] transition-colors">سفال و سرامیک</a></li>
-          <li><a href="{% url 'shop' %}?cat=calligraphy" class="hover:text-[#2C4A3E] transition-colors">خوشنویسی و خط</a></li>
-          <li><a href="{% url 'shop' %}?cat=handicrafts" class="hover:text-[#2C4A3E] transition-colors">صنایع‌دستی و دکوری</a></li>
+          <li><a href="{% url 'shop' %}?cat=painting" class="hover:text-[#2C4A3E] transition-colors">{% if is_en %}Oil Paintings{% else %}نقاشی و نگارگری{% endif %}</a></li>
+          <li><a href="{% url 'shop' %}?cat=pottery" class="hover:text-[#2C4A3E] transition-colors">{% if is_en %}Ceramics{% else %}سفال و سرامیک{% endif %}</a></li>
+          <li><a href="{% url 'shop' %}?cat=calligraphy" class="hover:text-[#2C4A3E] transition-colors">{% if is_en %}Calligraphy{% else %}خوشنویسی و خط{% endif %}</a></li>
+          <li><a href="{% url 'shop' %}?cat=handicrafts" class="hover:text-[#2C4A3E] transition-colors">{% if is_en %}Handicrafts{% else %}صنایع‌دستی و دکوری{% endif %}</a></li>
           {% endfor %}
         </ul>
       </div>
 
       <!-- ستون ۳: راهنما و خدمات مشتریان -->
       <div>
-        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">راهنما و قوانین سایت</h3>
+        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">{% if is_en %}Customer Guide & Policies{% else %}راهنما و قوانین سایت{% endif %}</h3>
         <ul class="space-y-2.5 text-xs text-[#6B726E]">
           {% for page in footer_pages %}
-          <li><a href="{% url 'static_page' page.slug %}" class="hover:text-[#2C4A3E] transition-colors">{{ page.title }}</a></li>
+          <li><a href="{% url 'static_page' page.slug %}" class="hover:text-[#2C4A3E] transition-colors">
+            {% if is_en %}
+              {% if "درباره" in page.title %}About Honarkadeh{% elif "شرایط" in page.title %}Terms & Conditions{% elif "ارسال" in page.title %}Shipping Methods{% else %}{{ page.title }}{% endif %}
+            {% else %}
+              {{ page.title }}
+            {% endif %}
+          </a></li>
           {% empty %}
-          <li><a href="{% url 'static_page' 'about-us' %}" class="hover:text-[#2C4A3E]">درباره هنرکده</a></li>
-          <li><a href="{% url 'static_page' 'terms' %}" class="hover:text-[#2C4A3E]">شرایط و ضوابط</a></li>
-          <li><a href="{% url 'static_page' 'shipping-methods' %}" class="hover:text-[#2C4A3E]">شیوه‌های ارسال</a></li>
+          <li><a href="{% url 'static_page' 'about-us' %}" class="hover:text-[#2C4A3E]">{% if is_en %}About Us{% else %}درباره هنرکده{% endif %}</a></li>
+          <li><a href="{% url 'static_page' 'terms' %}" class="hover:text-[#2C4A3E]">{% if is_en %}Terms of Service{% else %}شرایط و ضوابط{% endif %}</a></li>
+          <li><a href="{% url 'static_page' 'shipping-methods' %}" class="hover:text-[#2C4A3E]">{% if is_en %}Shipping Policies{% else %}شیوه‌های ارسال{% endif %}</a></li>
           {% endfor %}
-          <li><a href="{% url 'login' %}" class="hover:text-[#82533D] font-semibold transition-colors">ثبت غرفه هنرمند</a></li>
+          <li><a href="{% url 'login' %}" class="hover:text-[#82533D] font-semibold transition-colors">{% if is_en %}Register Artist Booth{% else %}ثبت غرفه هنرمند{% endif %}</a></li>
         </ul>
       </div>
 
       <!-- ستون ۴: اطلاعات تماس و نمادها -->
       <div>
-        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">تماس با هنرکده</h3>
+        <h3 class="text-xs sm:text-sm font-bold text-[#1E3329] mb-4 pb-2 border-b border-[#E8E3D9]">{% if is_en %}Contact Honarkadeh{% else %}تماس با هنرکده{% endif %}</h3>
         <div class="space-y-3 text-xs text-[#6B726E]">
-          <p class="leading-relaxed">{{ site_settings.address|default:"تهران، خیابان نجات‌اللهی، پلاک ۱۱۰" }}</p>
-          <p class="font-bold text-[#1E3329] dir-ltr text-right">تلفن: {{ site_settings.phone|default:"۰۲۱-۸۸۸۸۴۴۴۴" }}</p>
-          <p class="text-[#2C4A3E] dir-ltr text-right font-medium">ایمیل: {{ site_settings.email|default:"info@kadehonar.ir" }}</p>
+          <p class="leading-relaxed">{% if is_en %}No. 110, Nejatollahi St. (Villa Ave), Tehran, Iran{% else %}{{ site_settings.address|default:"تهران، خیابان نجات‌اللهی، پلاک ۱۱۰" }}{% endif %}</p>
+          <p class="font-bold text-[#1E3329] font-mono">{% if is_en %}Tel: +98 21 8888 4444{% else %}تلفن: {{ site_settings.phone|default:"۰۲۱-۸۸۸۸۴۴۴۴" }}{% endif %}</p>
+          <p class="text-[#2C4A3E] font-medium font-mono">{% if is_en %}Email: info@kadehonar.ir{% else %}ایمیل: {{ site_settings.email|default:"info@kadehonar.ir" }}{% endif %}</p>
           
           <!-- نمادهای اعتماد و استاندارد به صورت المان‌های مینیمال -->
           <div class="pt-2 flex items-center gap-2">
-            <div class="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E8E3D9] text-center w-20">
-              <span class="block text-[10px] text-[#2C4A3E] font-bold">اینماد</span>
-              <span class="text-[9px] text-[#98A19C]">نماد رسمی</span>
+            <div class="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E8E3D9] text-center w-24">
+              <span class="block text-[10px] text-[#2C4A3E] font-bold">{% if is_en %}Enamad{% else %}اینماد{% endif %}</span>
+              <span class="text-[9px] text-[#98A19C]">{% if is_en %}Official Verified{% else %}نماد رسمی{% endif %}</span>
             </div>
-            <div class="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E8E3D9] text-center w-20">
-              <span class="block text-[10px] text-[#82533D] font-bold">ساماندهی</span>
-              <span class="text-[9px] text-[#98A19C]">ثبت ملی</span>
+            <div class="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E8E3D9] text-center w-24">
+              <span class="block text-[10px] text-[#82533D] font-bold">{% if is_en %}Samandehi{% else %}ساماندهی{% endif %}</span>
+              <span class="text-[9px] text-[#98A19C]">{% if is_en %}National Registry{% else %}ثبت ملی{% endif %}</span>
             </div>
           </div>
         </div>
@@ -147,7 +163,7 @@
     <div class="border-t border-[#E8E3D9] mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#6B726E] gap-4">
       <p>{{ t.footer_copyright|default:site_settings.footer_copyright|default:"کلیه حقوق مادی و معنوی این وب‌سایت متعلق به «هنرکده» می‌باشد." }}</p>
       <div class="flex items-center gap-4 text-[11px] text-[#98A19C]">
-        <span>طراحی شده با الهام از اصالت هنر ایرانی</span>
+        <span>{% if is_en %}Handcrafted with passion inspired by Persian artistic heritage{% else %}طراحی شده با الهام از اصالت هنر ایرانی{% endif %}</span>
       </div>
     </div>
   </div>

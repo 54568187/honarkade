@@ -93,6 +93,41 @@
       gap: 8px !important;
       z-index: 30 !important;
     }
+
+    /* استایل‌های جامع جهت چیدمان انگلیسی و چپ‌چین کامل قالب و محتوا (LTR Mode) */
+    html[dir="ltr"],
+    html[dir="ltr"] body {
+      direction: ltr !important;
+      text-align: left !important;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    }
+    html[dir="ltr"] .text-right {
+      text-align: left !important;
+    }
+    html[dir="ltr"] input,
+    html[dir="ltr"] textarea,
+    html[dir="ltr"] select {
+      text-align: left !important;
+      direction: ltr !important;
+    }
+    html[dir="ltr"] #slider-prev {
+      left: 20px !important;
+      right: auto !important;
+    }
+    html[dir="ltr"] #slider-next {
+      right: 20px !important;
+      left: auto !important;
+    }
+    @media (max-width: 640px) {
+      html[dir="ltr"] #slider-prev {
+        left: 10px !important;
+        right: auto !important;
+      }
+      html[dir="ltr"] #slider-next {
+        right: 10px !important;
+        left: auto !important;
+      }
+    }
   </style>
 
   {% block extra_head %}{% endblock %}

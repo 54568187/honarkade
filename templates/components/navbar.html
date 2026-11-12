@@ -22,16 +22,16 @@
         </svg>
       </span>
       <p class="font-medium text-[11px] sm:text-xs md:text-sm text-[#FAF7F2] drop-shadow leading-relaxed">
-        <span class="text-[#E0BA79] font-black drop-shadow-sm">{{ top_banner.title }}:</span>
-        {{ top_banner.description }}
+        <span class="text-[#E0BA79] font-black drop-shadow-sm">{% if is_en %}Special Gallery Offer{% else %}{{ top_banner.title }}{% endif %}:</span>
+        {% if is_en %}15% discount on all authentic Iranian handicrafts and artworks with coupon code{% else %}{{ top_banner.description }}{% endif %}
         {% if top_banner.discount_code %}
         <span class="bg-[#C69A52] text-[#1E3329] px-2 sm:px-2.5 py-0.5 rounded-lg font-black font-mono tracking-wider mr-1 shadow-md inline-block">{{ top_banner.discount_code }}</span>
         {% endif %}
       </p>
       {% if top_banner.link %}
       <a href="{{ top_banner.link }}" class="hidden md:inline-flex items-center gap-1.5 text-xs sm:text-[13px] text-[#E0BA79] hover:text-white font-bold px-3 py-1 rounded-xl bg-black/30 hover:bg-[#C69A52]/30 border border-[#C69A52]/40 backdrop-blur-sm transition-all drop-shadow shrink-0">
-        <span>مشاهده آثار</span>
-        <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path></svg>
+        <span>{% if is_en %}Explore Collection{% else %}مشاهده آثار{% endif %}</span>
+        <svg class="w-3.5 h-3.5 {% if is_en %}{% else %}rotate-180{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"></path></svg>
       </a>
       {% endif %}
     </div>

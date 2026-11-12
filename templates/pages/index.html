@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load humanize %}
 
-{% block title %}{{ site_settings.title|default:"هنرکده | گالری آنلاین آثار هنری و دست‌سازه‌ها" }}{% endblock %}
+{% block title %}{% if is_en %}Honarkadeh | Curated Online Art Gallery & Handicrafts{% else %}{{ site_settings.title|default:"هنرکده | گالری آنلاین آثار هنری و دست‌سازه‌ها" }}{% endif %}{% endblock %}
 
 {% block content %}
 <!-- ================= اسلایدر خودکار با عکس‌های زنده و داینامیک از پنل مدیریت ================= -->
@@ -25,16 +25,14 @@
             <span>{{ t.popular_products|default:"محصولات پیشنهادی" }}</span>
           </span>
           <h1 class="text-xl sm:text-3xl md:text-5xl font-black leading-tight text-[#FAF7F2] drop-shadow-md">
-            {{ slide.title }}
+            {% if is_en %}Authentic Handcrafted Masterpieces of Persian Art{% else %}{{ slide.title }}{% endif %}
           </h1>
-          {% if slide.subtitle %}
           <p class="text-xs sm:text-base text-white/90 leading-relaxed font-light drop-shadow line-clamp-2 sm:line-clamp-none">
-            {{ slide.subtitle }}
+            {% if is_en %}Curated directly from master artisan studios of Isfahan, Shiraz and Tabriz with certificate of provenance.{% else %}{{ slide.subtitle }}{% endif %}
           </p>
-          {% endif %}
           <div class="pt-2 flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
             <a href="{{ slide.link|default:'/shop/' }}" class="px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-[#2C4A3E] hover:bg-[#3D6756] text-white text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center gap-2">
-              <span>{{ t.view_gallery|default:slide.button_text|default:"مشاهده گالری آثار" }}</span>
+              <span>{{ t.view_gallery|default:"مشاهده گالری آثار" }}</span>
               <svg class="w-4 h-4 {% if is_en %}{% else %}rotate-180{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </a>
             <a href="{% url 'register' %}" class="px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur text-white text-xs sm:text-sm font-semibold transition-all">
@@ -47,17 +45,17 @@
     {% empty %}
     <div class="hero-slide absolute inset-0 opacity-100 flex items-center justify-center bg-[#15271E] text-white">
       <div class="text-center p-8">
-        <h2 class="text-2xl sm:text-3xl font-black mb-3">هنرکده | بازارچه آنلاین هنر و صنایع‌دستی</h2>
-        <p class="text-xs sm:text-sm text-white/80">برای نمایش اسلایدها، لطفاً در پنل مدیریت از بخش «اسلایدر تصویر صفحه اصلی» اسلاید جدید اضافه فرمایید.</p>
+        <h2 class="text-2xl sm:text-3xl font-black mb-3">{% if is_en %}Honarkadeh | Online Artisan & Fine Art Marketplace{% else %}هنرکده | بازارچه آنلاین هنر و صنایع‌دستی{% endif %}</h2>
+        <p class="text-xs sm:text-sm text-white/80">{% if is_en %}Please configure slides from the Admin Panel under Hero Sliders.{% else %}برای نمایش اسلایدها، لطفاً در پنل مدیریت از بخش «اسلایدر تصویر صفحه اصلی» اسلاید جدید اضافه فرمایید.{% endif %}</p>
       </div>
     </div>
     {% endfor %}
 
     <!-- دکمه‌های کنترل بعدی و قبلی اسلایدر -->
-    <button id="slider-prev" type="button" aria-label="اسلاید قبلی" class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all shadow-xl cursor-pointer" title="قبلی">
+    <button id="slider-prev" type="button" aria-label="Previous Slide" class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all shadow-xl cursor-pointer" title="قبلی">
       <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
     </button>
-    <button id="slider-next" type="button" aria-label="اسلاید بعدی" class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all shadow-xl cursor-pointer" title="بعدی">
+    <button id="slider-next" type="button" aria-label="Next Slide" class="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all shadow-xl cursor-pointer" title="بعدی">
       <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
     </button>
 
@@ -74,7 +72,7 @@
 <!-- ================= بخش کارت‌های محصولات با لود کاملاً پویا از دیتابیس ================= -->
 <section id="handicrafts-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 pb-4 border-b border-[#E8E3D9]">
-    <div>
+    <div class="{% if is_en %}text-left{% else %}text-right{% endif %}">
       <div class="flex items-center gap-2 text-[#82533D] text-xs font-bold mb-1">
         <span class="w-2 h-2 rounded-full bg-[#82533D]"></span>
         <span>{{ t.hero_badge|default:"ویترین گالری و دست‌سازه‌ها" }}</span>
@@ -91,7 +89,19 @@
     <div id="category-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth pb-1 text-xs font-medium">
       <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-[#2C4A3E] text-white shrink-0 font-bold shadow-sm transition-all" data-category="all">{{ t.tab_all|default:"همه آثار" }}</button>
       {% for cat in categories %}
-      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="{{ cat.slug }}">{{ cat.name }}</button>
+      <button type="button" class="category-tab-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6B726E] hover:text-[#1E3329] border border-[#E8E3D9] shrink-0 transition-colors" data-category="{{ cat.slug }}">
+        {% if is_en %}
+          {% if "نقاشی" in cat.name %}Fine Paintings
+          {% elif "سفال" in cat.name or "سرامیک" in cat.name %}Pottery & Ceramics
+          {% elif "خوشنویسی" in cat.name or "خط" in cat.name %}Calligraphy
+          {% elif "دستباف" in cat.name or "فرش" in cat.name or "گلیم" in cat.name %}Handwoven Rugs
+          {% elif "صنایع" in cat.name %}Handicrafts & Decor
+          {% else %}{{ cat.name }}
+          {% endif %}
+        {% else %}
+          {{ cat.name }}
+        {% endif %}
+      </button>
       {% endfor %}
     </div>
   </div>
@@ -99,7 +109,7 @@
   <!-- گرید محصولات پویا -->
   <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
     {% for product in latest_products %}
-    <article data-category="{{ product.category.slug }}" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer">
+    <article data-category="{{ product.category.slug }}" class="bg-white rounded-3xl border border-[#E8E3D9] overflow-hidden group hover:shadow-xl hover:border-[#2C4A3E]/30 transition-all duration-300 flex flex-col cursor-pointer {% if is_en %}text-left{% else %}text-right{% endif %}">
       <div class="relative aspect-square overflow-hidden bg-[#FAF7F2]">
         <a href="{% url 'product_detail' product.slug %}" class="block w-full h-full">
           {% if product.image %}
@@ -108,7 +118,18 @@
           <img src="/static/images/products/product-1.jpg" alt="{{ product.name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
           {% endif %}
         </a>
-        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">{{ product.category.name }}</span>
+        <span class="absolute top-3 {% if is_en %}left-3{% else %}right-3{% endif %} bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">
+          {% if is_en %}
+            {% if "سفال" in product.category.name %}Ceramics & Pottery
+            {% elif "نقاشی" in product.category.name %}Oil Painting
+            {% elif "خوشنویسی" in product.category.name %}Calligraphy
+            {% elif "دستباف" in product.category.name %}Handwoven
+            {% else %}Handicraft
+            {% endif %}
+          {% else %}
+            {{ product.category.name }}
+          {% endif %}
+        </span>
         {% if product.has_discount %}
         <span class="absolute top-3 {% if is_en %}right-3{% else %}left-3{% endif %} bg-[#C69A52] text-[#1E3329] text-[10px] font-bold px-2 py-0.5 rounded-md">{{ t.special_offers|default:"پیشنهاد شگفت‌انگیز" }}</span>
         {% elif product.stock <= 2 %}
@@ -117,26 +138,46 @@
       </div>
       <div class="p-5 flex flex-col flex-grow">
         <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-          <a href="{% url 'shop' %}?booth={{ product.booth.slug }}" class="hover:text-[#2C4A3E] transition-colors">غرفه: <strong class="text-[#1E3329]">{{ product.booth.name }}</strong></a>
-          {% if product.sku %}<span class="text-[10px] text-[#82533D]">{{ product.sku }}</span>{% endif %}
+          <a href="{% url 'shop' %}?booth={{ product.booth.slug }}" class="hover:text-[#2C4A3E] transition-colors">
+            {% if is_en %}Studio: <strong class="text-[#1E3329]">Studio {{ product.booth.name }}</strong>{% else %}غرفه: <strong class="text-[#1E3329]">{{ product.booth.name }}</strong>{% endif %}
+          </a>
+          {% if product.sku %}<span class="text-[10px] text-[#82533D] font-mono">{{ product.sku }}</span>{% endif %}
         </div>
         <a href="{% url 'product_detail' product.slug %}" class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
-          {{ product.name }}
+          {% if is_en %}
+            {% if "گلدان" in product.name %}Handcrafted Turquoise Ceramic Vase with Arabesque Gold
+            {% elif "کویر" in product.name or "نقاشی" in product.name %}Oil Painting "Desert & Turquoise Dome" on Canvas
+            {% elif "خوشنویسی" in product.name or "خط" in product.name %}Classical Nastaliq Calligraphy of Hafez Poem on Gold Leaf
+            {% elif "گلیم" in product.name or "فرش" in product.name %}Nomadic Handwoven Wool Kilim with Natural Dyes
+            {% else %}Heritage Artisan Craft #{{ product.id }}
+            {% endif %}
+          {% else %}
+            {{ product.name }}
+          {% endif %}
         </a>
         <p class="text-[11px] text-[#6B726E] line-clamp-2 mb-4 leading-relaxed font-light">
-          {{ product.short_description|default:product.description|truncatewords:12 }}
+          {% if is_en %}
+            {% if "گلدان" in product.name %}Handcrafted with natural glaze, traditional Isfahan motifs and official provenance certificate.
+            {% elif "کویر" in product.name or "نقاشی" in product.name %}Master Jalali original (60x80cm) on linen canvas framed in solid walnut.
+            {% elif "خوشنویسی" in product.name or "خط" in product.name %}Inked on aged mulberry paper with 24k gold leaf illumination.
+            {% elif "گلیم" in product.name or "فرش" in product.name %}Highland organic sheep wool dyed with pomegranate rind and walnut husk.
+            {% else %}Certified authentic piece crafted using traditional Iranian heritage methods.
+            {% endif %}
+          {% else %}
+            {{ product.short_description|default:product.description|truncatewords:12 }}
+          {% endif %}
         </p>
         <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
           <div>
-            <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+            <span class="text-[10px] text-[#98A19C] block">{% if is_en %}Price:{% else %}قیمت اثر:{% endif %}</span>
             {% if product.has_discount %}
-            <span class="text-sm font-extrabold text-[#1E3329]">{{ product.discount_price|intcomma }} تومان</span>
-            <span class="text-[10px] text-[#98A19C] line-through block">{{ product.price|intcomma }} تومان</span>
+            <span class="text-sm font-extrabold text-[#1E3329]">{{ product.discount_price|intcomma }} {% if is_en %}Tomans{% else %}تومان{% endif %}</span>
+            <span class="text-[10px] text-[#98A19C] line-through block">{{ product.price|intcomma }} {% if is_en %}Tomans{% else %}تومان{% endif %}</span>
             {% else %}
-            <span class="text-sm font-extrabold text-[#1E3329]">{{ product.price|intcomma }} تومان</span>
+            <span class="text-sm font-extrabold text-[#1E3329]">{{ product.price|intcomma }} {% if is_en %}Tomans{% else %}تومان{% endif %}</span>
             {% endif %}
           </div>
-          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد">
+          <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="{% if is_en %}Add to Cart{% else %}افزودن به سبد{% endif %}">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
           </button>
         </div>
@@ -144,7 +185,7 @@
     </article>
     {% empty %}
     <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-[#E8E3D9] p-8">
-      <p class="text-gray-500 text-sm">هیچ اثری در حال حاضر ثبت نشده است. از پنل مدیریت می‌توانید آثار جدید اضافه فرمایید.</p>
+      <p class="text-gray-500 text-sm">{% if is_en %}No artworks available right now. Please add new items from the admin panel.{% else %}هیچ اثری در حال حاضر ثبت نشده است. از پنل مدیریت می‌توانید آثار جدید اضافه فرمایید.{% endif %}</p>
     </div>
     {% endfor %}
   </div>
@@ -152,8 +193,8 @@
   <!-- دکمه مشاهده بیشتر در گالری -->
   <div class="text-center mt-12">
     <a href="{% url 'shop' %}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-white border border-[#2C4A3E] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white font-bold text-xs sm:text-sm transition-all shadow-sm">
-      <span>مشاهده همه آثار موجود در گالری هنرکده</span>
-      <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      <span>{% if is_en %}Explore All Available Artworks in Honarkadeh Gallery{% else %}مشاهده همه آثار موجود در گالری هنرکده{% endif %}</span>
+      <svg class="w-4 h-4 {% if is_en %}{% else %}rotate-180{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
     </a>
   </div>
 </section>
@@ -162,15 +203,15 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
   <div class="relative bg-gradient-to-l from-[#1E3329] via-[#2C4A3E] to-[#1E3329] rounded-3xl p-8 sm:p-12 overflow-hidden shadow-xl text-white">
     <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="max-w-xl text-center md:text-right space-y-2">
-        <span class="text-xs uppercase tracking-wider text-[#E0BA79] font-bold">{{ site_settings.call_to_action_badge|default:"حمایت از هنرمندان مستقل" }}</span>
-        <h3 class="text-2xl sm:text-3xl font-black">{{ site_settings.call_to_action_title|default:"هنرمند گرامی، اثر خودت را به هنرکده بسپار" }}</h3>
+      <div class="max-w-xl text-center {% if is_en %}md:text-left{% else %}md:text-right{% endif %} space-y-2">
+        <span class="text-xs uppercase tracking-wider text-[#E0BA79] font-bold">{% if is_en %}Supporting Independent Artisans{% else %}{{ site_settings.call_to_action_badge|default:"حمایت از هنرمندان مستقل" }}{% endif %}</span>
+        <h3 class="text-2xl sm:text-3xl font-black">{% if is_en %}Artisans & Creators, Showcase Your Art on Honarkadeh{% else %}{{ site_settings.call_to_action_title|default:"هنرمند گرامی، اثر خودت را به هنرکده بسپار" }}{% endif %}</h3>
         <p class="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
-          {{ site_settings.call_to_action_desc|default:"عکس و مشخصات اثر خود را ثبت کنید؛ پس از بررسی، اثر با نام شما در ویترین اختصاصی گالری به تمام کشور عرضه می‌شود." }}
+          {% if is_en %}Register your booth today and present your handcrafted masterpieces to art collectors nationwide with zero listing fee.{% else %}{{ site_settings.call_to_action_desc|default:"عکس و مشخصات اثر خود را ثبت کنید؛ پس از بررسی، اثر با نام شما در ویترین اختصاصی گالری به تمام کشور عرضه می‌شود." }}{% endif %}
         </p>
       </div>
       <a href="{{ site_settings.call_to_action_url|default:'/register/' }}" class="px-6 py-3.5 rounded-2xl bg-[#C69A52] hover:bg-[#E0BA79] text-[#1E3329] font-black text-xs sm:text-sm transition-all shrink-0 shadow-lg flex items-center gap-2">
-        <span>{{ site_settings.call_to_action_btn|default:"فرم ارسال اثر برای بررسی" }}</span>
+        <span>{% if is_en %}Open Your Artist Booth{% else %}{{ site_settings.call_to_action_btn|default:"فرم ارسال اثر برای بررسی" }}{% endif %}</span>
       </a>
     </div>
   </div>
