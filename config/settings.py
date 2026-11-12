@@ -254,6 +254,17 @@ UNFOLD = {
                 ],
             },
             {
+                "title": "بین‌المللی و بومی‌سازی (کارگاه ۱۹)",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "ترجمه‌ها و عبارات قالب (کارگاه ۱۹)",
+                        "icon": "translate",
+                        "link": reverse_lazy("admin:core_themetranslation_changelist"),
+                    },
+                ],
+            },
+            {
                 "title": "ارسال و لجستیک",
                 "separator": True,
                 "items": [

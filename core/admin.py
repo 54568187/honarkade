@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from unfold.admin import ModelAdmin
 from unfold.decorators import display
 from core.admin_helpers import render_action_buttons
-from .models import SiteSetting, StaticPage, Slider, Banner, MenuItem
+from .models import SiteSetting, StaticPage, Slider, Banner, MenuItem, ThemeTranslation
 
 
 @admin.register(SiteSetting)
@@ -138,6 +138,27 @@ class MenuItemAdmin(ModelAdmin):
     list_editable = ("order", "is_active")
     list_filter = ("is_active",)
     search_fields = ("title", "url")
+
+    @display(description="عملیات")
+    def action_buttons(self, obj):
+        return render_action_buttons(obj)
+
+
+@admin.register(ThemeTranslation)
+class ThemeTranslationAdmin(ModelAdmin):
+    list_display = ("original_phrase", "fa_translation", "en_translation", "section", "key", "action_buttons")
+    list_editable = ("fa_translation", "en_translation")
+    list_filter = ("section",)
+    search_fields = ("original_phrase", "fa_translation", "en_translation", "key")
+    fieldsets = (
+        ("مشخصات عبارت و موقعیت در قالب", {
+            "fields": ("original_phrase", "key", "section", "description")
+        }),
+        ("ترجمه و عبارات جایگزین (کارگاه ۱۹ کتاب درسی)", {
+            "fields": ("fa_translation", "en_translation"),
+            "description": "عبارت جایگزین فارسی (مثلاً تغییر «محصولات پرطرفدار» به «محصولات پیشنهادی») و معادل انگلیسی آن."
+        }),
+    )
 
     @display(description="عملیات")
     def action_buttons(self, obj):

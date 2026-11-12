@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="{{ current_lang|default:'fa' }}" dir="{{ site_dir|default:'rtl' }}" class="{% if is_en %}en-layout{% else %}fa-layout{% endif %}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -97,7 +97,7 @@
 
   {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex flex-col font-['Vazirmatn'] selection:bg-[#2C4A3E] selection:text-[#FAF7F2] antialiased overflow-x-hidden">
+<body class="bg-[#FAF7F2] text-[#242826] min-h-screen flex flex-col {% if is_en %}font-sans{% else %}font-['Vazirmatn']{% endif %} selection:bg-[#2C4A3E] selection:text-[#FAF7F2] antialiased overflow-x-hidden">
 
   <!-- نوبار و هدر سایت -->
   {% include 'components/navbar.html' %}
@@ -127,22 +127,14 @@
   <script src="/static/js/main.js"></script>
   <script>
     function toggleSiteLang() {
-      const current = localStorage.getItem('site_lang') || 'fa';
+      const current = "{{ current_lang|default:'fa' }}";
       const next = current === 'fa' ? 'en' : 'fa';
+      document.cookie = `site_lang=${next};path=/;max-age=31536000;SameSite=Lax`;
       localStorage.setItem('site_lang', next);
-      const btnText = document.getElementById('lang-code-text');
-      if (btnText) {
-        btnText.textContent = next === 'en' ? 'EN / English' : 'FA / فارسی';
-      }
-      alert(next === 'en' ? 'English language selected. Multilingual support (i18n) is active.' : 'زبان فارسی انتخاب شد. سامانه چندزبانه فعال است.');
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', next);
+      window.location.href = url.toString();
     }
-    document.addEventListener('DOMContentLoaded', () => {
-      const saved = localStorage.getItem('site_lang');
-      const btnText = document.getElementById('lang-code-text');
-      if (saved === 'en' && btnText) {
-        btnText.textContent = 'EN / English';
-      }
-    });
   </script>
   {% block extra_scripts %}{% endblock %}
 </body>

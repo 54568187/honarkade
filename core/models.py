@@ -346,3 +346,34 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ThemeTranslation(models.Model):
+    """
+    سیستم ترجمه و بومی‌سازی قالب فروشگاه (کارگاه ۱۹ پودمان دوم)
+    امکان جستجو و جایگزینی عبارات متنی قالب به زبان‌های فارسی و انگلیسی
+    """
+    SECTION_CHOICES = (
+        ("home", _("صفحه اصلی و ویترین‌ها (Home Page)")),
+        ("header", _("سربرگ، منو و ناوبری (Header & Navigation)")),
+        ("shop", _("فروشگاه و فیلترهای لایه‌ای (Shop & Filters)")),
+        ("cart", _("سبد خرید و تسویه‌حساب (Cart & Checkout)")),
+        ("footer", _("پاصفحه و نشان‌های اعتماد (Footer & Trust)")),
+    )
+
+    key = models.SlugField(max_length=100, unique=True, verbose_name=_("شناسه سیستمی (Key)"))
+    section = models.CharField(max_length=20, choices=SECTION_CHOICES, default="home", verbose_name=_("بخش قالب"))
+    original_phrase = models.CharField(max_length=255, verbose_name=_("عبارت اصلی قالب (پیش‌فرض)"))
+    fa_translation = models.CharField(max_length=255, verbose_name=_("جایگزین / ترجمه فارسی (FA)"))
+    en_translation = models.CharField(max_length=255, verbose_name=_("ترجمه انگلیسی (EN)"))
+    description = models.CharField(max_length=255, blank=True, verbose_name=_("راهنمای کاربرد در قالب"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("آخرین ویرایش"))
+
+    class Meta:
+        verbose_name = _("عبارت قالب (ترجمه)")
+        verbose_name_plural = _("ترجمه‌ها و عبارات قالب (کارگاه ۱۹)")
+        ordering = ["section", "id"]
+
+    def __str__(self):
+        return f"{self.original_phrase} ➔ {self.fa_translation} | {self.en_translation}"
+

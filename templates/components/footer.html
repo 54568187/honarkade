@@ -14,7 +14,7 @@
             </svg>
           </div>
           <div>
-            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ site_settings.benefit_1_title|default:"شناسنامه و گواهی اصالت" }}</h4>
+            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ t.trust_1_title|default:site_settings.benefit_1_title|default:"شناسنامه و گواهی اصالت" }}</h4>
             <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_1_desc|default:"امضای مستقیم هنرمند و گواهی معتبر" }}</p>
           </div>
         </div>
@@ -27,7 +27,7 @@
             </svg>
           </div>
           <div>
-            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ site_settings.benefit_2_title|default:"بسته‌بندی تخصصی هنری" }}</h4>
+            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ t.trust_2_title|default:site_settings.benefit_2_title|default:"بسته‌بندی تخصصی هنری" }}</h4>
             <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_2_desc|default:"ارسال ضدضربه با بیمه کامل مرسوله" }}</p>
           </div>
         </div>
@@ -40,7 +40,7 @@
             </svg>
           </div>
           <div>
-            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ site_settings.benefit_3_title|default:"۷ روز ضمانت بازگشت" }}</h4>
+            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ t.trust_3_title|default:site_settings.benefit_3_title|default:"۷ روز ضمانت بازگشت" }}</h4>
             <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_3_desc|default:"تضمین سلامت فیزیکی و تطابق اثر" }}</p>
           </div>
         </div>
@@ -53,7 +53,7 @@
             </svg>
           </div>
           <div>
-            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ site_settings.benefit_4_title|default:"مشاوره رایگان دکوراسیون" }}</h4>
+            <h4 class="text-xs sm:text-sm font-bold text-[#1E3329]">{{ t.trust_4_title|default:site_settings.benefit_4_title|default:"مشاوره رایگان دکوراسیون" }}</h4>
             <p class="text-[11px] text-[#6B726E] mt-0.5">{{ site_settings.benefit_4_desc|default:"پاسخگویی و هماهنگی کارشناسان گالری" }}</p>
           </div>
         </div>
@@ -70,7 +70,7 @@
       <div class="md:col-span-2 space-y-4">
         <a href="{% url 'home' %}" class="flex items-center gap-3">
           <img src="{% if site_settings and site_settings.header_logo %}{{ site_settings.header_logo.url }}{% else %}/static/images/favicon.svg{% endif %}" alt="هنرکده" class="w-9 h-9">
-          <span class="text-2xl font-black text-[#1E3329]">{{ site_settings.title|default:"هنرکده" }}</span>
+          <span class="text-2xl font-black text-[#1E3329]">{{ t.brand_name|default:site_settings.title|default:"هنرکده" }}</span>
         </a>
         <p class="text-xs leading-relaxed text-[#6B726E] max-w-sm">
           «هنرکده» پلی میان خلاقیت هنرمندان معاصر ایران و علاقمندان به هنر اصیل است. تمامی آثار با بررسی و نظارت دقیق کارشناسان هنری در گالری عرضه می‌شوند تا ارزش، کیفیت و اصالت هر اثر حفظ شود.
@@ -145,7 +145,7 @@
 
     <!-- کپی‌رایت نهایی -->
     <div class="border-t border-[#E8E3D9] mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#6B726E] gap-4">
-      <p>© {{ site_settings.footer_copyright|default:"کلیه حقوق مادی و معنوی این وب‌سایت متعلق به «هنرکده» می‌باشد." }}</p>
+      <p>{{ t.footer_copyright|default:site_settings.footer_copyright|default:"کلیه حقوق مادی و معنوی این وب‌سایت متعلق به «هنرکده» می‌باشد." }}</p>
       <div class="flex items-center gap-4 text-[11px] text-[#98A19C]">
         <span>طراحی شده با الهام از اصالت هنر ایرانی</span>
       </div>
