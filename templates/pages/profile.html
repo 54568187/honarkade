@@ -457,17 +457,17 @@
             <h3 class="text-base sm:text-lg font-black text-[#1E3329]">مدیریت آثار و ویترین گالری من</h3>
             <p class="text-xs text-[#6B726E]">آثار عرضه شده شما با نام و امضای اختصاصی در معرض دید بیش از ۵۰,۰۰۰ مجموعه‌دار قرار دارد.</p>
           </div>
-          {% if user.is_staff or user.is_superuser %}
-          <a href="/admin/catalog/product/add/" class="px-5 py-3 rounded-xl bg-[#82533D] hover:bg-[#9C684F] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-            <span>افزودن اثر جدید به گالری</span>
-          </a>
-          {% else %}
-          <button type="button" onclick="alert('فرم افزودن اثر جدید با قابلیت بارگذاری تصاویر و ثبت ابعاد باز شد.');" class="px-5 py-3 rounded-xl bg-[#82533D] hover:bg-[#9C684F] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-            <span>افزودن اثر جدید به گالری</span>
-          </button>
-          {% endif %}
+          <div class="flex items-center gap-2">
+            <a href="{% url 'booth_dashboard' %}" class="px-4 py-2.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5">
+              <span>داشبورد و امور مالی غرفه ←</span>
+            </a>
+            {% if user.is_staff or user.is_superuser %}
+            <a href="/admin/catalog/product/add/" class="px-4 py-2.5 rounded-xl bg-[#82533D] hover:bg-[#9C684F] text-white text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>افزودن اثر جدید</span>
+            </a>
+            {% endif %}
+          </div>
         </div>
 
         <div class="pt-6">

@@ -21,6 +21,14 @@ from core.views import (
     robots_txt_view,
     sitemap_xml_view,
 )
+from orders.views import (
+    checkout_submit_view,
+    direct_buy_view,
+    payment_gateway_view,
+    payment_process_view,
+    payment_receipt_view,
+)
+from catalog.views import booth_dashboard_view
 
 urlpatterns = [
     # پنل مدیریت حرفه‌ای و جامع
@@ -39,6 +47,17 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("profile/", profile_view, name="profile"),
     path("dashboard/", profile_view, name="dashboard"),
+
+    # درگاه پرداخت شاپرک و تسویه‌حساب (کارگاه ۱۷)
+    path("checkout/submit/", checkout_submit_view, name="checkout_submit"),
+    path("buy/direct/<int:product_id>/", direct_buy_view, name="direct_buy"),
+    path("payment/gateway/", payment_gateway_view, name="payment_gateway_default"),
+    path("payment/gateway/<int:order_id>/", payment_gateway_view, name="payment_gateway"),
+    path("payment/process/<int:order_id>/", payment_process_view, name="payment_process"),
+    path("payment/receipt/<int:order_id>/", payment_receipt_view, name="payment_receipt"),
+
+    # داشبورد اختصاصی غرفه‌داران و هنرمندان (مستقل از ادمین جنگو)
+    path("booth/dashboard/", booth_dashboard_view, name="booth_dashboard"),
     
     # فایل‌های سئو و موتورهای جست‌وجو (کارگاه‌های ۲۵ و ۲۶ کتاب درسی)
     path("robots.txt", robots_txt_view, name="robots_txt"),

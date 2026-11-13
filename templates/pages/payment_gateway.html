@@ -1,0 +1,421 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پرداخت اینترنتی به پرداخت ملت | شاپرک</title>
+  <!-- Tailwind CSS & Fonts -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+  <style>
+    * { font-family: 'Vazirmatn', sans-serif !important; }
+    .input-behpardakht {
+      background-color: #FFFFFF;
+      border: 1.5px solid #D5DDE5;
+      border-radius: 9999px;
+      padding: 0.55rem 1.25rem;
+      font-size: 0.95rem;
+      color: #2D3748;
+      transition: all 0.2s ease-in-out;
+      outline: none;
+      direction: ltr;
+      text-align: center;
+    }
+    .input-behpardakht:focus {
+      border-color: #3B82F6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+    .btn-green-pay {
+      background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%);
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(39, 174, 96, 0.4);
+    }
+    .btn-green-pay:hover {
+      background: linear-gradient(180deg, #27ae60 0%, #219653 100%);
+    }
+    .btn-amber-cancel {
+      background: linear-gradient(180deg, #f6cf71 0%, #f1b742 100%);
+      color: #5d4002;
+      box-shadow: 0 4px 6px -1px rgba(241, 183, 66, 0.3);
+    }
+    .btn-amber-cancel:hover {
+      background: linear-gradient(180deg, #f1b742 0%, #e0a32e 100%);
+    }
+    .red-ribbon {
+      background-color: #C00814;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 2px 28px;
+      border-radius: 0 0 16px 16px;
+      box-shadow: 0 3px 6px rgba(192, 8, 20, 0.25);
+    }
+    .captcha-box {
+      background: repeating-linear-gradient(45deg, #f0f3f6, #f0f3f6 10px, #e2e8f0 10px, #e2e8f0 20px);
+      font-family: 'Courier New', Courier, monospace !important;
+      letter-spacing: 6px;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #1e293b;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      user-select: none;
+    }
+  </style>
+</head>
+<body class="bg-[#ECEFF3] min-h-screen py-6 px-3 flex flex-col items-center justify-center">
+
+  <!-- کادر اصلی درگاه به پرداخت ملت (طراحی شده دقیقاً مشابه تصویر مرجع) -->
+  <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-[#D5DDE5] overflow-hidden">
+    
+    <!-- نوار سربرگ بالایی با لوگوها -->
+    <header class="relative px-6 py-4 border-b border-[#E2E8F0] bg-white flex items-center justify-between">
+      
+      <!-- لوگوی به پرداخت ملت (سمت چپ) -->
+      <div class="flex items-center gap-3">
+        <!-- آیکون اختصاصی ۴ تایی به پرداخت ملت -->
+        <div class="flex flex-col items-center">
+          <div class="flex items-center gap-1 mb-0.5">
+            <span class="w-2.5 h-2.5 rounded-sm bg-[#E31E24]"></span>
+            <span class="w-2.5 h-2.5 rounded-sm bg-[#E31E24]"></span>
+            <span class="w-2.5 h-2.5 rounded-sm bg-[#E31E24]"></span>
+          </div>
+          <div class="w-8 h-2.5 rounded-sm bg-[#E31E24]"></div>
+        </div>
+        <div class="leading-tight">
+          <div class="text-xs font-black text-[#2D3748]">به پرداخت ملت</div>
+          <div class="text-[9px] text-[#718096] font-sans tracking-wide">beh pardakht mellat</div>
+        </div>
+      </div>
+
+      <!-- عنوان مرکزی و نوار قرمز سایت -->
+      <div class="flex flex-col items-center">
+        <h1 class="text-sm sm:text-base font-extrabold text-[#2D3748] tracking-tight">
+          پرداخت اینترنتی به پرداخت ملت
+        </h1>
+        <div class="mt-1">
+          <span class="red-ribbon font-mono">www.Behpardakht.com</span>
+        </div>
+      </div>
+
+      <!-- لوگوی شاپرک و دکمه EN (سمت راست) -->
+      <div class="flex items-center gap-3">
+        <div class="text-right hidden sm:block">
+          <div class="text-[11px] font-bold text-[#1E3A8A]">شرکت شبکه الکترونیکی پرداخت کارت</div>
+          <div class="text-[9px] text-[#64748B] font-mono">SHAPARAK CO.</div>
+        </div>
+        <!-- بال پرنده شاپرک -->
+        <div class="w-10 h-10 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center p-1">
+          <svg class="w-7 h-7 text-[#2563EB]" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+        </div>
+        <!-- دکمه تغییر زبان EN در گوشه بالا -->
+        <button type="button" class="bg-[#E53E3E] text-white text-[11px] font-bold px-2 py-1 rounded shadow-sm hover:bg-[#C53030]">
+          EN
+        </button>
+      </div>
+
+    </header>
+
+    <!-- محتوای اصلی ۲ ستونه: اطلاعات پذیرنده (راست در تصویر / چپ در وب) و اطلاعات کارت -->
+    <div class="grid grid-cols-1 md:grid-cols-12 min-h-[460px]">
+      
+      <!-- ستون چپ: اطلاعات پذیرنده (Merchant Information) -->
+      <div class="md:col-span-5 p-6 bg-[#F8FAFC] border-l border-[#E2E8F0] flex flex-col justify-between relative overflow-hidden">
+        
+        <!-- واترمارک کم‌رنگ سبد خرید در پس‌زمینه مانند تصویر -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+          <svg class="w-64 h-64 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+          </svg>
+        </div>
+
+        <div class="relative z-10 space-y-5">
+          <!-- هدر تب اطلاعات پذیرنده -->
+          <div class="inline-block bg-[#A0AEC0] text-white text-xs font-bold px-4 py-1 rounded-full shadow-inner">
+            اطلاعات پذیرنده
+          </div>
+
+          <div class="space-y-3.5 text-xs text-[#4A5568]">
+            <div class="flex items-center justify-between">
+              <span class="text-[#718096]">نام پذیرنده :</span>
+              <strong class="text-[#2D3748] font-bold">{{ merchant_name }}</strong>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-[#718096]">شماره پذیرنده:</span>
+              <strong class="text-[#2D3748] font-mono font-bold">{{ merchant_id }}</strong>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-[#718096]">شماره ترمینال:</span>
+              <strong class="text-[#2D3748] font-mono font-bold">{{ terminal_id }}</strong>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-[#718096]">آدرس وب سایت:</span>
+              <a href="{{ website_url }}" target="_blank" class="text-blue-600 hover:underline font-mono text-[11px] font-bold">
+                {{ website_url }}
+              </a>
+            </div>
+
+            {% if order.delivery_date %}
+            <div class="pt-2 border-t border-dashed border-[#CBD5E1] text-[11px] text-[#4A5568]">
+              <div class="flex justify-between items-center text-[#2C4A3E] bg-[#E8EFEA]/70 p-2 rounded-xl">
+                <span>زمان تحویل انتخابی:</span>
+                <strong>{{ order.delivery_date }} ({{ order.delivery_time_slot }})</strong>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- بخش پایین: مبلغ قابل پرداخت با فونت درشت سبز و خط چین بالا -->
+        <div class="relative z-10 pt-4 border-t border-dashed border-[#CBD5E1] mt-6">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-[#718096]">مبلغ قابل پرداخت :</span>
+            <div class="text-right">
+              <div class="text-lg sm:text-xl font-black text-[#10B981] font-mono tracking-tight">
+                {{ price_rial|intcomma }} ریال
+              </div>
+              <div class="text-[10px] text-[#64748B]">
+                ({{ price_toman|intcomma }} تومان)
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ستون راست: اطلاعات کارت (Card Information) -->
+      <div class="md:col-span-7 p-6 bg-white flex flex-col justify-between">
+        
+        <form id="payment-form" action="{% url 'payment_process' order.id %}" method="POST" class="space-y-4">
+          {% csrf_token %}
+
+          <!-- نوار هدر تب و زمان باقی مانده -->
+          <div class="flex items-center justify-between pb-2 border-b border-[#F1F5F9]">
+            <span class="text-xs text-[#4A5568] flex items-center gap-1.5 font-bold">
+              زمان باقی مانده :
+              <span id="countdown-timer" class="font-mono text-sm text-[#E53E3E] font-black">14:59</span>
+            </span>
+
+            <div class="inline-block bg-[#A0AEC0] text-white text-xs font-bold px-4 py-1 rounded-full shadow-inner">
+              اطلاعات کارت
+            </div>
+          </div>
+
+          <!-- فیلد ۱: شماره کارت ۱۶ رقمی -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <span id="bank-name-badge" class="text-[10px] text-blue-600 font-bold hidden">بانک ملت</span>
+              <label class="block text-xs font-bold text-[#4A5568] text-right w-full">شماره کارت</label>
+            </div>
+            <div class="relative">
+              <input type="text" id="card-number-input" name="card_number" required maxlength="19" placeholder="----  ----  ----  ----" value="6037 9975 8421 2841" class="input-behpardakht w-full pr-10 font-mono tracking-widest font-bold">
+              <!-- آیکون کارت آبی رنگ در سمت راست داخل فیلد -->
+              <div class="absolute right-3.5 top-1/2 -translate-y-1/2 text-blue-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+                  <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            <p class="text-[10px] text-[#A0AEC0] text-right">شماره کارت 16 رقمی درج شده روی کارت را وارد نمایید</p>
+          </div>
+
+          <!-- فیلد ۲: شماره شناسایی دوم (CVV2) -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-[#4A5568] text-right">شماره شناسایی دوم (CVV2)</label>
+            <div class="flex items-center gap-2">
+              <!-- آیکون کیپد مجازی سبز (۹ نقطه) در سمت چپ فیلد -->
+              <button type="button" onclick="toggleVirtualKeypad('cvv2')" class="w-8 h-8 rounded-lg bg-[#F8FAFC] border border-[#CBD5E1] text-[#10B981] flex items-center justify-center hover:bg-[#E8EFEA] shrink-0" title="صفحه‌کلید مجازی">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <circle cx="4" cy="4" r="2"></circle><circle cx="10" cy="4" r="2"></circle><circle cx="16" cy="4" r="2"></circle>
+                  <circle cx="4" cy="10" r="2"></circle><circle cx="10" cy="10" r="2"></circle><circle cx="16" cy="10" r="2"></circle>
+                  <circle cx="4" cy="16" r="2"></circle><circle cx="10" cy="16" r="2"></circle><circle cx="16" cy="16" r="2"></circle>
+                </svg>
+              </button>
+              <input type="password" id="cvv2-input" name="cvv2" required maxlength="4" placeholder="***" value="384" class="input-behpardakht flex-grow font-mono tracking-widest font-bold">
+            </div>
+            <p class="text-[10px] text-[#A0AEC0] text-right">شماره 3 یا 4 رقمی درج شده روی کارت را وارد نمایید</p>
+          </div>
+
+          <!-- فیلد ۳: تاریخ انقضای کارت (ماه و سال) -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-[#4A5568] text-right">تاریخ انقضای کارت</label>
+            <div class="grid grid-cols-2 gap-3 max-w-[240px] ml-auto">
+              <input type="text" name="exp_month" maxlength="2" placeholder="ماه" value="08" class="input-behpardakht font-mono font-bold">
+              <input type="text" name="exp_year" maxlength="2" placeholder="سال" value="06" class="input-behpardakht font-mono font-bold">
+            </div>
+            <p class="text-[10px] text-[#A0AEC0] text-right">تاریخ انقضای کارت را وارد کنید</p>
+          </div>
+
+          <!-- فیلد ۴: کد امنیتی (کپچا) -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-[#4A5568] text-right">کد امنیتی</label>
+            <div class="flex items-center gap-2">
+              <!-- دکمه ریفرش کپچا به رنگ آبی -->
+              <button type="button" onclick="refreshCaptcha()" class="w-8 h-8 rounded-full border border-blue-300 text-blue-600 flex items-center justify-center hover:bg-blue-50 transition-colors shrink-0" title="بارگذاری مجدد کد امنیتی">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+              </button>
+              <!-- کادر کپچا گرافیکی -->
+              <div id="captcha-display" class="captcha-box px-3 py-1.5 rounded-xl border border-gray-300 tracking-widest text-center min-w-[90px]">
+                59658
+              </div>
+              <!-- ورودی کد امنیتی کاربر -->
+              <input type="text" id="captcha-input" name="captcha" required maxlength="5" value="59658" placeholder="کد امنیتی" class="input-behpardakht flex-grow font-mono font-bold">
+            </div>
+            <p class="text-[10px] text-[#A0AEC0] text-right">لطفا کد امنیتی داخل کادر را وارد نمایید</p>
+          </div>
+
+          <!-- فیلد ۵: رمز اینترنتی کارت (رمز دوم یا پویا) -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-[#4A5568] text-right">رمز اینترنتی کارت</label>
+            <div class="flex items-center gap-2">
+              <!-- آیکون کیپد مجازی سبز (۹ نقطه) -->
+              <button type="button" onclick="toggleVirtualKeypad('otp')" class="w-8 h-8 rounded-lg bg-[#F8FAFC] border border-[#CBD5E1] text-[#10B981] flex items-center justify-center hover:bg-[#E8EFEA] shrink-0" title="صفحه‌کلید مجازی">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <circle cx="4" cy="4" r="2"></circle><circle cx="10" cy="4" r="2"></circle><circle cx="16" cy="4" r="2"></circle>
+                  <circle cx="4" cy="10" r="2"></circle><circle cx="10" cy="10" r="2"></circle><circle cx="16" cy="10" r="2"></circle>
+                  <circle cx="4" cy="16" r="2"></circle><circle cx="10" cy="16" r="2"></circle><circle cx="16" cy="16" r="2"></circle>
+                </svg>
+              </button>
+              <!-- دکمه آبی دریافت رمز پویا همراه با آیکون نامه -->
+              <button type="button" id="get-otp-btn" onclick="requestDynamicOtp()" class="px-3 py-1.5 rounded-full border border-blue-400 text-blue-600 hover:bg-blue-50 text-[11px] font-bold flex items-center gap-1.5 shrink-0 transition-colors">
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                <span id="otp-btn-text">دریافت رمز پویا</span>
+              </button>
+              <!-- فیلد ورودی رمز پویا -->
+              <input type="password" id="otp-input" name="otp" required maxlength="8" placeholder="رمز پویا" value="129482" class="input-behpardakht flex-grow font-mono font-bold">
+            </div>
+            <p id="otp-help-msg" class="text-[10px] text-[#A0AEC0] text-right">رمز اینترنتی را وارد نمایید</p>
+          </div>
+
+          <!-- فیلد ۶: ایمیل (اختیاری) -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-[#4A5568] text-right">ایمیل</label>
+            <input type="email" name="email" placeholder="example@mail.com" class="input-behpardakht w-full font-sans text-right">
+            <p class="text-[10px] text-[#A0AEC0] text-right">لطفا ایمیل معتبر وارد کنید (اختیاری)</p>
+          </div>
+
+          <!-- دکمه‌های عملیاتی: سبز برای پرداخت و زرد برای انصراف -->
+          <div class="flex items-center justify-center gap-4 pt-4 border-t border-[#F1F5F9]">
+            <a href="{% url 'cart' %}" class="btn-amber-cancel px-10 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-transform active:scale-95 shadow">
+              انصراف
+            </a>
+            <button type="submit" id="submit-pay-btn" class="btn-green-pay px-12 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-transform active:scale-95 shadow flex items-center justify-center gap-2">
+              <span id="pay-btn-text">پرداخت</span>
+              <svg id="pay-spinner" class="hidden w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- پاورقی امنیتی شاپرک -->
+  <footer class="mt-4 text-center text-xs text-[#718096] space-y-1">
+    <div class="flex items-center justify-center gap-2">
+      <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+      <span>اتصال امن رمزنگاری‌شده با پروتکل SSL معتبر شاپرک (کاشف بانک مرکزی جمهوری اسلامی ایران)</span>
+    </div>
+    <div class="text-[10px] text-[#A0AEC0]">
+      سامانه پرداخت الکترونیک به پرداخت ملت © کلیه حقوق محفوظ است.
+    </div>
+  </footer>
+
+  <!-- اسکریپت‌های درگاه: تایمر شمارش معکوس، فرمت کارت، کپچا و رمز پویا -->
+  <script>
+    // ۱. شمارش معکوس زمان باقی‌مانده (۱۴:۵۹ به پایین)
+    let timeLeft = 14 * 60 + 59;
+    const timerEl = document.getElementById('countdown-timer');
+    const timerInterval = setInterval(() => {
+      timeLeft--;
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        timerEl.textContent = '00:00';
+        alert('زمان معتبر پرداخت به پایان رسید. به صفحه سبد خرید بازمی‌گردید.');
+        window.location.href = "{% url 'cart' %}";
+        return;
+      }
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      timerEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }, 1000);
+
+    // ۲. فرمت‌بندی خودکار شماره کارت (۴ رقم - ۴ رقم)
+    const cardInput = document.getElementById('card-number-input');
+    cardInput.addEventListener('input', function(e) {
+      let val = this.value.replace(/\D/g, '').substring(0, 16);
+      let formatted = '';
+      for (let i = 0; i < val.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += ' ';
+        formatted += val[i];
+      }
+      this.value = formatted;
+    });
+
+    // ۳. بارگذاری مجدد کپچا
+    const captchas = ['59658', '84129', '73921', '61450', '92834', '47182'];
+    function refreshCaptcha() {
+      const randomCode = captchas[Math.floor(Math.random() * captchas.length)];
+      const display = document.getElementById('captcha-display');
+      display.textContent = randomCode;
+      document.getElementById('captcha-input').value = randomCode;
+    }
+
+    // ۴. دریافت رمز پویا
+    let otpCooldown = 0;
+    function requestDynamicOtp() {
+      if (otpCooldown > 0) return;
+      const btn = document.getElementById('get-otp-btn');
+      const text = document.getElementById('otp-btn-text');
+      const msg = document.getElementById('otp-help-msg');
+      const otpInput = document.getElementById('otp-input');
+
+      // تولید رمز پویای ۶ رقمی
+      const generatedOtp = Math.floor(100000 + Math.random() * 900000);
+      otpInput.value = generatedOtp;
+
+      msg.textContent = `✓ پیامک رمز پویا ارسال گردید (کد شبیه‌سازی: ${generatedOtp})`;
+      msg.className = 'text-[10px] text-emerald-600 font-bold text-right';
+
+      otpCooldown = 120;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      const cdInterval = setInterval(() => {
+        otpCooldown--;
+        if (otpCooldown <= 0) {
+          clearInterval(cdInterval);
+          text.textContent = 'دریافت رمز پویا';
+          btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+          text.textContent = `ارسال مجدد (${otpCooldown})`;
+        }
+      }, 1000);
+    }
+
+    // ۵. ارسال فرم با شبیه‌سازی بارگذاری شاپرک
+    document.getElementById('payment-form').addEventListener('submit', function(e) {
+      const btn = document.getElementById('submit-pay-btn');
+      const btnText = document.getElementById('pay-btn-text');
+      const spinner = document.getElementById('pay-spinner');
+
+      btn.disabled = true;
+      btn.classList.add('opacity-75');
+      btnText.textContent = 'در حال اتصال به شاپرک...';
+      spinner.classList.remove('hidden');
+    });
+
+    function toggleVirtualKeypad(type) {
+      alert(`صفحه‌کلید امن مجازی برای فیلد ${type} فعال است.`);
+    }
+  </script>
+</body>
+</html>

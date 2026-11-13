@@ -5,7 +5,7 @@ from unfold.decorators import display
 from core.admin_helpers import render_action_buttons
 from .models import (
     Category, Attribute, AttributeValue, Feature, FeatureValue,
-    Brand, Supplier, Booth, Product, ProductImage
+    Brand, Supplier, Booth, BoothFinancial, Product, ProductImage
 )
 
 
@@ -119,12 +119,29 @@ class SupplierAdmin(ModelAdmin):
 
 @admin.register(Booth)
 class BoothAdmin(ModelAdmin):
-    list_display = ("name", "owner", "is_approved", "created_at", "action_buttons")
+    list_display = ("name", "owner", "wallet_balance_display", "is_approved", "created_at", "action_buttons")
     list_filter = ("is_approved",)
     list_editable = ("is_approved",)
     search_fields = ("name", "owner__username", "owner__first_name", "owner__last_name")
     prepopulated_fields = {"slug": ("name",)}
     actions = ["approve_booths", "reject_booths"]
+
+    fieldsets = (
+        ("مشخصات غرفه هنری", {
+            "fields": ("name", "slug", "owner", "logo", "banner", "bio", "is_approved")
+        }),
+        ("اطلاعات بانکی غرفه‌دار جهت تسویه‌حساب (کارگاه ۱۷)", {
+            "fields": ("bank_name", "bank_account_holder", "bank_shaba", "bank_card", "bank_account_number"),
+            "description": "شماره شبا و حساب بانکی صاحب غرفه جهت واریز سهم فروش آثار هنری."
+        }),
+        ("تراز مالی و کیف پول غرفه", {
+            "fields": ("wallet_balance", "total_earnings", "settled_amount", "settlement_status"),
+        }),
+    )
+
+    @display(description="موجودی کیف پول")
+    def wallet_balance_display(self, obj):
+        return f"{obj.wallet_balance:,} تومان"
 
     @display(description="عملیات")
     def action_buttons(self, obj):
@@ -137,6 +154,66 @@ class BoothAdmin(ModelAdmin):
     @admin.action(description="عدم تأیید / تعلیق غرفه‌های انتخاب شده")
     def reject_booths(self, request, queryset):
         queryset.update(is_approved=False)
+
+
+@admin.register(BoothFinancial)
+class BoothFinancialAdmin(ModelAdmin):
+    list_display = (
+        "name",
+        "owner",
+        "bank_name",
+        "bank_account_holder",
+        "bank_shaba",
+        "bank_card",
+        "wallet_balance_display",
+        "total_earnings_display",
+        "settled_amount_display",
+        "settlement_status",
+        "action_buttons",
+    )
+    list_editable = ("settlement_status",)
+    list_filter = ("settlement_status", "bank_name")
+    search_fields = ("name", "owner__username", "owner__first_name", "owner__last_name", "bank_shaba", "bank_card", "bank_account_holder")
+    fieldsets = (
+        ("مشخصات غرفه و هنرمند", {
+            "fields": ("name", "owner", "is_approved")
+        }),
+        ("اطلاعات حساب بانکی غرفه‌دار جهت واریز و تسویه (کارگاه ۱۷)", {
+            "fields": (
+                "bank_name",
+                "bank_account_holder",
+                "bank_shaba",
+                "bank_card",
+                "bank_account_number",
+            ),
+            "description": "اطلاعات حساب بانکی و شماره شبای غرفه‌دار جهت واریز سهم فروش آثار هنری."
+        }),
+        ("تراز و صورت‌حساب مالی", {
+            "fields": (
+                "wallet_balance",
+                "total_earnings",
+                "settled_amount",
+                "settlement_status",
+            ),
+            "description": "گزارش وضعیت کیف پول، کل مبالغ فروش و مبالغ تسویه شده با غرفه‌دار."
+        }),
+    )
+
+    @display(description="موجودی قابل تسویه")
+    def wallet_balance_display(self, obj):
+        return f"{obj.wallet_balance:,} تومان"
+
+    @display(description="کل درآمد ناخالص")
+    def total_earnings_display(self, obj):
+        return f"{obj.total_earnings:,} تومان"
+
+    @display(description="مبالغ تسویه شده")
+    def settled_amount_display(self, obj):
+        return f"{obj.settled_amount:,} تومان"
+
+    @display(description="عملیات")
+    def action_buttons(self, obj):
+        return render_action_buttons(obj)
 
 
 class ProductImageInline(TabularInline):

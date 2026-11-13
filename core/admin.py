@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from unfold.admin import ModelAdmin
 from unfold.decorators import display
 from core.admin_helpers import render_action_buttons
-from .models import SiteSetting, StaticPage, Slider, Banner, MenuItem, ThemeTranslation
+from .models import SiteSetting, StaticPage, Slider, Banner, MenuItem, ThemeTranslation, PaymentGatewaySetting
 
 
 @admin.register(SiteSetting)
@@ -163,3 +163,42 @@ class ThemeTranslationAdmin(ModelAdmin):
     @display(description="عملیات")
     def action_buttons(self, obj):
         return render_action_buttons(obj)
+
+
+
+@admin.register(PaymentGatewaySetting)
+class PaymentGatewaySettingAdmin(ModelAdmin):
+    list_display = (
+        "gateway_provider",
+        "merchant_id",
+        "terminal_id",
+        "bank_name",
+        "bank_card_number",
+        "is_online_gateway_active",
+        "is_bank_slip_active",
+        "action_buttons"
+    )
+    fieldsets = (
+        ("درگاه پرداخت اینترنتی شاپرک (کارگاه ۱۷ کتاب درسی)", {
+            "fields": ("is_online_gateway_active", "gateway_provider", "merchant_id", "terminal_id", "gateway_url"),
+            "description": "پیکربندی ماژول پرداخت الکترونیکی و مشخصات پذیرنده شاپرک مطابق کارگاه ۱۷ کتاب درسی."
+        }),
+        ("اطلاعات حساب بانکی و واریز با فیش (کارت به کارت)", {
+            "fields": ("is_bank_slip_active", "bank_name", "bank_owner_name", "bank_card_number", "bank_account_number", "bank_shaba_number", "receipt_guidelines"),
+            "description": "مشخصات حساب و شماره شبا جهت پرداخت از طریق فیش بانکی (شکل ۴۰ و ۴۱ کتاب درسی)."
+        }),
+        ("قوانین مالی و کارمزد پلتفرم", {
+            "fields": ("commission_percentage",),
+            "description": "درصد کارمزد پلتفرم از سفارش‌های غرفه‌داران."
+        }),
+    )
+
+    def has_add_permission(self, request):
+        return not PaymentGatewaySetting.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    @display(description="عملیات")
+    def action_buttons(self, obj):
+        return render_action_buttons(obj, edit_label="پیکربندی")

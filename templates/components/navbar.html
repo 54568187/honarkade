@@ -143,6 +143,10 @@
                   <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                   <span>{% if is_en %}Saved Artworks & Wishlist{% else %}آثار نشان‌شده و علاقه‌مندی‌ها{% endif %}</span>
                 </a>
+                <a href="{% url 'booth_dashboard' %}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#82533D] font-bold hover:bg-[#F7EFEA] transition-colors">
+                  <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                  <span>{% if is_en %}Booth Owner Dashboard & Finance{% else %}داشبورد غرفه‌دار و امور مالی{% endif %}</span>
+                </a>
                 <a href="{% url 'profile' %}#gallery" id="nav-artist-gallery-link" class="{% if user.profile.role != 'seller' %}hidden{% endif %} flex items-center gap-2.5 px-3 py-2 rounded-xl text-[#82533D] font-bold hover:bg-[#F7EFEA] transition-colors">
                   <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                   <span>{% if is_en %}Studio & Artworks Management{% else %}مدیریت غرفه و آثار{% endif %}</span>
@@ -210,7 +214,7 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
             </svg>
-            <span id="cart-count-badge" class="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#82533D] text-white text-[10px] font-bold flex items-center justify-center transition-transform shadow-sm">1</span>
+            <span id="cart-count-badge" class="hidden absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#82533D] text-white text-[10px] font-bold flex items-center justify-center transition-transform shadow-sm">0</span>
           </button>
 
           <!-- منوی دراپ‌داون سبد خرید دقیقاً زیر آیکون فروشگاه -->
@@ -219,7 +223,7 @@
             <div class="flex items-center justify-between pb-3 border-b border-[#E8E3D9] mb-3">
               <div class="flex items-center gap-2">
                 <span class="text-xs font-bold text-[#1E3329]">{% if is_en %}Your Shopping Cart{% else %}سبد خرید شما{% endif %}</span>
-                <span id="cart-items-count-badge" class="text-[10px] text-[#2C4A3E] bg-[#E8EFEA] px-2 py-0.5 rounded-full font-bold">{% if is_en %}1 Artwork{% else %}۱ اثر هنری{% endif %}</span>
+                <span id="cart-items-count-badge" class="text-[10px] text-[#2C4A3E] bg-[#E8EFEA] px-2 py-0.5 rounded-full font-bold">{% if is_en %}Empty{% else %}سبد خالی{% endif %}</span>
               </div>
               <button id="close-cart-dropdown-btn" type="button" class="text-[#98A19C] hover:text-[#1E3329] p-1 rounded-lg transition-colors" title="{% if is_en %}Close{% else %}بستن{% endif %}">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -228,19 +232,12 @@
 
             <!-- لیست آثار انتخابی -->
             <div id="cart-items-container" class="space-y-3 max-h-64 overflow-y-auto pr-1">
-              <div class="flex items-center gap-3 p-2.5 rounded-2xl bg-[#FAF7F2] border border-[#E8E3D9]/70 relative group">
-                <img src="/static/images/products/product-1.jpg" alt="Vase" class="w-14 h-14 rounded-xl object-cover bg-white shrink-0 border border-[#E8E3D9]">
-                <div class="flex-grow min-w-0">
-                  <h5 class="text-xs font-bold text-[#1E3329] truncate">{% if is_en %}Turquoise Ceramic Vase with Golden Arabesque{% else %}گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار{% endif %}</h5>
-                  <span class="text-[10px] text-[#82533D] block">{% if is_en %}Unique Piece • Kohan Studio{% else %}تک‌نسخه • کارگاه کهن{% endif %}</span>
-                  <div class="flex items-center justify-between mt-1">
-                    <span class="text-xs font-black text-[#2C4A3E]">{% if is_en %}1,450,000 Toman{% else %}۱,۴۵۰,۰۰۰ تومان{% endif %}</span>
-                    <span class="text-[10px] text-[#6B726E] bg-white px-1.5 py-0.5 rounded border border-[#E8E3D9]">{% if is_en %}1 pc{% else %}۱ عدد{% endif %}</span>
-                  </div>
+              <div class="py-8 px-4 text-center">
+                <div class="w-12 h-12 mx-auto rounded-2xl bg-[#FAF7F2] text-[#98A19C] flex items-center justify-center mb-2.5 border border-[#E8E3D9]">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                 </div>
-                <button type="button" onclick="this.closest('.flex').remove();" class="text-[#98A19C] hover:text-red-500 p-1 transition-colors" title="{% if is_en %}Remove{% else %}حذف اثر{% endif %}">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                </button>
+                <p class="text-xs font-bold text-[#1E3329]">{% if is_en %}Your shopping cart is currently empty{% else %}سبد خرید شما در حال حاضر خالی است{% endif %}</p>
+                <span class="text-[11px] text-[#6B726E] mt-1 block font-light">{% if is_en %}Click + on artworks to add them{% else %}روی + آثار هنری کلیک کنید تا به سبد افزوده شوند{% endif %}</span>
               </div>
             </div>
 
@@ -248,7 +245,7 @@
             <div class="mt-4 pt-3 border-t border-[#E8E3D9] space-y-3">
               <div class="flex items-center justify-between text-xs">
                 <span class="text-[#6B726E]">{% if is_en %}Order Subtotal:{% else %}جمع کل سفارش:{% endif %}</span>
-                <span id="cart-dropdown-total-price" class="font-black text-[#1E3329] text-sm">{% if is_en %}1,450,000 Toman{% else %}۱,۴۵۰,۰۰۰ تومان{% endif %}</span>
+                <span id="cart-dropdown-total-price" class="font-black text-[#1E3329] text-sm">{% if is_en %}0 Toman{% else %}۰ تومان{% endif %}</span>
               </div>
               <div class="flex items-center gap-1.5 text-[10px] text-emerald-700 bg-[#E8EFEA] px-2.5 py-1.5 rounded-xl">
                 <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
@@ -360,12 +357,13 @@
         </a>
       </div>
 
-      <!-- سمت چپ منو: لینک «در هنرکده بفروشید!» -->
+      <!-- سمت چپ منو: لینک «داشبورد غرفه‌داران و امور مالی» -->
       <div class="flex items-center gap-3">
         <span class="w-px h-5 bg-[#E8E3D9]"></span>
-        <a href="{% url 'login' %}" class="flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-[#82533D] font-bold hover:bg-[#F7EFEA] transition-all">
-          <span>{% if is_en %}Open Booth in Honarkadeh!{% else %}{{ t.sell_art|default:"در هنرکده غرفه بزنید!" }}{% endif %}</span>
-          <span class="w-2 h-2 rounded-full bg-[#C69A52] animate-ping"></span>
+        <a href="{% url 'booth_dashboard' %}" class="flex items-center gap-1.5 py-1.5 px-3 rounded-xl bg-[#FAF7F2] border border-[#E8E3D9] text-[#82533D] font-bold hover:bg-[#F7EFEA] hover:border-[#82533D] transition-all">
+          <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+          <span>{% if is_en %}Artists & Booth Dashboard{% else %}داشبورد غرفه‌داران و امور مالی{% endif %}</span>
+          <span class="w-2 h-2 rounded-full bg-[#10B981] animate-ping"></span>
         </a>
       </div>
 
@@ -411,6 +409,7 @@
     <a href="{% url 'shop' %}" class="block text-sm text-[#242826] py-1.5">{% if is_en %}Full Gallery Artworks{% else %}گالری کامل آثار{% endif %}</a>
     <a href="{% url 'artists' %}" class="block text-sm text-[#242826] py-1.5">{% if is_en %}Artists & Studios{% else %}هنرمندان و غرفه‌ها{% endif %}</a>
     <a href="{% url 'cart' %}" class="block text-sm text-[#242826] py-1.5">{% if is_en %}Shopping Cart{% else %}سبد خرید{% endif %}</a>
+    <a href="{% url 'booth_dashboard' %}" class="block text-sm font-bold text-[#82533D] py-1.5">{% if is_en %}Artists & Booth Dashboard{% else %}داشبورد غرفه‌داران و امور مالی{% endif %}</a>
   </div>
 
 </header>

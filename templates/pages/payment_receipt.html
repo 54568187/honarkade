@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}رسید پرداخت شاپرک | سفارش شماره #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 w-full">
+
+  <!-- کارت رسید تراکنش دیجیتال -->
+  <div class="bg-white rounded-3xl p-6 sm:p-10 border border-[#E8E3D9] shadow-xl relative overflow-hidden">
+    
+    <!-- نوار سبز موفقیت بالا -->
+    <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600"></div>
+
+    <div class="text-center space-y-3 pb-6 border-b border-[#E8E3D9]">
+      <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner">
+        <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+
+      <h1 class="text-xl sm:text-2xl font-black text-[#1E3329]">
+        پرداخت شما با موفقیت انجام شد
+      </h1>
+      <p class="text-xs sm:text-sm text-[#6B726E]">
+        سفارش شما در سامانه بازارچه آنلاین هنرکده ثبت شد و جهت آماده‌سازی به غرفه‌دار تحویل گردید.
+      </p>
+    </div>
+
+    <!-- جدول مشخصات تراکنش الکترونیکی شاپرک -->
+    <div class="py-6 space-y-4 text-xs sm:text-sm text-[#4A5568]">
+      
+      <div class="flex items-center justify-between py-2 border-b border-[#F1F5F9]">
+        <span class="text-[#718096]">شماره سفارش:</span>
+        <strong class="font-mono text-[#1E3329] font-bold">#{{ order.id }}</strong>
+      </div>
+
+      <div class="flex items-center justify-between py-2 border-b border-[#F1F5F9]">
+        <span class="text-[#718096]">کد پیگیری مرجع شاپرک (RRN):</span>
+        <strong class="font-mono text-emerald-700 font-black text-base">{{ order.gateway_ref_code|default:"SHP892147510" }}</strong>
+      </div>
+
+      <div class="flex items-center justify-between py-2 border-b border-[#F1F5F9]">
+        <span class="text-[#718096]">غرفه مبدأ و هنرمند:</span>
+        <strong class="text-[#82533D] font-bold">{{ booth.name|default:"کارگاه هنری هنرکده" }}</strong>
+      </div>
+
+      <div class="flex items-center justify-between py-2 border-b border-[#F1F5F9]">
+        <span class="text-[#718096]">شماره کارت پرداخت‌کننده:</span>
+        <strong class="font-mono text-[#2D3748]">{{ order.card_masked_number|default:"6037-****-****-2841" }}</strong>
+      </div>
+
+      <div class="flex items-center justify-between py-2 border-b border-[#F1F5F9]">
+        <span class="text-[#718096]">تاریخ و ساعت تراکنش:</span>
+        <strong class="font-mono text-[#2D3748]">{{ order.paid_at|default:order.created_at|date:"Y/m/d - H:i:s" }}</strong>
+      </div>
+
+      <!-- بازه زمانی انتخابی دریافت کالا -->
+      <div class="flex items-center justify-between py-2.5 bg-[#FAF7F2] p-3 rounded-2xl border border-[#E8E3D9]">
+        <div class="flex items-center gap-2 text-[#2C4A3E]">
+          <svg class="w-5 h-5 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <span class="font-bold">زمان انتخابی دریافت کالا:</span>
+        </div>
+        <strong class="text-[#1E3329] font-black">{{ order.delivery_date }} ({{ order.delivery_time_slot }})</strong>
+      </div>
+
+      <div class="flex items-center justify-between py-2 border-b border-[#F1F5F9]">
+        <span class="text-[#718096]">روش ارسال و شرکت حامل:</span>
+        <strong>{{ order.carrier.name|default:"پست پیشتاز جمهوری اسلامی ایران" }}</strong>
+      </div>
+
+      <div class="flex items-center justify-between py-2 border-b border-[#F1F5F9]">
+        <span class="text-[#718096]">مبلغ پرداخت شده:</span>
+        <div class="text-right">
+          <span class="font-mono font-black text-emerald-700 text-base sm:text-lg">{{ price_toman|intcomma }} تومان</span>
+          <span class="text-[11px] text-[#718096] block font-mono">({{ price_rial|intcomma }} ریال)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- اقلام خریداری شده -->
+    <div class="pt-4 border-t border-[#E8E3D9] space-y-3">
+      <h3 class="text-xs font-bold text-[#1E3329]">آثار هنری خریداری شده در این سفارش:</h3>
+      <div class="space-y-2">
+        {% for item in order.items.all %}
+        <div class="flex items-center justify-between p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
+          <div class="flex items-center gap-3">
+            {% if item.product.image %}
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-12 h-12 rounded-xl object-cover border border-[#CBD5E1]">
+            {% endif %}
+            <div>
+              <div class="text-xs font-bold text-[#1E3329]">{{ item.product.name }}</div>
+              <div class="text-[10px] text-[#718096]">تعداد: {{ item.quantity }} عدد</div>
+            </div>
+          </div>
+          <span class="font-mono text-xs font-bold text-[#2C4A3E]">{{ item.unit_price|intcomma }} تومان</span>
+        </div>
+        {% empty %}
+        <div class="text-xs text-[#718096]">یک اثر دست‌ساز از غرفه هنرمند</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- دکمه‌های ناوبری و چاپ رسید -->
+    <div class="mt-8 pt-6 border-t border-[#E8E3D9] flex flex-col sm:flex-row items-center justify-center gap-3">
+      <button type="button" onclick="window.print()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-[#CBD5E1] hover:bg-[#F8FAFC] text-xs font-bold text-[#4A5568] flex items-center justify-center gap-2 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+        <span>چاپ رسید الکترونیکی</span>
+      </button>
+
+      <a href="{% url 'booth_dashboard' %}" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#82533D] hover:bg-[#6D4230] text-white text-xs font-bold transition-all shadow-md text-center">
+        مشاهده در داشبورد غرفه‌دار
+      </a>
+
+      <a href="{% url 'shop' %}" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs font-bold transition-all shadow-md text-center">
+        بازگشت به گالری آثار
+      </a>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

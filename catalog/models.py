@@ -278,6 +278,60 @@ class Booth(models.Model):
         verbose_name=_("تأیید شده توسط مدیریت بازارچه"),
         help_text=_("پس از بررسی، تیک تأیید را بزنید تا غرفه فعال شود.")
     )
+    
+    # اطلاعات حساب بانکی و تسویه‌حساب غرفه‌دار (کارگاه ۱۷ کتاب درسی)
+    bank_name = models.CharField(
+        max_length=100,
+        blank=True,
+        default="بانک ملی ایران",
+        verbose_name=_("نام بانک غرفه‌دار")
+    )
+    bank_shaba = models.CharField(
+        max_length=40,
+        blank=True,
+        default="IR540170000000000000000000",
+        verbose_name=_("شماره شبا (IBAN)")
+    )
+    bank_card = models.CharField(
+        max_length=30,
+        blank=True,
+        default="",
+        verbose_name=_("شماره کارت بانکی غرفه‌دار")
+    )
+    bank_account_number = models.CharField(
+        max_length=30,
+        blank=True,
+        default="",
+        verbose_name=_("شماره حساب بانکی")
+    )
+    bank_account_holder = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+        verbose_name=_("نام و نام خانوادگی صاحب حساب")
+    )
+    wallet_balance = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("موجودی قابل تسویه (تومان)")
+    )
+    total_earnings = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("کل درآمد ناخالص غرفه (تومان)")
+    )
+    settled_amount = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("مبالغ تسویه شده (تومان)")
+    )
+    settlement_status = models.CharField(
+        max_length=30,
+        choices=(
+            ("settled", _("تسویه شده")),
+            ("pending", _("در انتظار بررسی تسویه حساب")),
+            ("no_request", _("بدون درخواست تسویه")),
+        ),
+        default="no_request",
+        verbose_name=_("وضعیت تسویه مالی")
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ ثبت غرفه"))
 
     class Meta:
@@ -293,6 +347,14 @@ class Booth(models.Model):
         if not self.slug:
             self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args, **kwargs)
+
+
+class BoothFinancial(Booth):
+    """مدل پراکسی جهت مدیریت اختصاصی امور مالی و اطلاعات بانکی غرفه‌داران"""
+    class Meta:
+        proxy = True
+        verbose_name = _("اطلاعات مالی و تسویه‌حساب غرفه‌دار")
+        verbose_name_plural = _("اطلاعات مالی و تسویه‌حساب غرفه‌داران")
 
 
 class Product(models.Model):

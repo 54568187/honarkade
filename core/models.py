@@ -377,3 +377,92 @@ class ThemeTranslation(models.Model):
     def __str__(self):
         return f"{self.original_phrase} ➔ {self.fa_translation} | {self.en_translation}"
 
+
+
+
+class PaymentGatewaySetting(models.Model):
+    """
+    پیکربندی درگاه پرداخت اینترنتی و اطلاعات حساب بانکی پلتفرم (کارگاه ۱۷ کتاب درسی)
+    """
+    # درگاه آنلاین
+    is_online_gateway_active = models.BooleanField(
+        default=True,
+        verbose_name=_("فعال بودن درگاه پرداخت اینترنتی (شاپرک)")
+    )
+    gateway_provider = models.CharField(
+        max_length=100,
+        default="به‌پرداخت ملت (شاپرک)",
+        verbose_name=_("شرکت ارائه‌دهنده درگاه پرداخت اینترنتی")
+    )
+    merchant_id = models.CharField(
+        max_length=50,
+        default="2374257",
+        verbose_name=_("شماره پذیرنده درگاه (Merchant ID)")
+    )
+    terminal_id = models.CharField(
+        max_length=50,
+        default="5841895",
+        verbose_name=_("شماره ترمینال درگاه (Terminal ID)")
+    )
+    gateway_url = models.CharField(
+        max_length=255,
+        default="https://store.dashtclub.ir",
+        verbose_name=_("آدرس وب‌سایت پذیرنده در شاپرک")
+    )
+    
+    # پرداخت از طریق فیش بانکی (کارت به کارت)
+    is_bank_slip_active = models.BooleanField(
+        default=True,
+        verbose_name=_("فعال بودن روش پرداخت با فیش بانکی (کارت به کارت)")
+    )
+    bank_name = models.CharField(
+        max_length=100,
+        default="بانک ملی ایران",
+        verbose_name=_("نام بانک رسمی پلتفرم")
+    )
+    bank_owner_name = models.CharField(
+        max_length=150,
+        default="فروشگاه صنایع‌دستی و آثار هنری هنرکده",
+        verbose_name=_("نام صاحب حساب بانکی")
+    )
+    bank_card_number = models.CharField(
+        max_length=30,
+        default="۶۰۳۷-۹۹۷۵-۱۲۳۴-۵۶۷۸",
+        verbose_name=_("شماره کارت بانکی پلتفرم")
+    )
+    bank_account_number = models.CharField(
+        max_length=30,
+        default="۰۱۱۴۵۸۷۲۲۹۰۰۱",
+        verbose_name=_("شماره حساب بانکی پلتفرم")
+    )
+    bank_shaba_number = models.CharField(
+        max_length=40,
+        default="IR540170000000114587229001",
+        verbose_name=_("شماره شبا (IBAN)")
+    )
+
+    # کارمزد و قوانین مالی
+    commission_percentage = models.PositiveIntegerField(
+        default=10,
+        verbose_name=_("درصد کارمزد پیش‌فرض پلتفرم از غرفه‌داران (%)")
+    )
+    receipt_guidelines = models.TextField(
+        default="مشتری گرامی، پس از انتقال وجه به شماره کارت یا حساب فوق، لطفاً شماره پیگیری فیش را در کادر مربوطه ثبت فرمایید تا بلافاصله پس از بررسی واحد مالی، سفارش شما تایید گردد.",
+        verbose_name=_("متن راهنمای واریز فیش برای مشتریان")
+    )
+
+    class Meta:
+        verbose_name = _("پیکربندی درگاه و حساب بانکی پلتفرم (کارگاه ۱۷)")
+        verbose_name_plural = _("پیکربندی درگاه و حساب بانکی پلتفرم (کارگاه ۱۷)")
+
+    def __str__(self):
+        return f"{self.gateway_provider} - پذیرنده: {self.merchant_id} | بانک: {self.bank_name}"
+
+    @classmethod
+    def load(cls):
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
+
+    @classmethod
+    def get_settings(cls):
+        return cls.load()

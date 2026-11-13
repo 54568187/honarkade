@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from catalog.models import Product
+from catalog.models import Product, Booth
 from shipping.models import Carrier, Province
 
 
@@ -107,6 +107,37 @@ class Order(models.Model):
     is_recycled_packaging = models.BooleanField(
         default=False,
         verbose_name=_("بسته‌بندی بازیافتی (دوستدار محیط زیست)")
+    )
+
+    # بازه زمانی دریافت و روز ارسال کالا
+    delivery_date = models.CharField(
+        max_length=100,
+        blank=True,
+        default="سریع‌ترین زمان ممکن (۱ الی ۳ روز کاری)",
+        verbose_name=_("روز انتخابی دریافت کالا")
+    )
+    delivery_time_slot = models.CharField(
+        max_length=100,
+        blank=True,
+        default="ساعت ۹ الی ۱۳ (صبح)",
+        verbose_name=_("بازه ساعتی تحویل مرسوله")
+    )
+
+    # اطلاعات تراکنش شاپرک و درگاه بانکی
+    gateway_ref_code = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name=_("کد پیگیری شاپرک / مرجع تراکنش آنلاین")
+    )
+    card_masked_number = models.CharField(
+        max_length=30,
+        blank=True,
+        verbose_name=_("شماره کارت خریدار (ماسک شده)")
+    )
+    paid_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name=_("زمان پرداخت درگاه")
     )
     
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("زمان ثبت سفارش"))
@@ -239,3 +270,35 @@ class CartRule(models.Model):
     def __str__(self):
         return f"{self.name} ({self.code})"
 
+
+
+
+class SettlementRequest(models.Model):
+    """درخواست‌های تسویه حساب مالی غرفه‌داران"""
+    STATUS_CHOICES = (
+        ("pending", _("در انتظار بررسی و واریز پایا")),
+        ("paid", _("واریز شد و تسویه گردید")),
+        ("rejected", _("رد شده")),
+    )
+    booth = models.ForeignKey(
+        Booth,
+        on_delete=models.CASCADE,
+        related_name="settlement_requests",
+        verbose_name=_("غرفه درخواست‌دهنده")
+    )
+    amount = models.PositiveIntegerField(verbose_name=_("مبلغ درخواستی تسویه (تومان)"))
+    shaba_number = models.CharField(max_length=40, verbose_name=_("شماره شبا مقصد"))
+    card_number = models.CharField(max_length=30, blank=True, verbose_name=_("شماره کارت مقصد"))
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending", verbose_name=_("وضعیت درخواست"))
+    tracking_code = models.CharField(max_length=100, blank=True, verbose_name=_("کد پیگیری حواله پایا/ساتنا"))
+    admin_note = models.TextField(blank=True, verbose_name=_("توضیحات مدیر مالی"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ ثبت درخواست"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("تاریخ به‌روزرسانی"))
+
+    class Meta:
+        verbose_name = _("درخواست تسویه حساب غرفه‌دار")
+        verbose_name_plural = _("درخواست‌های تسویه حساب غرفه‌داران")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"درخواست #{self.id} - غرفه: {self.booth.name} ({self.amount:,} تومان) - {self.get_status_display()}"

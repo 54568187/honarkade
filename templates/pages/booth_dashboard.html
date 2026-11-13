@@ -1,0 +1,351 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}هنرکده | داشبورد مدیریت غرفه و امور مالی هنرمندان{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+
+  <!-- پیام‌های سیستم (فلش مسیج‌ها) -->
+  {% if messages %}
+  <div class="space-y-2">
+    {% for message in messages %}
+    <div class="p-4 rounded-2xl text-xs font-bold flex items-center justify-between {% if message.tags == 'success' %}bg-emerald-50 text-emerald-800 border border-emerald-200{% else %}bg-amber-50 text-amber-800 border border-amber-200{% endif %}">
+      <span>{{ message }}</span>
+      <button type="button" onclick="this.parentElement.remove()" class="text-xs opacity-70 hover:opacity-100">✕</button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- بنر معرفی غرفه و سوئیچر انتخاب غرفه -->
+  <div class="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E3D9] shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-4 sm:gap-6 text-right w-full md:w-auto">
+      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#FAF7F2] border-2 border-[#2C4A3E]/20 text-[#2C4A3E] flex items-center justify-center text-2xl font-black shrink-0 overflow-hidden shadow-inner">
+        {% if current_booth.logo %}
+        <img src="{{ current_booth.logo.url }}" alt="{{ current_booth.name }}" class="w-full h-full object-cover">
+        {% else %}
+        <span>🎨</span>
+        {% endif %}
+      </div>
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <h1 class="text-lg sm:text-2xl font-black text-[#1E3329]">{{ current_booth.name }}</h1>
+          {% if current_booth.is_approved %}
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E8EFEA] text-[#2C4A3E]">
+            <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            غرفه تأیید شده
+          </span>
+          {% endif %}
+        </div>
+        <p class="text-xs text-[#6B726E]">
+          هنرمند صاحب غرفه: <strong class="text-[#1E3329]">{{ current_booth.owner.get_full_name|default:current_booth.owner.username }}</strong>
+          • عضو از {{ current_booth.created_at|date:"Y/m/d" }}
+        </p>
+      </div>
+    </div>
+
+    <!-- سلکتور سوئیچ بین غرفه‌ها جهت تست و نمایش -->
+    <div class="w-full md:w-auto bg-[#FAF7F2] p-3 rounded-2xl border border-[#E8E3D9] flex items-center gap-3">
+      <label class="text-xs font-bold text-[#6B726E] shrink-0">مشاهده غرفه:</label>
+      <select onchange="window.location.href='?booth_id=' + this.value" class="bg-white border border-[#CBD5E1] rounded-xl px-3 py-1.5 text-xs font-bold text-[#1E3329] focus:outline-none focus:border-[#2C4A3E]">
+        {% for b in all_booths %}
+        <option value="{{ b.id }}" {% if b.id == current_booth.id %}selected{% endif %}>
+          {{ b.name }} ({{ b.owner.get_full_name|default:b.owner.username }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <!-- کارت‌های خلاصه مالی و تراز حساب غرفه -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    
+    <!-- کارت ۱: موجودی قابل تسویه -->
+    <div class="bg-white rounded-3xl p-5 border border-[#E8E3D9] shadow-sm space-y-2">
+      <div class="flex items-center justify-between text-xs text-[#6B726E]">
+        <span>موجودی قابل تسویه</span>
+        <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">💳</span>
+      </div>
+      <div class="text-xl sm:text-2xl font-black text-[#2C4A3E] font-mono">
+        {{ current_booth.wallet_balance|intcomma }} <span class="text-xs font-sans font-medium text-[#6B726E]">تومان</span>
+      </div>
+      <div class="pt-1">
+        <a href="#settlement-form" class="inline-block text-[11px] text-emerald-700 hover:underline font-bold">
+          درخواست تسویه فوری ←
+        </a>
+      </div>
+    </div>
+
+    <!-- کارت ۲: کل فروش ناخالص -->
+    <div class="bg-white rounded-3xl p-5 border border-[#E8E3D9] shadow-sm space-y-2">
+      <div class="flex items-center justify-between text-xs text-[#6B726E]">
+        <span>کل درآمد ناخالص غرفه</span>
+        <span class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold">📈</span>
+      </div>
+      <div class="text-xl sm:text-2xl font-black text-[#1E3329] font-mono">
+        {{ current_booth.total_earnings|intcomma }} <span class="text-xs font-sans font-medium text-[#6B726E]">تومان</span>
+      </div>
+      <div class="text-[11px] text-[#6B726E]">
+        مجموع فروش از آغاز فعالیت
+      </div>
+    </div>
+
+    <!-- کارت ۳: مبالغ تسویه شده -->
+    <div class="bg-white rounded-3xl p-5 border border-[#E8E3D9] shadow-sm space-y-2">
+      <div class="flex items-center justify-between text-xs text-[#6B726E]">
+        <span>واریز شده به حساب بانکی</span>
+        <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold">🏦</span>
+      </div>
+      <div class="text-xl sm:text-2xl font-black text-[#82533D] font-mono">
+        {{ current_booth.settled_amount|intcomma }} <span class="text-xs font-sans font-medium text-[#6B726E]">تومان</span>
+      </div>
+      <div class="text-[11px] text-[#6B726E]">
+        حواله‌های پایا و ساتنا واریز شده
+      </div>
+    </div>
+
+    <!-- کارت ۴: تعداد سفارش‌های دریافتی -->
+    <div class="bg-white rounded-3xl p-5 border border-[#E8E3D9] shadow-sm space-y-2">
+      <div class="flex items-center justify-between text-xs text-[#6B726E]">
+        <span>سفارش‌های دریافتی غرفه</span>
+        <span class="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center font-bold">📦</span>
+      </div>
+      <div class="text-xl sm:text-2xl font-black text-[#1E3329] font-mono">
+        {{ total_orders_count }} <span class="text-xs font-sans font-medium text-[#6B726E]">سفارش</span>
+      </div>
+      <div class="text-[11px] text-[#6B726E]">
+        درخواست خرید توسط خریداران
+      </div>
+    </div>
+
+  </div>
+
+  <!-- بخش اصلی: ۲ ستونه شامل تب‌های سفارش‌ها و تب فرم اطلاعات بانکی -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- ستون ۲ سهمی: سفارش‌ها و خریداران ("کی درخواست داده برای خرید") -->
+    <div class="lg:col-span-2 space-y-6">
+      
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E3D9] shadow-sm space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-[#E8E3D9]">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            <h2 class="text-base sm:text-lg font-black text-[#1E3329]">
+              درخواست‌های خرید مشتریان (کی درخواست داده برای خرید)
+            </h2>
+          </div>
+          <span class="text-xs text-[#6B726E] font-bold">{{ booth_orders|length }} سفارش ثبت‌شده</span>
+        </div>
+
+        {% if booth_orders %}
+        <div class="space-y-4">
+          {% for order in booth_orders %}
+          <div class="bg-[#FAF7F2]/60 rounded-2xl p-4 sm:p-5 border border-[#E8E3D9] space-y-3 transition-all hover:bg-[#FAF7F2] hover:border-[#2C4A3E]/30">
+            
+            <!-- ردیف بالای هر سفارش: شماره، زمان، وضعیت -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[#E8E3D9]">
+              <div class="flex items-center gap-2">
+                <span class="font-mono font-bold text-xs bg-white px-2 py-0.5 rounded-md border border-[#E8E3D9]">
+                  سفارش #{{ order.id }}
+                </span>
+                <span class="text-[11px] text-[#718096]">
+                  {{ order.created_at|date:"Y/m/d - H:i" }}
+                </span>
+              </div>
+
+              <!-- نشان وضعیت سفارش -->
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full 
+                {% if order.status == 'delivered' %}bg-emerald-100 text-emerald-800
+                {% elif order.status == 'shipped' %}bg-blue-100 text-blue-800
+                {% elif order.status == 'processing' %}bg-amber-100 text-amber-800
+                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                {{ order.get_status_display }}
+              </span>
+            </div>
+
+            <!-- مشخصات خریدار -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#4A5568]">
+              <div>
+                <span class="text-[#718096]">نام خریدار:</span>
+                <strong class="text-[#1E3329] mr-1">{{ order.customer.get_full_name|default:order.customer.username }}</strong>
+              </div>
+              <div>
+                <span class="text-[#718096]">تلفن تماس:</span>
+                <strong class="font-mono text-[#1E3329] mr-1">{{ order.phone }}</strong>
+              </div>
+              <div class="sm:col-span-2">
+                <span class="text-[#718096]">نشانی مقصد:</span>
+                <span class="text-[#1E3329] mr-1">{{ order.city }} - {{ order.address }}</span>
+              </div>
+            </div>
+
+            <!-- بازه زمانی انتخابی دریافت کالا (درخواست اختصاصی کاربر) -->
+            <div class="bg-[#E8EFEA] p-2.5 rounded-xl border border-emerald-200/60 flex items-center justify-between text-xs text-[#2C4A3E]">
+              <div class="flex items-center gap-1.5 font-bold">
+                <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span>روز و بازه زمانی انتخابی خریدار:</span>
+              </div>
+              <strong class="font-bold font-sans">{{ order.delivery_date }} ({{ order.delivery_time_slot }})</strong>
+            </div>
+
+            <!-- اطلاعات پرداخت و کد رهگیری شاپرک -->
+            <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#6B726E] pt-1">
+              <div>
+                <span>روش پرداخت:</span>
+                <strong class="text-[#1E3329]">
+                  {% if order.payment_method == 'online' %}💳 درگاه شاپرک{% else %}🏦 فیش بانکی کارت‌به‌کارت{% endif %}
+                </strong>
+                {% if order.gateway_ref_code %}
+                <span class="font-mono text-emerald-700 font-bold mr-2">کد پیگیری: {{ order.gateway_ref_code }}</span>
+                {% endif %}
+              </div>
+              <div class="font-mono font-bold text-sm text-[#2C4A3E]">
+                مبلغ کل: {{ order.total_price|intcomma }} تومان
+              </div>
+            </div>
+
+            <!-- فرم تغییر وضعیت سفارش توسط غرفه‌دار -->
+            <form method="POST" class="pt-2 border-t border-[#E8E3D9] flex items-center justify-between gap-2 text-xs">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="update_order_status">
+              <input type="hidden" name="order_id" value="{{ order.id }}">
+              <input type="hidden" name="booth_id" value="{{ current_booth.id }}">
+              
+              <span class="text-[#718096]">تغییر وضعیت مرسوله:</span>
+              <div class="flex items-center gap-2">
+                <select name="new_status" class="bg-white border border-[#CBD5E1] rounded-lg px-2 py-1 text-xs text-[#2D3748] focus:outline-none">
+                  <option value="processing" {% if order.status == 'processing' %}selected{% endif %}>در حال آماده‌سازی</option>
+                  <option value="shipped" {% if order.status == 'shipped' %}selected{% endif %}>تحویل به حامل / ارسال شد</option>
+                  <option value="delivered" {% if order.status == 'delivered' %}selected{% endif %}>تحویل مرسوله به خریدار</option>
+                </select>
+                <button type="submit" class="bg-[#2C4A3E] hover:bg-[#1E3329] text-white px-3 py-1 rounded-lg text-xs font-bold transition-colors">
+                  ثبت
+                </button>
+              </div>
+            </form>
+
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="py-12 text-center text-[#718096] space-y-2">
+          <div class="text-3xl">📦</div>
+          <p class="text-xs font-bold text-[#1E3329]">هنوز سفارشی برای این غرفه ثبت نشده است.</p>
+          <span class="text-[11px]">با ثبت اولین سفارش از سبد خرید، مشخصات خریدار و زمان تحویل در اینجا نمایش داده می‌شود.</span>
+        </div>
+        {% endif %}
+
+      </div>
+
+    </div>
+
+    <!-- ستون ۱ سهمی: اطلاعات بانکی و فرم تسویه حساب غرفه‌دار -->
+    <div class="space-y-6">
+      
+      <!-- ۱. فرم ویرایش اطلاعات بانکی غرفه‌دار (کارگاه ۱۷) -->
+      <div class="bg-white rounded-3xl p-6 border border-[#E8E3D9] shadow-sm space-y-4">
+        <div class="flex items-center gap-2 pb-3 border-b border-[#E8E3D9]">
+          <span class="text-lg">🏦</span>
+          <h3 class="text-sm font-black text-[#1E3329]">
+            اطلاعات بانکی غرفه‌دار (کارگاه ۱۷)
+          </h3>
+        </div>
+
+        <form method="POST" class="space-y-3.5 text-xs text-right">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="update_bank_info">
+          <input type="hidden" name="booth_id" value="{{ current_booth.id }}">
+
+          <div>
+            <label class="block font-bold text-[#4A5568] mb-1">نام بانک</label>
+            <input type="text" name="bank_name" value="{{ current_booth.bank_name }}" placeholder="مثلاً: بانک ملی ایران" class="w-full bg-[#FAF7F2] border border-[#CBD5E1] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#2C4A3E]">
+          </div>
+
+          <div>
+            <label class="block font-bold text-[#4A5568] mb-1">نام و نام خانوادگی صاحب حساب</label>
+            <input type="text" name="bank_account_holder" value="{{ current_booth.bank_account_holder|default:current_booth.owner.get_full_name }}" placeholder="نام صاحب حساب" class="w-full bg-[#FAF7F2] border border-[#CBD5E1] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#2C4A3E]">
+          </div>
+
+          <div>
+            <label class="block font-bold text-[#4A5568] mb-1">شماره شبا (IBAN)</label>
+            <input type="text" name="bank_shaba" value="{{ current_booth.bank_shaba }}" placeholder="IR..." class="w-full bg-[#FAF7F2] border border-[#CBD5E1] rounded-xl px-3 py-2 text-xs font-mono direction-ltr text-center focus:outline-none focus:border-[#2C4A3E]">
+          </div>
+
+          <div>
+            <label class="block font-bold text-[#4A5568] mb-1">شماره کارت بانکی (۱۶ رقمی)</label>
+            <input type="text" name="bank_card" value="{{ current_booth.bank_card }}" placeholder="---- ---- ---- ----" class="w-full bg-[#FAF7F2] border border-[#CBD5E1] rounded-xl px-3 py-2 text-xs font-mono direction-ltr text-center focus:outline-none focus:border-[#2C4A3E]">
+          </div>
+
+          <div>
+            <label class="block font-bold text-[#4A5568] mb-1">شماره حساب بانکی</label>
+            <input type="text" name="bank_account_number" value="{{ current_booth.bank_account_number }}" placeholder="شماره حساب" class="w-full bg-[#FAF7F2] border border-[#CBD5E1] rounded-xl px-3 py-2 text-xs font-mono direction-ltr text-center focus:outline-none focus:border-[#2C4A3E]">
+          </div>
+
+          <button type="submit" class="w-full py-2.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white font-bold transition-all shadow-md text-xs">
+            ذخیره و به‌روزرسانی اطلاعات بانکی
+          </button>
+        </form>
+      </div>
+
+      <!-- ۲. فرم درخواست تسویه حساب پایا -->
+      <div id="settlement-form" class="bg-white rounded-3xl p-6 border border-[#E8E3D9] shadow-sm space-y-4">
+        <div class="flex items-center gap-2 pb-3 border-b border-[#E8E3D9]">
+          <span class="text-lg">💸</span>
+          <h3 class="text-sm font-black text-[#1E3329]">
+            ثبت درخواست تسویه حساب مالی
+          </h3>
+        </div>
+
+        <form method="POST" class="space-y-3 text-xs text-right">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="request_settlement">
+          <input type="hidden" name="booth_id" value="{{ current_booth.id }}">
+
+          <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-amber-900 text-[11px] leading-relaxed">
+            موجودی قابل تسویه شما: <strong>{{ current_booth.wallet_balance|intcomma }} تومان</strong> است.
+          </div>
+
+          <div>
+            <label class="block font-bold text-[#4A5568] mb-1">مبلغ درخواستی تسویه (تومان)</label>
+            <input type="number" name="amount" min="10000" max="{{ current_booth.wallet_balance }}" value="{{ current_booth.wallet_balance }}" class="w-full bg-[#FAF7F2] border border-[#CBD5E1] rounded-xl px-3 py-2 text-xs font-mono focus:outline-none focus:border-[#2C4A3E]">
+          </div>
+
+          <div class="text-[11px] text-[#718096]">
+            واریز به شبای: <strong class="font-mono text-[#2D3748]">{{ current_booth.bank_shaba }}</strong>
+          </div>
+
+          <button type="submit" class="w-full py-2.5 rounded-xl bg-[#82533D] hover:bg-[#6D4230] text-white font-bold transition-all shadow-md text-xs">
+            ثبت درخواست تسویه پایا
+          </button>
+        </form>
+
+        <!-- سابقه درخواست‌های تسویه -->
+        {% if settlement_requests %}
+        <div class="pt-3 border-t border-[#E8E3D9] space-y-2">
+          <span class="text-[11px] font-bold text-[#1E3329] block">آخرین درخواست‌های تسویه:</span>
+          {% for req in settlement_requests|slice:":3" %}
+          <div class="p-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-between text-[11px]">
+            <div>
+              <span class="font-bold text-[#1E3329]">{{ req.amount|intcomma }} تومان</span>
+              <span class="block text-[10px] text-[#718096]">{{ req.created_at|date:"Y/m/d" }}</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+              {% if req.status == 'paid' %}bg-emerald-100 text-emerald-800
+              {% elif req.status == 'rejected' %}bg-red-100 text-red-800
+              {% else %}bg-amber-100 text-amber-800{% endif %}">
+              {{ req.get_status_display }}
+            </span>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

@@ -65,29 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const saved = localStorage.getItem('honarkadeh_cart_items');
     if (saved) {
       cart = JSON.parse(saved);
+      if (!Array.isArray(cart)) cart = [];
     } else {
-      cart = [
-        {
-          id: 'prod-init-1',
-          title: 'گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار',
-          subtitle: 'تک‌نسخه • کارگاه کهن',
-          price: 1450000,
-          image: '/static/images/products/product-1.jpg',
-          qty: 1
-        }
-      ];
+      cart = [];
     }
   } catch (e) {
-    cart = [
-      {
-        id: 'prod-init-1',
-        title: 'گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار',
-        subtitle: 'تک‌نسخه • کارگاه کهن',
-        price: 1450000,
-        image: '/static/images/products/product-1.jpg',
-        qty: 1
-      }
-    ];
+    cart = [];
   }
 
   function saveCart() {
@@ -300,6 +283,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (summarySubtotalEl) summarySubtotalEl.textContent = `${formatPrice(subtotal)} تومان`;
     if (summaryDiscountEl) summaryDiscountEl.textContent = `${formatPrice(discount)}- تومان`;
     if (summaryTotalEl) summaryTotalEl.textContent = `${formatPrice(finalTotal)} تومان`;
+
+    const checkoutSubmitBtn = document.getElementById('submit-checkout-btn');
+    if (checkoutSubmitBtn) {
+      if (cart.length === 0) {
+        checkoutSubmitBtn.disabled = true;
+        checkoutSubmitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      } else {
+        checkoutSubmitBtn.disabled = false;
+        checkoutSubmitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
+    }
   }
 
   // اضافه کردن اثر به سبد با کلیک روی + محصول

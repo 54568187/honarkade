@@ -286,11 +286,32 @@ UNFOLD = {
                 ],
             },
             {
-                "title": "فروش و مالی",
+                "title": "امور مالی و پرداخت‌ها (کارگاه ۱۷)",
                 "separator": True,
                 "items": [
                     {
-                        "title": "سفارش‌ها و کارمزد",
+                        "title": "پیکربندی درگاه و حساب بانکی پلتفرم (کارگاه ۱۷)",
+                        "icon": "payments",
+                        "link": reverse_lazy("admin:core_paymentgatewaysetting_changelist"),
+                    },
+                    {
+                        "title": "اطلاعات مالی و تسویه‌حساب غرفه‌داران",
+                        "icon": "account_balance",
+                        "link": reverse_lazy("admin:catalog_boothfinancial_changelist"),
+                    },
+                    {
+                        "title": "درخواست‌های تسویه حساب غرفه‌داران",
+                        "icon": "request_quote",
+                        "link": reverse_lazy("admin:orders_settlementrequest_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "فروش و مدیریت سفارش‌ها",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "سفارش‌ها و کارمزد پلتفرم",
                         "icon": "shopping_cart",
                         "link": reverse_lazy("admin:orders_order_changelist"),
                     },

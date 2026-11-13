@@ -2,7 +2,7 @@ from django.contrib import admin
 from unfold.admin import ModelAdmin, TabularInline
 from unfold.decorators import display
 from core.admin_helpers import render_action_buttons
-from .models import Order, OrderItem, CartRule
+from .models import Order, OrderItem, CartRule, SettlementRequest
 
 
 class OrderItemInline(TabularInline):
@@ -13,20 +13,42 @@ class OrderItemInline(TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(ModelAdmin):
-    list_display = ("id", "customer", "total_price_display", "payment_method_display", "status", "carrier", "is_gift_display", "created_at", "action_buttons")
+    list_display = (
+        "id",
+        "customer",
+        "total_price_display",
+        "payment_method_display",
+        "status",
+        "delivery_schedule_display",
+        "carrier",
+        "is_gift_display",
+        "created_at",
+        "action_buttons"
+    )
     list_filter = ("status", "payment_method", "is_gift_wrapped", "is_recycled_packaging", "created_at", "carrier")
     list_editable = ("status",)
-    search_fields = ("id", "customer__username", "customer__first_name", "customer__last_name", "phone", "address", "bank_tracking_code")
-    readonly_fields = ("total_products_price", "shipping_cost", "total_price", "commission_amount", "created_at", "updated_at")
+    search_fields = ("id", "customer__username", "customer__first_name", "customer__last_name", "phone", "address", "bank_tracking_code", "gateway_ref_code")
+    readonly_fields = ("total_products_price", "shipping_cost", "total_price", "commission_amount", "paid_at", "created_at", "updated_at")
     inlines = [OrderItemInline]
 
     fieldsets = (
-        ("مشخصات خریدار و سفارش", {
+        ("مشخصات خریدار و وضعیت سفارش", {
             "fields": ("customer", "status", "created_at", "updated_at")
         }),
-        ("روش پرداخت و فیش بانکی (کارگاه ۱۷)", {
-            "fields": ("payment_method", "bank_tracking_code", "bank_receipt_image"),
-            "description": "پیکربندی پرداخت از طریق درگاه الکترونیک یا ثبت فیش بانکی (کارت به کارت)"
+        ("روش پرداخت و درگاه بانکی / فیش (کارگاه ۱۷)", {
+            "fields": (
+                "payment_method",
+                "gateway_ref_code",
+                "card_masked_number",
+                "paid_at",
+                "bank_tracking_code",
+                "bank_receipt_image",
+            ),
+            "description": "پیکربندی و مشاهده جزئیات پرداخت اینترنتی شاپرک یا فیش بانکی (کارت به کارت)"
+        }),
+        ("زمان‌بندی ارسال و بازه دریافت کالا", {
+            "fields": ("delivery_date", "delivery_time_slot"),
+            "description": "روز و بازه زمانی انتخابی خریدار جهت ارسال و دریافت بسته سفارشی."
         }),
         ("خدمات بسته‌بندی ویژه (کتاب درسی)", {
             "fields": ("is_gift_wrapped", "gift_message", "is_recycled_packaging"),
@@ -44,6 +66,10 @@ class OrderAdmin(ModelAdmin):
     @display(description="روش پرداخت")
     def payment_method_display(self, obj):
         return obj.get_payment_method_display()
+
+    @display(description="زمان تحویل کالا")
+    def delivery_schedule_display(self, obj):
+        return f"{obj.delivery_date} ({obj.delivery_time_slot})"
 
     @display(description="کادوپیچی", boolean=True)
     def is_gift_display(self, obj):
@@ -114,3 +140,38 @@ class CartRuleAdmin(ModelAdmin):
     @display(description="وضعیت", boolean=True)
     def is_active_badge(self, obj):
         return obj.is_active
+
+
+@admin.register(SettlementRequest)
+class SettlementRequestAdmin(ModelAdmin):
+    list_display = (
+        "id",
+        "booth",
+        "amount_display",
+        "shaba_number",
+        "card_number",
+        "status",
+        "tracking_code",
+        "created_at",
+        "action_buttons",
+    )
+    list_filter = ("status", "created_at")
+    list_editable = ("status",)
+    search_fields = ("id", "booth__name", "shaba_number", "card_number", "tracking_code", "admin_note")
+    fieldsets = (
+        ("مشخصات غرفه متقاضی تسویه", {
+            "fields": ("booth", "amount", "status")
+        }),
+        ("اطلاعات بانکی جهت واریز وجه", {
+            "fields": ("shaba_number", "card_number", "tracking_code", "admin_note")
+        }),
+    )
+
+    @display(description="مبلغ درخواستی")
+    def amount_display(self, obj):
+        return f"{obj.amount:,} تومان"
+
+    @display(description="عملیات")
+    def action_buttons(self, obj):
+        return render_action_buttons(obj)
+
