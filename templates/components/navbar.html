@@ -104,7 +104,7 @@
               <!-- نام و نقش کاربر (در تبلت و دسکتاپ) -->
               <div class="hidden sm:flex flex-col {% if is_en %}text-left{% else %}text-right{% endif %}">
                 <span id="nav-profile-name" class="text-xs font-bold text-[#1E3329] max-w-[110px] truncate">
-                  {{ user.get_full_name|default:user.username|default:(is_en|yesno:"Guest User,کاربر گرامی") }}
+                  {% if user.get_full_name %}{{ user.get_full_name }}{% elif user.username %}{{ user.username }}{% else %}{% if is_en %}Guest User{% else %}کاربر گرامی{% endif %}{% endif %}
                 </span>
                 <span id="nav-profile-role" class="text-[9px] font-semibold {% if user.profile.role == 'seller' %}text-[#82533D]{% else %}text-[#2C4A3E]{% endif %}">
                   {% if user.is_superuser %}{% if is_en %}Platform Superadmin{% else %}مدیر کل پلتفرم{% endif %}{% elif user.is_staff %}{% if is_en %}Staff / Manager{% else %}مدیر / پرسنل{% endif %}{% elif user.profile.role == 'seller' %}{% if is_en %}Artist / Booth Owner{% else %}هنرمند / غرفه‌دار{% endif %}{% else %}{% if is_en %}Art Collector{% else %}خریدار هنر{% endif %}{% endif %}
@@ -121,7 +121,7 @@
                     {{ user.first_name|first|default:user.username|first|upper|default:'U' }}
                   </div>
                   <div class="flex flex-col truncate">
-                    <span id="nav-dropdown-name" class="text-xs font-bold text-[#1E3329] truncate">{{ user.get_full_name|default:user.username|default:(is_en|yesno:"Guest User,کاربر گرامی") }}</span>
+                    <span id="nav-dropdown-name" class="text-xs font-bold text-[#1E3329] truncate">{% if user.get_full_name %}{{ user.get_full_name }}{% elif user.username %}{{ user.username }}{% else %}{% if is_en %}Guest User{% else %}کاربر گرامی{% endif %}{% endif %}</span>
                     <span id="nav-dropdown-phone" class="text-[10px] text-[#6B726E] font-mono truncate">{{ user.profile.phone_number|default:user.username|default:'09120000000' }}</span>
                     <span id="nav-dropdown-role-badge" class="text-[9px] font-bold mt-1 px-2 py-0.5 rounded-full w-fit {% if user.profile.role == 'seller' %}bg-[#F7EFEA] text-[#82533D]{% else %}bg-[#E8EFEA] text-[#2C4A3E]{% endif %}">
                       {% if user.profile.role == 'seller' %}{% if is_en %}Official Gallery Artist{% else %}هنرمند رسمی گالری{% endif %}{% else %}{% if is_en %}Art Collector & Buyer{% else %}خریدار و مجموعه‌دار هنر{% endif %}{% endif %}

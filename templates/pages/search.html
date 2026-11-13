@@ -18,7 +18,7 @@
     <div class="flex items-center gap-2 text-xs">
       <span class="text-[#6B726E]">{% if is_en %}Search results for:{% else %}نتیجه جستجو برای:{% endif %}</span>
       <span class="bg-[#FAF7F2] border border-[#2C4A3E]/30 text-[#2C4A3E] px-3 py-1 rounded-full font-bold">
-        «{{ query|default:(is_en|yesno:"All Artworks,تمام آثار") }}»
+        «{% if query %}{{ query }}{% else %}{% if is_en %}All Artworks{% else %}تمام آثار{% endif %}{% endif %}»
       </span>
       <span class="text-[#98A19C] text-[11px]">({% if is_en %}{{ products.count }} artworks found{% else %}{{ products.count }} اثر یافت شد{% endif %})</span>
     </div>
