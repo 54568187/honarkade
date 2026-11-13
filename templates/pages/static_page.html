@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}هنرکده | {{ page.meta_title|default:page.title }}{% endblock %}
+{% block title %}{% if is_en %}Honarkadeh | {{ page.title }}{% else %}هنرکده | {{ page.meta_title|default:page.title }}{% endif %}{% endblock %}
 {% block meta_description %}{{ page.meta_description|default:page.title }}{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full {% if is_en %}text-left{% else %}text-right{% endif %}">
   
   <nav class="flex items-center gap-2 text-xs text-[#6B726E] mb-8">
-    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">صفحه اصلی</a>
+    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">{% if is_en %}Home{% else %}صفحه اصلی{% endif %}</a>
     <span>/</span>
     <span class="text-[#1E3329] font-bold">{{ page.title }}</span>
   </nav>

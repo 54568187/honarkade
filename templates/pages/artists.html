@@ -1,26 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}هنرکده | هنرمندان و غرفه‌داران برگزیده{% endblock %}
+{% block title %}{% if is_en %}Honarkadeh | Featured Masters & Booths{% else %}هنرکده | هنرمندان و غرفه‌داران برگزیده{% endif %}{% endblock %}
 
 {% block content %}
 <!-- ================= بنر معرفی بخش هنرمندان برگزیده ================= -->
 <section class="bg-[#15271E] text-white py-14 px-4 relative overflow-hidden border-b border-[#C69A52]/30">
   <div class="absolute inset-0 opacity-20">
-    <img src="/static/images/hero/slide-1.jpg" alt="پس‌زمینه آتلیه هنر" class="w-full h-full object-cover">
+    <img src="/static/images/hero/slide-1.jpg" alt="Art Studio" class="w-full h-full object-cover">
   </div>
   <div class="absolute inset-0 bg-gradient-to-r from-[#112018]/90 via-[#15271E]/70 to-[#112018]/90"></div>
 
   <div class="relative max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
-    <div class="space-y-4 text-center lg:text-right max-w-2xl">
+    <div class="space-y-4 text-center {% if is_en %}lg:text-left{% else %}lg:text-right{% endif %} max-w-2xl">
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#C69A52]/30 text-[#E0BA79] border border-[#C69A52]/50 backdrop-blur-sm shadow-sm">
         <span class="w-2 h-2 rounded-full bg-[#C69A52] animate-pulse"></span>
-        <span>غرفه‌های اختصاصی و آفرینندگان مستقل هنر ایران</span>
+        <span>{% if is_en %}Exclusive Studios & Independent Iranian Artisans{% else %}غرفه‌های اختصاصی و آفرینندگان مستقل هنر ایران{% endif %}</span>
       </div>
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#FAF7F2] leading-tight">
-        هنرمندان و غرفه‌داران برگزیده هنرکده
+        {% if is_en %}Honarkadeh Featured Masters & Artisans{% else %}هنرمندان و غرفه‌داران برگزیده هنرکده{% endif %}
       </h1>
       <p class="text-xs sm:text-sm text-white/85 leading-relaxed font-light">
+        {% if is_en %}
+        Celebrating the creative hands of independent ceramists, calligraphers, miniature painters and craftsmen across Iran. Every artwork comes with original provenance, verified physical certificate, and hours of passion in private studios.
+        {% else %}
         روایتی از دستان هنرمندان، سرامیست‌ها، خطاطان و نگارگران مستقل ایران‌زمین. هر اثر دارای امضای اصل، شناسنامه فیزیکی ممهور و حاصل ساعت‌ها عشق و مهارت در آتلیه‌های شخصی است.
+        {% endif %}
       </p>
     </div>
 
@@ -28,19 +32,19 @@
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center shrink-0 w-full lg:w-auto">
       <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 shadow-lg">
         <span class="text-2xl font-black text-[#C69A52] block">{{ booths.count }}</span>
-        <span class="text-white/80 text-[11px] font-medium">غرفه تأییدشده</span>
+        <span class="text-white/80 text-[11px] font-medium">{% if is_en %}Verified Studios{% else %}غرفه تأییدشده{% endif %}</span>
       </div>
       <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 shadow-lg">
-        <span class="text-2xl font-black text-[#C69A52] block">۱۰۰٪</span>
-        <span class="text-white/80 text-[11px] font-medium">شناسنامه و امضا</span>
+        <span class="text-2xl font-black text-[#C69A52] block">100%</span>
+        <span class="text-white/80 text-[11px] font-medium">{% if is_en %}Signed & Certified{% else %}شناسنامه و امضا{% endif %}</span>
       </div>
       <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 shadow-lg">
-        <span class="text-2xl font-black text-[#C69A52] block">تضمین</span>
-        <span class="text-white/80 text-[11px] font-medium">اصالت فیزیکی</span>
+        <span class="text-2xl font-black text-[#C69A52] block">{% if is_en %}Guaranteed{% else %}تضمین{% endif %}</span>
+        <span class="text-white/80 text-[11px] font-medium">{% if is_en %}Physical Authenticity{% else %}اصالت فیزیکی{% endif %}</span>
       </div>
       <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 shadow-lg">
-        <span class="text-2xl font-black text-[#C69A52] block">سراسری</span>
-        <span class="text-white/80 text-[11px] font-medium">ارسال ایمن بیمه‌شده</span>
+        <span class="text-2xl font-black text-[#C69A52] block">{% if is_en %}Nationwide{% else %}سراسری{% endif %}</span>
+        <span class="text-white/80 text-[11px] font-medium">{% if is_en %}Insured Shipping{% else %}ارسال ایمن بیمه‌شده{% endif %}</span>
       </div>
     </div>
   </div>
@@ -51,9 +55,9 @@
   
   <!-- مسیر راهنما (Breadcrumb) -->
   <nav class="flex items-center gap-2 text-xs text-[#6B726E] mb-8">
-    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E] transition-colors">صفحه اصلی</a>
+    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E] transition-colors">{% if is_en %}Home{% else %}صفحه اصلی{% endif %}</a>
     <span>/</span>
-    <span class="text-[#1E3329] font-bold">هنرمندان و غرفه‌داران برگزیده</span>
+    <span class="text-[#1E3329] font-bold">{% if is_en %}Featured Artists & Studios{% else %}هنرمندان و غرفه‌داران برگزیده{% endif %}</span>
   </nav>
 
   <!-- گرید کارت‌های جامع هنرمندان و غرفه‌ها -->
@@ -67,10 +71,10 @@
         <img src="{{ booth.banner.url }}" alt="{{ booth.name }}" class="absolute inset-0 w-full h-full object-cover opacity-40">
         {% endif %}
         <span class="relative z-10 bg-[#C69A52] text-[#1E3329] text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm">
-          غرفه تأییدشده
+          {% if is_en %}Verified Studio{% else %}غرفه تأییدشده{% endif %}
         </span>
         <span class="relative z-10 text-white/90 text-[11px] bg-black/40 backdrop-blur px-2.5 py-1 rounded-full border border-white/10">
-          هنرمند مستقل
+          {% if is_en %}Independent Master{% else %}هنرمند مستقل{% endif %}
         </span>
       </div>
       
@@ -85,7 +89,7 @@
               {{ booth.name|slice:":2" }}
             </div>
             {% endif %}
-            <span class="absolute bottom-1 -left-1 w-5 h-5 bg-[#C69A52] text-[#1E3329] rounded-full flex items-center justify-center text-xs font-bold border-2 border-white shadow" title="تأییدشده هنرکده">✓</span>
+            <span class="absolute bottom-1 -left-1 w-5 h-5 bg-[#C69A52] text-[#1E3329] rounded-full flex items-center justify-center text-xs font-bold border-2 border-white shadow" title="{% if is_en %}Verified by Honarkadeh{% else %}تأییدشده هنرکده{% endif %}">✓</span>
           </div>
         </div>
 
@@ -93,16 +97,20 @@
           {{ booth.name }}
         </h3>
         <span class="text-xs text-[#82533D] font-semibold mb-3">
-          هنرمند: {{ booth.owner.get_full_name|default:booth.owner.username }}
+          {% if is_en %}Master Artisan:{% else %}هنرمند:{% endif %} {{ booth.owner.get_full_name|default:booth.owner.username }}
         </span>
         <p class="text-xs text-[#6B726E] leading-relaxed mb-4 font-light line-clamp-3">
-          {{ booth.bio|default:"آفریننده آثار دست‌ساز و صنایع‌دستی نفیس با شناسنامه رسمی و گواهی اصالت در بازارچه آنلاین هنرکده." }}
+          {% if is_en %}
+            {{ booth.bio|default:"Creator of authentic Iranian handicrafts and fine art with official certification in the Honarkadeh marketplace." }}
+          {% else %}
+            {{ booth.bio|default:"آفریننده آثار دست‌ساز و صنایع‌دستی نفیس با شناسنامه رسمی و گواهی اصالت در بازارچه آنلاین هنرکده." }}
+          {% endif %}
         </p>
 
         <!-- نمونه آثار شاخص غرفه -->
         {% if booth.products.all %}
         <div class="mb-5 pt-3 border-t border-[#E8E3D9]">
-          <span class="text-[11px] font-bold text-[#1E3329] block mb-2.5">آثار شاخص در گالری:</span>
+          <span class="text-[11px] font-bold text-[#1E3329] block mb-2.5">{% if is_en %}Featured Artworks in Gallery:{% else %}آثار شاخص در گالری:{% endif %}</span>
           <div class="grid grid-cols-3 gap-2">
             {% for prod in booth.products.all|slice:":3" %}
             <a href="{% url 'product_detail' prod.slug %}" class="aspect-square rounded-xl overflow-hidden bg-[#FAF7F2] border border-[#E8E3D9] group/item relative" title="{{ prod.name }}">
@@ -118,20 +126,22 @@
         {% endif %}
 
         <div class="mt-auto pt-4 border-t border-[#E8E3D9] flex items-center justify-between">
-          <span class="text-[11px] text-[#6B726E]">{{ booth.products.count }} اثر در گالری</span>
+          <span class="text-[11px] text-[#6B726E]">
+            {% if is_en %}{{ booth.products.count }} Artworks in Gallery{% else %}{{ booth.products.count }} اثر در گالری{% endif %}
+          </span>
           <a href="{% url 'shop' %}?booth={{ booth.slug }}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs font-bold transition-all shadow-sm">
-            <span>مشاهده آثار غرفه</span>
-            <svg class="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            <span>{% if is_en %}Explore Studio{% else %}مشاهده آثار غرفه{% endif %}</span>
+            <svg class="w-3.5 h-3.5 {% if is_en %}{% else %}rotate-180{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </a>
         </div>
       </div>
     </article>
     {% empty %}
     <div class="col-span-full py-16 text-center text-[#6B726E] bg-white rounded-3xl border border-[#E8E3D9] p-8">
-      <p class="text-base font-bold text-[#1E3329] mb-2">در حال حاضر هیچ غرفه تأییدشده‌ای ثبت نشده است.</p>
-      <p class="text-xs text-[#6B726E] mb-4">برای نمایش، لطفاً از پنل مدیریت در بخش «غرفه‌های اختصاصی هنرمندان» غرفه جدید اضافه نموده و تیک تأیید را فعال فرمایید.</p>
+      <p class="text-base font-bold text-[#1E3329] mb-2">{% if is_en %}No verified booths registered yet.{% else %}در حال حاضر هیچ غرفه تأییدشده‌ای ثبت نشده است.{% endif %}</p>
+      <p class="text-xs text-[#6B726E] mb-4">{% if is_en %}To display booths, please add a new booth in the admin panel and mark it verified.{% else %}برای نمایش، لطفاً از پنل مدیریت در بخش «غرفه‌های اختصاصی هنرمندان» غرفه جدید اضافه نموده و تیک تأیید را فعال فرمایید.{% endif %}</p>
       <a href="{% url 'register' %}" class="inline-block px-5 py-2.5 bg-[#2C4A3E] text-white rounded-xl text-xs font-bold hover:bg-[#1E3329] transition-all">
-        درخواست راه‌اندازی غرفه هنری
+        {% if is_en %}Apply to Open an Art Studio Booth{% else %}درخواست راه‌اندازی غرفه هنری{% endif %}
       </a>
     </div>
     {% endfor %}
@@ -139,15 +149,19 @@
 
   <!-- بنر عضویت هنرمندان -->
   <div class="mt-16 bg-[#FAF7F2] rounded-3xl p-8 border border-[#E8E3D9] flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-    <div class="space-y-2 text-center md:text-right">
-      <span class="text-xs font-bold text-[#82533D]">آفریننده یا استاد هنر هستید؟</span>
-      <h3 class="text-xl sm:text-2xl font-black text-[#1E3329]">غرفه اختصاصی خود را در بازارچه هنرکده راه‌اندازی کنید</h3>
+    <div class="space-y-2 text-center {% if is_en %}md:text-left{% else %}md:text-right{% endif %}">
+      <span class="text-xs font-bold text-[#82533D]">{% if is_en %}Are you an artist or master creator?{% else %}آفریننده یا استاد هنر هستید؟{% endif %}</span>
+      <h3 class="text-xl sm:text-2xl font-black text-[#1E3329]">{% if is_en %}Launch your exclusive booth on the Honarkadeh marketplace{% else %}غرفه اختصاصی خود را در بازارچه هنرکده راه‌اندازی کنید{% endif %}</h3>
       <p class="text-xs sm:text-sm text-[#6B726E] max-w-xl">
+        {% if is_en %}
+        Without any upfront costs, showcase your handcrafted creations to thousands of art collectors nationwide with fair commission rates.
+        {% else %}
         بدون نیاز به پرداخت هزینه اولیه، دست‌سازه‌ها و آثار هنری خود را به هزاران مجموعه‌دار معرفی کنید و با کمیسیون مناسب بفروشید.
+        {% endif %}
       </p>
     </div>
     <a href="{% url 'register' %}" class="shrink-0 px-6 py-3.5 rounded-2xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs sm:text-sm font-bold transition-all shadow-md">
-      ثبت‌نام و افتتاح غرفه هنری ←
+      {% if is_en %}Register & Open Studio Booth →{% else %}ثبت‌نام و افتتاح غرفه هنری ←{% endif %}
     </a>
   </div>
 

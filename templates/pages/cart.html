@@ -1,33 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}هنرکده | سبد خرید و تسویه‌حساب آثار{% endblock %}
+{% block title %}{% if is_en %}Honarkadeh | Shopping Cart & Checkout{% else %}هنرکده | سبد خرید و تسویه‌حساب آثار{% endif %}{% endblock %}
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
   
   <!-- مسیر راهنما (Breadcrumb) -->
   <nav class="flex items-center gap-2 text-xs text-[#6B726E] mb-6">
-    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">صفحه اصلی</a>
+    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">{% if is_en %}Home{% else %}صفحه اصلی{% endif %}</a>
     <span>/</span>
-    <span class="text-[#1E3329] font-bold">سبد خرید آثار هنری</span>
+    <span class="text-[#1E3329] font-bold">{% if is_en %}Artworks Shopping Cart{% else %}سبد خرید آثار هنری{% endif %}</span>
   </nav>
 
   <!-- مراحل تسویه حساب -->
   <div class="bg-white rounded-2xl p-3 sm:p-4 border border-[#E8E3D9] mb-8 shadow-sm">
     <div class="flex items-center justify-between sm:justify-around max-w-2xl mx-auto text-[10px] sm:text-xs font-bold gap-1 sm:gap-2">
       <div class="flex items-center gap-1.5 sm:gap-2 text-[#2C4A3E] shrink-0">
-        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#2C4A3E] text-white flex items-center justify-center text-[10px] sm:text-[11px]">۱</span>
-        <span>سبد خرید</span>
+        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#2C4A3E] text-white flex items-center justify-center text-[10px] sm:text-[11px]">1</span>
+        <span>{% if is_en %}Shopping Cart{% else %}سبد خرید{% endif %}</span>
       </div>
       <span class="flex-grow max-w-[32px] sm:max-w-[48px] h-px bg-[#2C4A3E]"></span>
       <div class="flex items-center gap-1.5 sm:gap-2 text-[#98A19C] shrink-0">
-        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FAF7F2] border border-[#E8E3D9] text-[#6B726E] flex items-center justify-center text-[10px] sm:text-[11px]">۲</span>
-        <span>ارسال و بیمه</span>
+        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FAF7F2] border border-[#E8E3D9] text-[#6B726E] flex items-center justify-center text-[10px] sm:text-[11px]">2</span>
+        <span>{% if is_en %}Shipping & Insurance{% else %}ارسال و بیمه{% endif %}</span>
       </div>
       <span class="flex-grow max-w-[32px] sm:max-w-[48px] h-px bg-[#E8E3D9]"></span>
       <div class="flex items-center gap-1.5 sm:gap-2 text-[#98A19C] shrink-0">
-        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FAF7F2] border border-[#E8E3D9] text-[#6B726E] flex items-center justify-center text-[10px] sm:text-[11px]">۳</span>
-        <span>پرداخت بانکی</span>
+        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FAF7F2] border border-[#E8E3D9] text-[#6B726E] flex items-center justify-center text-[10px] sm:text-[11px]">3</span>
+        <span>{% if is_en %}Bank Payment{% else %}پرداخت بانکی{% endif %}</span>
       </div>
     </div>
   </div>
@@ -35,30 +35,30 @@
   <!-- گرید اصلی سبد خرید: ۲ ستونه -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     
-    <!-- ستون آیتم‌های سبد خرید (۲ ستون راست) -->
+    <!-- ستون آیتم‌های سبد خرید -->
     <div id="cart-page-items" class="lg:col-span-2 space-y-4">
       
       <!-- کارت آیتم ۱ -->
       <div class="bg-white rounded-3xl p-4 sm:p-6 border border-[#E8E3D9] shadow-sm flex flex-row items-center gap-3.5 sm:gap-5 relative group">
-        <img src="/static/images/products/product-1.jpg" alt="گلدان سرامیکی" class="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl object-cover bg-[#FAF7F2] shrink-0 border border-[#E8E3D9]">
-        <div class="flex-grow space-y-1.5 sm:space-y-2 w-full text-right">
+        <img src="/static/images/products/product-1.jpg" alt="Vase" class="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl object-cover bg-[#FAF7F2] shrink-0 border border-[#E8E3D9]">
+        <div class="flex-grow space-y-1.5 sm:space-y-2 w-full {% if is_en %}text-left{% else %}text-right{% endif %}">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[9px] sm:text-[10px] bg-[#E8EFEA] text-[#2C4A3E] px-2 sm:px-2.5 py-0.5 rounded-full font-bold">سفال و سرامیک • تک‌نسخه</span>
-            <button type="button" class="text-[#98A19C] hover:text-red-500 transition-colors p-1" title="حذف از سبد">
+            <span class="text-[9px] sm:text-[10px] bg-[#E8EFEA] text-[#2C4A3E] px-2 sm:px-2.5 py-0.5 rounded-full font-bold">{% if is_en %}Pottery & Ceramics • Unique Piece{% else %}سفال و سرامیک • تک‌نسخه{% endif %}</span>
+            <button type="button" class="text-[#98A19C] hover:text-red-500 transition-colors p-1" title="{% if is_en %}Remove{% else %}حذف از سبد{% endif %}">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
             </button>
           </div>
-          <h3 class="text-xs sm:text-base font-bold text-[#1E3329] line-clamp-1 sm:line-clamp-none">گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار</h3>
-          <p class="text-[11px] sm:text-xs text-[#6B726E] hidden sm:block">کارگاه: استودیو کهن • دارای شناسنامه فیزیکی معتبر</p>
+          <h3 class="text-xs sm:text-base font-bold text-[#1E3329] line-clamp-1 sm:line-clamp-none">{% if is_en %}Turquoise Ceramic Vase with Golden Arabesque{% else %}گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار{% endif %}</h3>
+          <p class="text-[11px] sm:text-xs text-[#6B726E] hidden sm:block">{% if is_en %}Studio: Kohan Workshop • Includes Physical Certificate{% else %}کارگاه: استودیو کهن • دارای شناسنامه فیزیکی معتبر{% endif %}</p>
           <div class="flex items-center justify-between pt-1 sm:pt-2 border-t border-[#E8E3D9]/60">
             <div class="flex items-center gap-1.5 sm:gap-2 border border-[#E8E3D9] rounded-xl px-1.5 sm:px-2 py-0.5 sm:py-1 bg-[#FAF7F2]">
               <button class="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[#1E3329] font-bold hover:bg-white rounded-lg text-xs">+</button>
-              <span class="text-xs font-bold w-4 text-center">۱</span>
+              <span class="text-xs font-bold w-4 text-center">1</span>
               <button class="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[#98A19C] hover:bg-white rounded-lg text-xs">-</button>
             </div>
-            <div class="text-left">
-              <span class="text-[10px] sm:text-xs text-[#98A19C] block">قیمت اثر:</span>
-              <span class="text-xs sm:text-base font-extrabold text-[#1E3329]">۱,۴۵۰,۰۰۰ تومان</span>
+            <div class="{% if is_en %}text-right{% else %}text-left{% endif %}">
+              <span class="text-[10px] sm:text-xs text-[#98A19C] block">{% if is_en %}Artwork Price:{% else %}قیمت اثر:{% endif %}</span>
+              <span class="text-xs sm:text-base font-extrabold text-[#1E3329]">{% if is_en %}1,450,000 Toman{% else %}۱,۴۵۰,۰۰۰ تومان{% endif %}</span>
             </div>
           </div>
         </div>
@@ -66,25 +66,25 @@
 
       <!-- کارت آیتم ۲ -->
       <div class="bg-white rounded-3xl p-4 sm:p-6 border border-[#E8E3D9] shadow-sm flex flex-row items-center gap-3.5 sm:gap-5 relative group">
-        <img src="/static/images/products/product-2.jpg" alt="تابلو نقاشی کویر" class="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl object-cover bg-[#FAF7F2] shrink-0 border border-[#E8E3D9]">
-        <div class="flex-grow space-y-1.5 sm:space-y-2 w-full text-right">
+        <img src="/static/images/products/product-2.jpg" alt="Painting" class="w-20 h-20 sm:w-32 sm:h-32 rounded-2xl object-cover bg-[#FAF7F2] shrink-0 border border-[#E8E3D9]">
+        <div class="flex-grow space-y-1.5 sm:space-y-2 w-full {% if is_en %}text-left{% else %}text-right{% endif %}">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[9px] sm:text-[10px] bg-[#F7EFEA] text-[#82533D] px-2 sm:px-2.5 py-0.5 rounded-full font-bold">نقاشی رنگ‌روغن • با قاب چوبی</span>
-            <button type="button" class="text-[#98A19C] hover:text-red-500 transition-colors p-1" title="حذف از سبد">
+            <span class="text-[9px] sm:text-[10px] bg-[#F7EFEA] text-[#82533D] px-2 sm:px-2.5 py-0.5 rounded-full font-bold">{% if is_en %}Oil Painting • Framed Wood{% else %}نقاشی رنگ‌روغن • با قاب چوبی{% endif %}</span>
+            <button type="button" class="text-[#98A19C] hover:text-red-500 transition-colors p-1" title="{% if is_en %}Remove{% else %}حذف از سبد{% endif %}">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
             </button>
           </div>
-          <h3 class="text-xs sm:text-base font-bold text-[#1E3329] line-clamp-1 sm:line-clamp-none">تابلو رنگ‌روغن «کویر و گنبد فیروزه‌ای»</h3>
-          <p class="text-[11px] sm:text-xs text-[#6B726E] hidden sm:block">هنرمند: استاد امیرحسین جلالی • ابعاد ۶۰×۸۰ روی بوم کتان</p>
+          <h3 class="text-xs sm:text-base font-bold text-[#1E3329] line-clamp-1 sm:line-clamp-none">{% if is_en %}Oil Painting "Desert & Turquoise Dome"{% else %}تابلو رنگ‌روغن «کویر و گنبد فیروزه‌ای»{% endif %}</h3>
+          <p class="text-[11px] sm:text-xs text-[#6B726E] hidden sm:block">{% if is_en %}Artist: Master Amirhossein Jalali • 60x80cm Linen Canvas{% else %}هنرمند: استاد امیرحسین جلالی • ابعاد ۶۰×۸۰ روی بوم کتان{% endif %}</p>
           <div class="flex items-center justify-between pt-1 sm:pt-2 border-t border-[#E8E3D9]/60">
             <div class="flex items-center gap-1.5 sm:gap-2 border border-[#E8E3D9] rounded-xl px-1.5 sm:px-2 py-0.5 sm:py-1 bg-[#FAF7F2]">
               <button class="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[#1E3329] font-bold hover:bg-white rounded-lg text-xs">+</button>
-              <span class="text-xs font-bold w-4 text-center">۱</span>
+              <span class="text-xs font-bold w-4 text-center">1</span>
               <button class="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-[#98A19C] hover:bg-white rounded-lg text-xs">-</button>
             </div>
-            <div class="text-left">
-              <span class="text-[10px] sm:text-xs text-[#98A19C] block">قیمت اثر:</span>
-              <span class="text-xs sm:text-base font-extrabold text-[#1E3329]">۲,۸۰۰,۰۰۰ تومان</span>
+            <div class="{% if is_en %}text-right{% else %}text-left{% endif %}">
+              <span class="text-[10px] sm:text-xs text-[#98A19C] block">{% if is_en %}Artwork Price:{% else %}قیمت اثر:{% endif %}</span>
+              <span class="text-xs sm:text-base font-extrabold text-[#1E3329]">{% if is_en %}2,800,000 Toman{% else %}۲,۸۰۰,۰۰۰ تومان{% endif %}</span>
             </div>
           </div>
         </div>
@@ -96,109 +96,115 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
         </div>
         <p class="text-xs text-[#6B726E] leading-relaxed">
+          {% if is_en %}
+          All artworks are safely packaged in 5-layer shockproof foam wrapping and delivered with an <strong class="text-[#1E3329]">official physical certificate signed by the artist</strong>.
+          {% else %}
           تمامی آثار قبل از ارسال در بسته‌بندی ۵ لایه ضدضربه فوم‌پیچ شده و همراه با <strong class="text-[#1E3329]">گواهی شناسنامه فیزیکی امضاشده توسط هنرمند</strong> تحویل می‌گردند.
+          {% endif %}
         </p>
       </div>
 
     </div>
 
-    <!-- ستون فاکتور و پرداخت (۱ ستون چپ) -->
+    <!-- ستون فاکتور و پرداخت -->
     <div class="space-y-4">
       
       <!-- کارت خلاصه فاکتور -->
       <div class="bg-white rounded-3xl p-6 border border-[#E8E3D9] shadow-sm space-y-4">
-        <h4 class="text-base font-bold text-[#1E3329] pb-3 border-b border-[#E8E3D9]">خلاصه پیش‌فاکتور</h4>
+        <h4 class="text-base font-bold text-[#1E3329] pb-3 border-b border-[#E8E3D9]">{% if is_en %}Order Summary{% else %}خلاصه پیش‌فاکتور{% endif %}</h4>
         
         <div class="space-y-2.5 text-xs text-[#6B726E]">
           <div class="flex items-center justify-between">
-            <span id="cart-summary-count">جمع قیمت آثار (۲ اثر):</span>
-            <span id="cart-summary-subtotal" class="font-bold text-[#1E3329]">۴,۲۵۰,۰۰۰ تومان</span>
+            <span id="cart-summary-count">{% if is_en %}Artworks Subtotal (2 items):{% else %}جمع قیمت آثار (۲ اثر):{% endif %}</span>
+            <span id="cart-summary-subtotal" class="font-bold text-[#1E3329]">{% if is_en %}4,250,000 Toman{% else %}۴,۲۵۰,۰۰۰ تومان{% endif %}</span>
           </div>
           <div class="flex items-center justify-between text-[#82533D]">
-            <span>تخفیف اولین سفارش (HONAR15):</span>
-            <span id="cart-summary-discount" class="font-bold">۶۳۷,۵۰۰- تومان</span>
+            <span>{% if is_en %}First Order Discount (HONAR15):{% else %}تخفیف اولین سفارش (HONAR15):{% endif %}</span>
+            <span id="cart-summary-discount" class="font-bold">{% if is_en %}-637,500 Toman{% else %}۶۳۷,۵۰۰- تومان{% endif %}</span>
           </div>
           <div class="flex items-center justify-between">
-            <span>بسته‌بندی ایمن گالری:</span>
-            <span class="text-emerald-700 font-bold">رایگان</span>
+            <span>{% if is_en %}Gallery Secure Packaging:{% else %}بسته‌بندی ایمن گالری:{% endif %}</span>
+            <span class="text-emerald-700 font-bold">{% if is_en %}Free{% else %}رایگان{% endif %}</span>
           </div>
           <div class="flex items-center justify-between">
-            <span>بیمه سلامت حمل اثر:</span>
-            <span class="text-emerald-700 font-bold">رایگان</span>
+            <span>{% if is_en %}Artwork Transit Insurance:{% else %}بیمه سلامت حمل اثر:{% endif %}</span>
+            <span class="text-emerald-700 font-bold">{% if is_en %}Free{% else %}رایگان{% endif %}</span>
           </div>
         </div>
 
         <!-- کد تخفیف (کارگاه ۲۳ کتاب درسی) -->
         <div class="pt-3 border-t border-[#E8E3D9]">
           <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-xs font-bold text-[#1E3329]">کد تخفیف (قوانین سبد خرید)</label>
-            <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-bold">کد کتاب: 970725</span>
+            <label class="block text-xs font-bold text-[#1E3329]">{% if is_en %}Discount Code (Cart Rules){% else %}کد تخفیف (قوانین سبد خرید){% endif %}</label>
+            <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-bold">{% if is_en %}Curriculum: 970725{% else %}کد کتاب: 970725{% endif %}</span>
           </div>
           <div class="flex items-center gap-2">
-            <input type="text" id="coupon-input" value="970725" placeholder="مثلاً: 970725" class="bg-[#FAF7F2] text-xs rounded-xl px-3 py-2.5 border border-[#E8E3D9] flex-grow focus:outline-none focus:border-[#2C4A3E] font-mono tracking-wider font-bold">
+            <input type="text" id="coupon-input" value="970725" placeholder="{% if is_en %}e.g. 970725{% else %}مثلاً: 970725{% endif %}" class="bg-[#FAF7F2] text-xs rounded-xl px-3 py-2.5 border border-[#E8E3D9] flex-grow focus:outline-none focus:border-[#2C4A3E] font-mono tracking-wider font-bold">
             <button type="button" id="apply-coupon-btn" class="bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shrink-0">
-              اعمال کد
+              {% if is_en %}Apply Code{% else %}اعمال کد{% endif %}
             </button>
           </div>
-          <p id="coupon-msg" class="text-[11px] text-emerald-700 mt-1.5 font-bold">✓ کد ۹۷۰۷۲۵ اعمال شد: ۱۰٪ تخفیف ویژه صنایع دستی</p>
+          <p id="coupon-msg" class="text-[11px] text-emerald-700 mt-1.5 font-bold">
+            {% if is_en %}✓ Code 970725 applied: 10% special handicraft discount{% else %}✓ کد ۹۷۰۷۲۵ اعمال شد: ۱۰٪ تخفیف ویژه صنایع دستی{% endif %}
+          </p>
         </div>
 
         <!-- خدمات بسته‌بندی ویژه (کتاب درسی: کادوپیچی و بسته‌بندی بازیافتی) -->
         <div class="pt-3 border-t border-[#E8E3D9] space-y-2.5">
-          <label class="block text-xs font-bold text-[#1E3329]">خدمات بسته‌بندی سفارش:</label>
+          <label class="block text-xs font-bold text-[#1E3329]">{% if is_en %}Packaging Options:{% else %}خدمات بسته‌بندی سفارش:{% endif %}</label>
           
           <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-[#E8E3D9] bg-[#FAF7F2]/60 hover:bg-[#FAF7F2] cursor-pointer transition-all">
             <input type="checkbox" id="gift-wrap-toggle" class="mt-0.5 rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
-            <div class="text-right">
-              <span class="text-xs font-bold text-[#1E3329] block">🎁 کادوپیچی اثر همراه با روبان و کارت تبریک</span>
-              <span class="text-[10px] text-[#6B726E]">مناسب جهت ارسال مستقیم به عنوان هدیه</span>
+            <div class="{% if is_en %}text-left{% else %}text-right{% endif %}">
+              <span class="text-xs font-bold text-[#1E3329] block">{% if is_en %}🎁 Gift Wrapping with Ribbon & Greeting Card{% else %}🎁 کادوپیچی اثر همراه با روبان و کارت تبریک{% endif %}</span>
+              <span class="text-[10px] text-[#6B726E]">{% if is_en %}Suitable for sending directly as a luxurious gift{% else %}مناسب جهت ارسال مستقیم به عنوان هدیه{% endif %}</span>
             </div>
           </label>
 
           <label class="flex items-start gap-2.5 p-2.5 rounded-xl border border-[#E8E3D9] bg-[#FAF7F2]/60 hover:bg-[#FAF7F2] cursor-pointer transition-all">
             <input type="checkbox" id="eco-pack-toggle" checked class="mt-0.5 rounded border-[#E8E3D9] text-[#2C4A3E] focus:ring-[#2C4A3E]">
-            <div class="text-right">
-              <span class="text-xs font-bold text-[#1E3329] block">♻️ بسته‌بندی دوستدار محیط‌زیست (قابل بازیافت)</span>
-              <span class="text-[10px] text-[#6B726E]">استفاده از کارتن‌های کرافت تجزیه‌پذیر و بدون نایلون غیرضروری</span>
+            <div class="{% if is_en %}text-left{% else %}text-right{% endif %}">
+              <span class="text-xs font-bold text-[#1E3329] block">{% if is_en %}♻️ Eco-Friendly Recycled Packaging{% else %}♻️ بسته‌بندی دوستدار محیط‌زیست (قابل بازیافت){% endif %}</span>
+              <span class="text-[10px] text-[#6B726E]">{% if is_en %}Using biodegradable kraft boxes with zero unnecessary plastics{% else %}استفاده از کارتن‌های کرافت تجزیه‌پذیر و بدون نایلون غیرضروری{% endif %}</span>
             </div>
           </label>
         </div>
 
         <!-- روش پرداخت (کارگاه ۱۷ کتاب درسی: درگاه آنلاین یا فیش بانکی) -->
         <div class="pt-3 border-t border-[#E8E3D9] space-y-2">
-          <label class="block text-xs font-bold text-[#1E3329]">روش پرداخت (کارگاه ۱۷):</label>
+          <label class="block text-xs font-bold text-[#1E3329]">{% if is_en %}Payment Method (Workshop 17):{% else %}روش پرداخت (کارگاه ۱۷):{% endif %}</label>
           
           <div class="space-y-2">
             <label class="flex items-center gap-2.5 p-2.5 rounded-xl border-2 border-[#2C4A3E] bg-[#FAF7F2] cursor-pointer">
               <input type="radio" name="payment_method" value="online" checked onchange="togglePaymentMethod('online')" class="text-[#2C4A3E] focus:ring-[#2C4A3E]">
-              <div class="text-right">
-                <span class="text-xs font-bold text-[#1E3329] block">💳 درگاه پرداخت اینترنتی شاپرک</span>
-                <span class="text-[10px] text-[#6B726E]">پرداخت آنلاین آنی با تمامی کارت‌های عضو شتاب</span>
+              <div class="{% if is_en %}text-left{% else %}text-right{% endif %}">
+                <span class="text-xs font-bold text-[#1E3329] block">{% if is_en %}💳 Shaparak Online Payment Gateway{% else %}💳 درگاه پرداخت اینترنتی شاپرک{% endif %}</span>
+                <span class="text-[10px] text-[#6B726E]">{% if is_en %}Instant online payment with all Iranian bank cards{% else %}پرداخت آنلاین آنی با تمامی کارت‌های عضو شتاب{% endif %}</span>
               </div>
             </label>
 
             <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-[#E8E3D9] hover:bg-[#FAF7F2] cursor-pointer transition-all">
               <input type="radio" name="payment_method" value="bank" onchange="togglePaymentMethod('bank')" class="text-[#2C4A3E] focus:ring-[#2C4A3E]">
-              <div class="text-right">
-                <span class="text-xs font-bold text-[#1E3329] block">🏦 پرداخت از طریق فیش بانکی (کارت به کارت)</span>
-                <span class="text-[10px] text-[#6B726E]">واریز به شماره حساب/کارت گالری و ثبت شماره فیش</span>
+              <div class="{% if is_en %}text-left{% else %}text-right{% endif %}">
+                <span class="text-xs font-bold text-[#1E3329] block">{% if is_en %}🏦 Bank Transfer Slip (Card to Card){% else %}🏦 پرداخت از طریق فیش بانکی (کارت به کارت){% endif %}</span>
+                <span class="text-[10px] text-[#6B726E]">{% if is_en %}Deposit into gallery account and enter transaction reference{% else %}واریز به شماره حساب/کارت گالری و ثبت شماره فیش{% endif %}</span>
               </div>
             </label>
           </div>
 
           <!-- باکس مشخصات فیش بانکی (کارگاه ۱۷) -->
-          <div id="bank-info-box" class="hidden p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-2 text-right">
+          <div id="bank-info-box" class="hidden p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-2 {% if is_en %}text-left{% else %}text-right{% endif %}">
             <div class="text-[11px] font-bold text-amber-900 border-b border-amber-200/60 pb-1.5">
-              مشخصات حساب بانکی هنرکده (بانک ملی ایران):
+              {% if is_en %}Honarkadeh Bank Account Information (Melli Bank):{% else %}مشخصات حساب بانکی هنرکده (بانک ملی ایران):{% endif %}
             </div>
             <div class="text-[11px] space-y-1 text-amber-950 font-mono">
-              <div class="flex justify-between font-sans"><span>شماره کارت:</span> <strong class="font-mono">۶۰۳۷-۹۹۷۵-۱۲۳۴-۵۶۷۸</strong></div>
-              <div class="flex justify-between font-sans"><span>شماره شبا:</span> <strong class="font-mono">IR540170000000114587229001</strong></div>
-              <div class="flex justify-between font-sans"><span>صاحب حساب:</span> <strong>فروشگاه صنایع‌دستی هنرکده</strong></div>
+              <div class="flex justify-between font-sans"><span>{% if is_en %}Card Number:{% else %}شماره کارت:{% endif %}</span> <strong class="font-mono">6037-9975-1234-5678</strong></div>
+              <div class="flex justify-between font-sans"><span>{% if is_en %}IBAN (Sheba):{% else %}شماره شبا:{% endif %}</span> <strong class="font-mono">IR540170000000114587229001</strong></div>
+              <div class="flex justify-between font-sans"><span>{% if is_en %}Account Holder:{% else %}صاحب حساب:{% endif %}</span> <strong>{% if is_en %}Honarkadeh Arts & Crafts Co.{% else %}فروشگاه صنایع‌دستی هنرکده{% endif %}</strong></div>
             </div>
             <div class="pt-2 border-t border-amber-200/60">
-              <label class="block text-[10px] font-bold text-amber-900 mb-1">شماره پیگیری فیش واریزی:</label>
-              <input type="text" placeholder="مثلاً: ۹۸۴۵۱۲" class="w-full bg-white text-xs rounded-xl px-2.5 py-1.5 border border-amber-300 focus:outline-none focus:border-[#2C4A3E]">
+              <label class="block text-[10px] font-bold text-amber-900 mb-1">{% if is_en %}Deposit Slip Reference No.:{% else %}شماره پیگیری فیش واریزی:{% endif %}</label>
+              <input type="text" placeholder="{% if is_en %}e.g. 984512{% else %}مثلاً: ۹۸۴۵۱۲{% endif %}" class="w-full bg-white text-xs rounded-xl px-2.5 py-1.5 border border-amber-300 focus:outline-none focus:border-[#2C4A3E]">
             </div>
           </div>
         </div>
@@ -206,23 +212,23 @@
         <!-- مبلغ نهایی -->
         <div class="pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
           <div>
-            <span class="text-xs text-[#98A19C] block">مبلغ نهایی پرداخت:</span>
-            <span id="cart-summary-total" class="text-lg font-black text-[#2C4A3E]">۳,۶۱۲,۵۰۰ تومان</span>
+            <span class="text-xs text-[#98A19C] block">{% if is_en %}Total to Pay:{% else %}مبلغ نهایی پرداخت:{% endif %}</span>
+            <span id="cart-summary-total" class="text-lg font-black text-[#2C4A3E]">{% if is_en %}3,612,500 Toman{% else %}۳,۶۱۲,۵۰۰ تومان{% endif %}</span>
           </div>
         </div>
 
         <a href="#checkout-address" class="block w-full py-3.5 rounded-xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-center text-xs sm:text-sm font-bold transition-all shadow-md">
-          تکمیل اطلاعات ارسال و پرداخت
+          {% if is_en %}Proceed to Shipping & Payment{% else %}تکمیل اطلاعات ارسال و پرداخت{% endif %}
         </a>
 
         <div class="flex items-center justify-center gap-2 text-[11px] text-[#98A19C] pt-1">
           <svg class="w-3.5 h-3.5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-          <span>۷ روز ضمانت بازگشت و سلامت کالا</span>
+          <span>{% if is_en %}7-Day Return & Delivery Guarantee{% else %}۷ روز ضمانت بازگشت و سلامت کالا{% endif %}</span>
         </div>
       </div>
 
       <a href="{% url 'shop' %}" class="block text-center text-xs text-[#82533D] hover:underline font-bold py-2">
-        ← ادامه گشت‌وگذار و افزودن آثار دیگر
+        {% if is_en %}← Continue Exploring Artworks{% else %}← ادامه گشت‌وگذار و افزودن آثار دیگر{% endif %}
       </a>
 
     </div>
@@ -242,20 +248,21 @@ function togglePaymentMethod(method) {
 }
 
 document.getElementById('apply-coupon-btn')?.addEventListener('click', function() {
+  const isEn = {{ is_en|yesno:"true,false" }};
   const code = document.getElementById('coupon-input').value.trim();
   const msg = document.getElementById('coupon-msg');
   if (code === '970725') {
-    msg.textContent = '✓ کد ۹۷۰۷۲۵ اعمال شد: ۱۰٪ تخفیف ویژه صنایع دستی (کارگاه ۲۳)';
+    msg.textContent = isEn ? '✓ Code 970725 applied: 10% special handicraft discount (Workshop 23)' : '✓ کد ۹۷۰۷۲۵ اعمال شد: ۱۰٪ تخفیف ویژه صنایع دستی (کارگاه ۲۳)';
     msg.className = 'text-[11px] text-emerald-700 mt-1.5 font-bold';
-    document.getElementById('cart-summary-discount').textContent = '۴۲۵,۰۰۰- تومان';
-    document.getElementById('cart-summary-total').textContent = '۳,۸۲۵,۰۰۰ تومان';
+    document.getElementById('cart-summary-discount').textContent = isEn ? '-425,000 Toman' : '۴۲۵,۰۰۰- تومان';
+    document.getElementById('cart-summary-total').textContent = isEn ? '3,825,000 Toman' : '۳,۸۲۵,۰۰۰ تومان';
   } else if (code === 'HONAR15') {
-    msg.textContent = '✓ کد HONAR15 اعمال شد: ۱۵٪ تخفیف اولین سفارش';
+    msg.textContent = isEn ? '✓ Code HONAR15 applied: 15% first order discount' : '✓ کد HONAR15 اعمال شد: ۱۵٪ تخفیف اولین سفارش';
     msg.className = 'text-[11px] text-emerald-700 mt-1.5 font-bold';
-    document.getElementById('cart-summary-discount').textContent = '۶۳۷,۵۰۰- تومان';
-    document.getElementById('cart-summary-total').textContent = '۳,۶۱۲,۵۰۰ تومان';
+    document.getElementById('cart-summary-discount').textContent = isEn ? '-637,500 Toman' : '۶۳۷,۵۰۰- تومان';
+    document.getElementById('cart-summary-total').textContent = isEn ? '3,612,500 Toman' : '۳,۶۱۲,۵۰۰ تومان';
   } else {
-    msg.textContent = 'کد وارد شده نامعتبر یا منقضی است.';
+    msg.textContent = isEn ? 'Entered coupon code is invalid or expired.' : 'کد وارد شده نامعتبر یا منقضی است.';
     msg.className = 'text-[11px] text-red-600 mt-1.5 font-bold';
   }
 });

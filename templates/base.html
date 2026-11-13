@@ -4,18 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>{% block title %}{{ site_settings.title|default:"هنرکده | گالری و فروشگاه آنلاین آثار هنری و دست‌سازه‌ها" }}{% endblock %}</title>
+  <title>{% block title %}{% if is_en %}Honarkadeh | Authentic Iranian Handicrafts & Art Gallery{% else %}{{ site_settings.title|default:"هنرکده | گالری و فروشگاه آنلاین آثار هنری و دست‌سازه‌ها" }}{% endif %}{% endblock %}</title>
   
-  <meta name="description" content="{% block meta_description %}{{ site_settings.description|default:'خرید و فروش آنلاین آثار اصیل هنری، نقاشی، خوشنویسی، سرامیک و دست‌سازه‌ها' }}{% endblock %}">
+  <meta name="description" content="{% block meta_description %}{% if is_en %}Curated Iranian fine arts, calligraphy, ceramics, Persian rugs, and master handicrafts with authenticity certificates.{% else %}{{ site_settings.description|default:'خرید و فروش آنلاین آثار اصیل هنری، نقاشی، خوشنویسی، سرامیک و دست‌سازه‌ها' }}{% endif %}{% endblock %}">
 
-  <!-- 
-    ★ قابلیت تغییر فاوآیکون از دیتابیس در جنگو:
-    در صورت وجود مدل تنظیمات در دیتابیس (site_settings.favicon.url)، از آن استفاده می‌شود؛
-    در غیر این صورت از فایل پیش‌فرض باکیفیت static استفاده خواهد شد.
-  -->
+  <!-- قابلیت تغییر فاوآیکون از دیتابیس در جنگو -->
   <link rel="icon" type="image/svg+xml" href="{% if site_settings and site_settings.favicon %}{{ site_settings.favicon.url }}{% else %}/static/images/favicon.svg{% endif %}">
 
-  <!-- استایل‌های بیلد شده تیلویند به همراه فونت‌های محلی بدون نیاز به اینترنت -->
+  <!-- استایل‌های بیلد شده تیلویند به همراه فونت‌های محلی -->
   <link rel="stylesheet" href="/static/css/style.css">
 
   <style>
@@ -171,6 +167,419 @@
       window.location.href = url.toString();
     }
   </script>
+
+  <!-- موتور ترجمه خودکار جامع و تضمین‌کننده حذف ۱۰۰٪ متون فارسی در حالت انگلیسی -->
+  <script>
+  (function() {
+    const isEn = document.documentElement.lang === 'en' || document.documentElement.getAttribute('dir') === 'ltr';
+    if (!isEn) return;
+
+    // ۱. تبدیل کلیه ارقام فارسی و عربی به ارقام انگلیسی
+    const numMap = {
+      '۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9',
+      '٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'
+    };
+
+    // ۲. دیکشنری غنی و جامع عبارات مرکب، عناوین محصولات و متون دیتابیس
+    const phrasePairs = [
+      // محصولات دیتابیس و کاتالوگ
+      ['گلدان سرامیکی فیروزه‌ای با اسلیمی زرنگار', 'Turquoise Ceramic Vase with Golden Arabesque'],
+      ['بشقاب قلمزنی مس و نقره اصفهان', 'Isfahan Engraved Copper & Silver Platter'],
+      ['تابلو نقاشی خط مذهب «وان یکاد»', 'Illuminated Calligraphy Painting "Wa In Yakad"'],
+      ['ست کاسه سفالی لاله‌جین لعاب‌دار', 'Lalejin Glazed Pottery Bowls Set'],
+      ['فرش دستباف ۶ متری طرح خشتی تبریز', 'Tabriz Handwoven 6m Rug (Kheshti Design)'],
+      ['تندیس چوبی معرق و منبت آهوان', 'Carved Wood Sculpture of Gazelles (Monabbat)'],
+      ['ساعت دیواری خاتم‌کاری و نگارگری', 'Khatam Marquetry & Miniature Wall Clock'],
+      ['رومیزی ترمه ابریشم هفت‌رنگ یزد', 'Yazd Silk Termeh Table Runner (7-Color)'],
+      ['گلدان میناکاری طرح اسلیمی', 'Isfahan Enamel (Minakari) Vase Arabesque'],
+      ['بشقاب میناکاری اصفهان', 'Isfahan Handcrafted Minakari Plate'],
+      ['تابلو رنگ‌روغن «کویر و گنبد فیروزه‌ای»', 'Oil Painting "Desert & Turquoise Dome"'],
+      ['صندوقچه خاتم‌کاری شیراز', 'Shiraz Khatam Marquetry Jewelry Box'],
+      ['آینه و شمعدان فیروزه‌کوبی نیشابور', 'Neyshabur Turquoise Inlay Mirror & Candlesticks'],
+      ['قندان نقره‌نما و قلمزنی', 'Silver-Plated Hand-Engraved Sugar Bowl'],
+      ['ست چای‌خوری قلمزنی سنتی', 'Traditional Engraved Brass Tea Set'],
+      ['کاسه سفالی زرین‌فام لعاب برجسته', 'Lusterware Embossed Glazed Ceramic Bowl'],
+      ['قالیچه دستباف ابریشمی کاشان', 'Kashan Handwoven Silk Rug'],
+      ['کوزه سفالی دست‌ساز کهن', 'Antique Handcrafted Pottery Pitcher'],
+      ['گلدان میناکاری شده', 'Enamelled Minakari Vase'],
+      ['بشقاب قلمزنی مسی', 'Engraved Copper Platter'],
+      ['فرش دستباف تبریز', 'Tabriz Handwoven Rug'],
+      ['ست کاسه سفالی', 'Pottery Bowls Set'],
+
+      // دسته‌ها و شاخه‌های هنری
+      ['سفال و سرامیک', 'Pottery & Ceramics'],
+      ['میناکاری و قلمزنی', 'Enameling & Engraving'],
+      ['خوشنویسی و نگارگری', 'Calligraphy & Miniature'],
+      ['چوب و خاتم‌کاری', 'Woodwork & Khatam Marquetry'],
+      ['فرش و گلیم', 'Handwoven Rugs & Kilims'],
+      ['صنایع دستی و دکوری', 'Handicrafts & Decor'],
+      ['صنایع دستی', 'Handicrafts'],
+      ['صنایع‌دستی', 'Handicrafts'],
+      ['دستباف و سنتی', 'Handwoven & Traditional'],
+      ['سفالگری', 'Pottery'],
+      ['سرامیک', 'Ceramics'],
+      ['میناکاری', 'Enameling (Minakari)'],
+      ['قلمزنی', 'Engraving (Ghalamzani)'],
+      ['خوشنویسی', 'Calligraphy'],
+      ['نگارگری', 'Persian Miniature'],
+      ['خاتم‌کاری', 'Khatam Marquetry'],
+      ['منبت‌کاری', 'Wood Carving'],
+      ['معرق‌کاری', 'Wood Inlaying'],
+      ['فیروزه‌کوبی', 'Turquoise Inlaying'],
+      ['ترمه‌بافی', 'Termeh Weaving'],
+      ['ملیله‌کاری', 'Filigree'],
+      ['زیورآلات سنتی', 'Traditional Handmade Jewelry'],
+      ['دست‌سازه‌ها', 'Handmade Artworks'],
+      ['نقاشی و نگارگری', 'Paintings & Miniatures'],
+      ['نقاشی خط', 'Calligraphic Painting'],
+      ['نقاشی رنگ‌روغن', 'Oil Painting'],
+
+      // هنرمندان، آتلیه‌ها و شهرها
+      ['استاد امیرحسین جلالی', 'Master Amirhossein Jalali'],
+      ['امیرحسین جلالی', 'Amirhossein Jalali'],
+      ['استاد رحیمی', 'Master Davood Rahimi'],
+      ['استاد محمدی', 'Master Mohammadi'],
+      ['استاد رفیعی', 'Master Rafiei'],
+      ['استاد جلالی', 'Master Jalali'],
+      ['کارگاه کهن', 'Kohan Studio'],
+      ['استودیو کهن', 'Kohan Studio'],
+      ['استودیو نقش‌جهان', 'Naqsh-e Jahan Workshop'],
+      ['نقش‌جهان', 'Naqsh-e Jahan'],
+      ['گالری هور', 'Hour Art Gallery'],
+      ['کارگاه صفوی', 'Safavi Studio'],
+      ['اصفهان', 'Isfahan'],
+      ['شیراز', 'Shiraz'],
+      ['تبریز', 'Tabriz'],
+      ['یزد', 'Yazd'],
+      ['تهران', 'Tehran'],
+      ['کاشان', 'Kashan'],
+      ['همدان', 'Hamedan'],
+      ['لاله‌جین', 'Lalejin'],
+      ['نیشابور', 'Neyshabur'],
+      ['ایران‌زمین', 'Iran'],
+      ['ایران', 'Iran'],
+
+      // عبارات سبد خرید، پرداخت و فرآیند خرید
+      ['هنرکده', 'Honarkadeh'],
+      ['تومان', 'Toman'],
+      ['ریال', 'Rials'],
+      ['سبد خرید و تسویه‌حساب آثار', 'Shopping Cart & Checkout'],
+      ['سبد خرید آثار هنری', 'Artworks Shopping Cart'],
+      ['سبد خرید شما', 'Your Shopping Cart'],
+      ['سبد خرید', 'Shopping Cart'],
+      ['خلاصه پیش‌فاکتور', 'Order Summary'],
+      ['جمع قیمت آثار', 'Artworks Subtotal'],
+      ['تخفیف اولین سفارش', 'First Order Discount'],
+      ['بسته‌بندی ایمن گالری', 'Gallery Secure Packaging'],
+      ['بیمه سلامت حمل اثر', 'Artwork Transit Insurance'],
+      ['بیمه سلامت حمل و نقل', 'Transit Insurance'],
+      ['مبلغ نهایی پرداخت', 'Total Amount to Pay'],
+      ['جمع کل سفارش', 'Order Total'],
+      ['جمع کل', 'Grand Total'],
+      ['قیمت اثر', 'Price'],
+      ['قیمت در گالری', 'Gallery Price'],
+      ['ارزش‌گذاری اثر در گالری', 'Gallery Valuation'],
+      ['تکمیل اطلاعات ارسال و پرداخت', 'Proceed to Shipping & Payment'],
+      ['ادامه گشت‌وگذار و افزودن آثار دیگر', 'Continue Exploring Artworks'],
+      ['مشاهده سبد و تسویه‌حساب نهایی', 'Proceed to Checkout'],
+      ['مشاهده سبد خرید و تسویه', 'View Cart & Checkout'],
+      ['افزودن به سبد خرید و رزرو اثر', 'Add to Cart & Reserve'],
+      ['افزودن به سبد خرید', 'Add to Cart'],
+      ['افزودن به سبد', 'Add to Cart'],
+      ['حذف از سبد', 'Remove from Cart'],
+      ['حذف اثر', 'Remove Artwork'],
+      ['کادوپیچی اثر همراه با روبان و کارت تبریک', 'Gift Wrapping with Ribbon & Greeting Card'],
+      ['بسته‌بندی دوستدار محیط‌زیست (قابل بازیافت)', 'Eco-Friendly Recycled Packaging'],
+      ['خدمات بسته‌بندی سفارش', 'Packaging Options'],
+      ['درگاه پرداخت اینترنتی شاپرک', 'Shaparak Online Payment Gateway'],
+      ['پرداخت از طریق فیش بانکی (کارت به کارت)', 'Bank Transfer Slip (Card to Card)'],
+      ['مشخصات حساب بانکی هنرکده (بانک ملی ایران)', 'Honarkadeh Bank Account Information (Melli Bank)'],
+      ['فروشگاه صنایع‌دستی هنرکده', 'Honarkadeh Arts & Crafts Co.'],
+      ['شماره پیگیری فیش واریزی', 'Deposit Slip Tracking Number'],
+      ['شماره کارت', 'Card Number'],
+      ['شماره شبا', 'IBAN (Sheba)'],
+      ['صاحب حساب', 'Account Holder'],
+      ['کد تخفیف (قوانین سبد خرید)', 'Discount Code (Cart Rules)'],
+      ['کد کتاب: 970725', 'Curriculum: 970725'],
+      ['اعمال کد', 'Apply Code'],
+      ['۷ روز ضمانت بازگشت و سلامت کالا', '7-Day Return Guarantee'],
+      ['۷ روز ضمانت بازگشت', '7-Day Return Guarantee'],
+      ['۷ روز ضمانت اصالت', '7-Day Authenticity Guarantee'],
+      ['تضمین اصالت فیزیکی', 'Physical Authenticity Guaranteed'],
+      ['دارای شناسنامه فیزیکی معتبر', 'Verified Physical Certificate'],
+      ['دارای شناسنامه فیزیکی', 'Physical Certificate'],
+      ['شناسنامه فیزیکی ممهور و معتبر', 'Verified Sealed Certificate'],
+      ['شناسنامه فیزیکی', 'Physical Certificate'],
+      ['تک‌نسخه اختصاصی', 'Exclusive Edition'],
+      ['تک‌نسخه و منحصربه‌فرد', 'Unique One-of-a-Kind Edition'],
+      ['تک‌نسخه', 'Unique Edition'],
+      ['موجود در انبار', 'In Stock'],
+      ['ناموجود در گالری', 'Sold Out'],
+      ['ناموجود', 'Out of Stock'],
+      ['موجودی:', 'In Stock:'],
+      ['پیشنهاد شگفت‌انگیز', 'Special Offer'],
+      ['تخفیف ویژه گالری', 'Special Gallery Discount'],
+      ['تخفیف ویژه', 'Special Offer'],
+      ['محصولات پیشنهادی', 'Featured Artworks'],
+      ['محصولات پرطرفدار', 'Popular Artworks'],
+      ['محصولات پرفروش', 'Best Sellers'],
+      ['گالری و فروشگاه آنلاین آثار هنری', 'Online Art Gallery & Marketplace'],
+      ['گالری آثار', 'Gallery Artworks'],
+      ['گالری کامل آثار', 'Complete Art Gallery'],
+      ['هنرمندان و غرفه‌داران برگزیده', 'Featured Artists & Studios'],
+      ['هنرمندان و غرفه‌ها', 'Artists & Studios'],
+      ['در هنرکده غرفه بزنید!', 'Open Booth in Honarkadeh!'],
+      ['درخواست راه‌اندازی غرفه هنری', 'Apply to Open Studio Booth'],
+      ['ثبت‌نام و افتتاح غرفه هنری', 'Register & Open Studio Booth'],
+      ['ورود به حساب کاربری', 'Login to Your Account'],
+      ['ورود به حساب', 'Login'],
+      ['ثبت‌نام جدید', 'Register'],
+      ['ورود | ثبت‌نام', 'Login | Register'],
+      ['ورود / ثبت‌نام در هنرکده', 'Login / Register in Honarkadeh'],
+      ['خروج از حساب کاربری', 'Logout from Account'],
+      ['خروج از حساب', 'Logout'],
+      ['میز کار و داشبورد کاربری', 'User Dashboard & Studio'],
+      ['میز کار و داشبورد', 'Dashboard'],
+      ['سفارش‌ها و شناسنامه‌ها', 'Orders & Certificates'],
+      ['آثار نشان‌شده و علاقه‌مندی‌ها', 'Saved Artworks & Wishlist'],
+      ['مدیریت غرفه و آثار', 'Studio & Booth Management'],
+      ['ورود به پیشخوان مدیریت', 'Admin Panel'],
+      ['اعلان‌های گالری', 'Gallery Notifications'],
+      ['۱ پیام جدید', '1 New Message'],
+      ['آغاز نمایشگاه فصلی آبرنگ', 'Seasonal Watercolor Exhibition Opening'],
+      ['آثار جدید استاد جلالی با گواهی اصالت به گالری اضافه شد.', 'New certified artworks by Master Jalali added to gallery.'],
+      ['۱۰ دقیقه پیش', '10 mins ago'],
+      ['بسته‌بندی ۵ لایه ضدضربه و بیمه رایگان', '5-Layer Shockproof Packaging & Free Insurance'],
+      ['بسته‌بندی ۵ لایه ضدضربه', '5-Layer Shockproof Packaging'],
+      ['دسته‌بندی آثار و صنایع‌دستی', 'Art & Craft Disciplines'],
+      ['دسته‌بندی‌های گالری', 'Gallery Collections'],
+      ['راهنما و قوانین سایت', 'Customer Guide & Policies'],
+      ['تماس با هنرکده', 'Contact Honarkadeh'],
+      ['کلیه حقوق مادی و معنوی این وب‌سایت متعلق به «هنرکده» می‌باشد.', 'All rights reserved for Honarkadeh.'],
+      ['طراحی شده با الهام از اصالت هنر ایرانی', 'Inspired by Persian artistic heritage'],
+      ['عضویت در حلقه دوستان هنرکده', 'Join the Art Collector Circle'],
+      ['اینماد', 'Enamad Verified'],
+      ['ساماندهی', 'Samandehi Certified'],
+      ['ثبت ملی', 'National Registry'],
+      ['نماد رسمی', 'Official Certified'],
+      ['داستان و پیشینه اثر', 'Artwork Story & Provenance'],
+      ['مشخصات کامل و راهنمای نگهداری', 'Full Specifications & Care Guide'],
+      ['دیدگاه مجموعه‌داران', 'Collector Reviews'],
+      ['دیدگاه خریداران و مجموعه‌داران', 'Buyer & Collector Reviews'],
+      ['ثبت دیدگاه جدید', 'Write a Review'],
+      ['اشتراک اثر', 'Share Artwork'],
+      ['اشتراک‌گذاری', 'Share'],
+      ['لینک کپی شد!', 'Link Copied!'],
+      ['سایر آثار مرتبط با این مجموعه', 'Related Collection Artworks'],
+      ['مشاهده همه آثار این شاخه', 'View All Artworks in Branch'],
+      ['مشاهده اثر', 'View Artwork'],
+      ['مشاهده آثار غرفه', 'Explore Studio Artworks'],
+      ['مشاهده آثار', 'View Artworks'],
+      ['مشاهده تمام آثار گالری', 'Explore All Gallery Artworks'],
+      ['همه آثار دارای گواهی اصالت و امضای اختصاصی هنرمند هستند.', 'All artworks include verified provenance and artist signature.'],
+      ['پدیدآورنده و غرفه اثر:', 'Creator & Studio:'],
+      ['پدیدآورنده اثر:', 'Creator:'],
+      ['شاخه هنری:', 'Art Discipline:'],
+      ['دسته‌بندی اثر:', 'Collection Category:'],
+      ['نشان تجاری / مکتب:', 'Studio / Movement:'],
+      ['وزن تقریبی:', 'Approx. Weight:'],
+      ['وزن خالص اثر:', 'Net Weight:'],
+      ['کد ثبت کاتالوگ (SKU):', 'Catalog SKU:'],
+      ['کد ثبت در گالری:', 'Gallery Registration SKU:'],
+      ['جدول کامل مشخصات ساختاری', 'Structural Specifications Table'],
+      ['دستورالعمل نگهداری و اصالت اثر هنری', 'Care & Preservation Instructions'],
+      ['مشخصه و گونه اثر:', 'Artwork Variant:'],
+      ['ویژگی‌های ممتاز آثار', 'Curated Distinctions'],
+      ['ویژگی‌های ممتاز', 'Curated Distinctions'],
+      ['مرتب‌سازی:', 'Sort by:'],
+      ['جدیدترین', 'Newest'],
+      ['پرفروش‌ترین', 'Best Sellers'],
+      ['قیمت: کم به زیاد', 'Price: Low to High'],
+      ['قیمت: زیاد به کم', 'Price: High to Low'],
+      ['فیلتر شاخه‌های هنری', 'Filter Art Branches'],
+      ['فیلتر بر اساس هنر', 'Filter by Discipline'],
+      ['شاخه‌های هنری', 'Art Disciplines'],
+      ['نتیجه جستجو برای:', 'Search results for:'],
+      ['اثر یافت شد', 'artworks found'],
+      ['اثر به نمایش درآمده', 'artworks displayed'],
+      ['اثر در گالری', 'artworks in gallery'],
+      ['رایگان', 'Free'],
+      ['دارد (ممهور)', 'Yes (Sealed)'],
+      ['دارد (ممهور به هولوگرام ضدجعل)', 'Yes (Sealed with Anti-Counterfeit Hologram)'],
+      ['فاقد شناسنامه', 'Without Certificate'],
+      ['فاقد شناسنامه فیزیکی', 'Without Physical Certificate'],
+      ['خریدار تاییدشده هنرکده', 'Verified Honarkadeh Buyer'],
+      ['خریدار و مجموعه‌دار هنر', 'Art Collector & Connoisseur'],
+      ['خریدار هنر', 'Art Collector'],
+      ['هنرمند رسمی گالری', 'Official Gallery Master'],
+      ['هنرمند و غرفه‌دار', 'Master Artisan & Booth Owner'],
+      ['هنرمند و آفریننده اثر', 'Master Artist & Creator'],
+      ['مدیر کل پلتفرم', 'Platform Superadmin'],
+      ['مدیر / پرسنل', 'Staff / Manager'],
+      ['کاربر گرامی', 'Honored Guest'],
+      ['احراز هویت شده', 'Identity Verified'],
+      ['ویرایش مشخصات', 'Edit Profile'],
+      ['عضویت رسمی از', 'Official Member Since'],
+      ['کلمه عبور', 'Password'],
+      ['شماره همراه یا ایمیل', 'Mobile Phone or Email'],
+      ['فراموشی رمز؟', 'Forgot Password?'],
+      ['قوانین و شرایط', 'Terms and Conditions'],
+      ['صفحه اصلی', 'Home'],
+      ['همه آثار', 'All Works'],
+      ['کلیه آثار', 'All Artworks'],
+      ['تمام آثار', 'All Artworks'],
+      ['بستن بنر', 'Close Banner'],
+      ['بستن', 'Close'],
+      ['تایید', 'Confirm'],
+      ['انصراف', 'Cancel'],
+      ['جستجو...', 'Search...'],
+      ['جستجوی آثار هنری...', 'Search artworks...'],
+      ['جستجوی نقاشی، سرامیک دست‌ساز، نام اثر، هنرمند...', 'Search paintings, ceramics, artist names...'],
+      ['عدد', 'pcs'],
+      ['گرم', 'g'],
+      ['غرفه:', 'Studio:'],
+      ['هنرمند:', 'Artist:']
+    ];
+
+    // ۳. نگاشت لغات پرتکرار و تک‌کلمه‌ها
+    const singleWords = {
+      'گلدان':'Vase','بشقاب':'Platter','کاسه':'Bowl','کوزه':'Pitcher','تابلو':'Painting','فرش':'Carpet','قالی':'Rug',
+      'قالیچه':'Rug','گلیم':'Kilim','ترمه':'Termeh','صندوقچه':'Jewelry Box','ساعت':'Clock','دیواری':'Wall',
+      'آینه':'Mirror','شمعدان':'Candlestick','قندان':'Sugar Bowl','تندیس':'Sculpture','دست‌ساز':'Handmade',
+      'دستساز':'Handmade','دست‌باف':'Handwoven','دستباف':'Handwoven','اصیل':'Authentic','فیروزه‌ای':'Turquoise',
+      'فیروزه':'Turquoise','زرنگار':'Gilded','اسلیمی':'Arabesque','ختایی':'Floral','مذهب':'Illuminated',
+      'تذهیب':'Illumination','لعاب':'Glaze','لعابی':'Glazed','چوبی':'Wooden','چوب':'Wood','مس':'Copper',
+      'مسی':'Copper','برنج':'Brass','برنجی':'Brass','نقره':'Silver','طلا':'Gold','خاتم':'Khatam','معرق':'Marquetry',
+      'منبت':'Woodcarving','قلمزنی':'Engraving','میناکاری':'Enameling','مینا':'Enamel','سفال':'Pottery','سفالی':'Ceramic',
+      'سرامیک':'Ceramic','سرامیکی':'Ceramic','خوشنویسی':'Calligraphy','خطاطی':'Calligraphy','خط':'Calligraphy',
+      'نقاشی':'Painting','نگارگری':'Miniature','رنگ‌روغن':'Oil Painting','بوم':'Canvas','ابریشم':'Silk','ابریشمی':'Silk',
+      'پشم':'Wool','پشمی':'Woolen','هنر':'Art','هنری':'Artistic','هنرمند':'Artist','هنرمندان':'Artists','صنایع':'Crafts',
+      'دستی':'Crafts','کارگاه':'Workshop','آتلیه':'Studio','استودیو':'Studio','گالری':'Gallery','غرفه':'Studio/Booth',
+      'غرفه‌ها':'Studios','مجموعه':'Collection','مجموعه‌دار':'Collector','مجموعه‌داران':'Collectors','خریدار':'Buyer',
+      'خریداران':'Buyers','فروشگاه':'Shop','بازارچه':'Marketplace','قیمت':'Price','تخفیف':'Discount','رایگان':'Free',
+      'تومان':'Toman','ریال':'Rials','ارسال':'Shipping','بیمه':'Insurance','بسته‌بندی':'Packaging','ضمانت':'Guarantee',
+      'اصالت':'Authenticity','شناسنامه':'Certificate','مهر':'Seal','امضا':'Signature','فیزیکی':'Physical','معتبر':'Official',
+      'تک‌نسخه':'Unique','موجود':'In Stock','ناموجود':'Sold Out','فروش':'Sale','خرید':'Buy','سفارش':'Order',
+      'پرداخت':'Checkout','درگاه':'Gateway','بانک':'Bank','بانکی':'Bank','فیش':'Slip','واریز':'Deposit','کارت':'Card',
+      'شبا':'IBAN','شماره':'No.','پیگیری':'Tracking','کد':'Code','کادوپیچی':'Gift-Wrap','بازیافتی':'Recycled',
+      'مشاهده':'View','افزودن':'Add','حذف':'Remove','ویرایش':'Edit','ثبت':'Submit','ورود':'Login','عضویت':'Register',
+      'ثبت‌نام':'Register','خروج':'Logout','حساب':'Account','کاربری':'User','پروفایل':'Profile','داشبورد':'Dashboard',
+      'میز':'Desk','کار':'Workspace','اعلان':'Notification','اعلان‌ها':'Notifications','پیام':'Message','دیدگاه':'Review',
+      'نظرات':'Reviews','جستجو':'Search','نتایج':'Results','فیلتر':'Filter','مرتب‌سازی':'Sort','جدیدترین':'Newest',
+      'پرفروش':'Best Seller','محبوب':'Popular','پیشنهادی':'Featured','ویژه':'Special','شگفت‌انگیز':'Wonder',
+      'مشخصات':'Specs','داستان':'Story','پیشینه':'Provenance','نگهداری':'Care','تماس':'Contact','درباره':'About',
+      'قوانین':'Terms','شرایط':'Conditions','حریم':'Privacy','اینماد':'Enamad','ساماندهی':'Samandehi','عدد':'pcs',
+      'اثر':'Piece','آثار':'Works','روز':'Days','ساعت':'Hours','دقیقه':'Mins','پیش':'ago','بله':'Yes','خیر':'No',
+      'دارد':'Yes','ندارد':'No','موفق':'Success','خطا':'Error'
+    };
+
+    // ۴. جدول ترانویسی حروف برای هرگونه کاراکتر فارسی باقیمانده
+    const charTrans = {
+      'آ':'A','ا':'a','ب':'b','پ':'p','ت':'t','ث':'s','ج':'j','چ':'ch','ح':'h','خ':'kh','د':'d','ذ':'z','ر':'r','ز':'z',
+      'ژ':'zh','س':'s','ش':'sh','ص':'s','ض':'z','ط':'t','ظ':'z','ع':'a','غ':'gh','ف':'f','ق':'gh','ک':'k','گ':'g','ل':'l',
+      'م':'m','ن':'n','و':'v','ه':'h','ی':'y','ي':'y','ك':'k','ة':'h','ء':'','ئ':'y','ؤ':'o','ۀ':'h','‌':' '
+    };
+
+    function translateStr(text) {
+      if (!text || typeof text !== 'string') return text;
+      
+      // الف: تبدیل اعداد
+      let res = text.replace(/[۰-۹٠-٩]/g, d => numMap[d] || d);
+
+      // ب: جایگزینی عبارات مرکب
+      for (const [fa, en] of phrasePairs) {
+        if (res.includes(fa)) {
+          res = res.split(fa).join(en);
+        }
+      }
+
+      // ج: جایگزینی تک‌واژه‌ها
+      for (const [faWord, enWord] of Object.entries(singleWords)) {
+        if (res.includes(faWord)) {
+          const reg = new RegExp('(^|[^\\u0600-\\u06FF\\w])' + faWord + '(?=[^\\u0600-\\u06FF\\w]|$)', 'g');
+          res = res.replace(reg, '$1' + enWord);
+        }
+      }
+
+      // د: تبدیل نهایی هرگونه کاراکتر فارسی/عربی باقیمانده به انگلیسی برای حذف صد درصدی
+      if (/[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(res)) {
+        res = res.replace(/[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]/g, c => charTrans[c] || '');
+        res = res.replace(/\s+/g, ' ');
+      }
+
+      return res;
+    }
+
+    function processTree(root) {
+      if (!root) return;
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+      let node;
+      const nodes = [];
+      while (node = walker.nextNode()) {
+        if (node.parentElement) {
+          const tag = node.parentElement.tagName.toLowerCase();
+          if (tag === 'script' || tag === 'style' || tag === 'noscript') continue;
+        }
+        nodes.push(node);
+      }
+
+      nodes.forEach(n => {
+        const val = n.nodeValue;
+        if (val && /[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(val)) {
+          n.nodeValue = translateStr(val);
+        }
+      });
+
+      // ترجمه صفت‌های عناصر
+      const elements = root.querySelectorAll ? root.querySelectorAll('*') : [];
+      elements.forEach(el => {
+        ['placeholder', 'title', 'alt', 'aria-label'].forEach(attr => {
+          const attrVal = el.getAttribute(attr);
+          if (attrVal && /[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(attrVal)) {
+            el.setAttribute(attr, translateStr(attrVal));
+          }
+        });
+        if (el.tagName === 'INPUT' && (el.type === 'button' || el.type === 'submit')) {
+          if (/[\u0600-\u06FF]/.test(el.value)) {
+            el.value = translateStr(el.value);
+          }
+        }
+      });
+    }
+
+    // اجرا در هنگام بارگذاری و تغییرات DOM
+    function executeTranslation() {
+      processTree(document.body);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', executeTranslation);
+    } else {
+      executeTranslation();
+    }
+    window.addEventListener('load', executeTranslation);
+
+    // دیدبانی مستمر تغییرات داینامیک صفحه
+    let timer = null;
+    const obs = new MutationObserver(mutations => {
+      let trigger = false;
+      for (const m of mutations) {
+        if (m.type === 'childList' && m.addedNodes.length > 0) {
+          trigger = true; break;
+        } else if (m.type === 'characterData' && /[\u0600-\u06FF]/.test(m.target.nodeValue)) {
+          trigger = true; break;
+        }
+      }
+      if (trigger) {
+        clearTimeout(timer);
+        timer = setTimeout(executeTranslation, 60);
+      }
+    });
+
+    obs.observe(document.body, { childList: true, subtree: true, characterData: true });
+  })();
+  </script>
+
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>

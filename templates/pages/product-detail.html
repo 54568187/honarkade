@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load humanize %}
 
-{% block title %}هنرکده | {{ product.name }}{% endblock %}
+{% block title %}{% if is_en %}Honarkadeh | {{ product.name }}{% else %}هنرکده | {{ product.name }}{% endif %}{% endblock %}
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
   
   <!-- مسیر راهنما (Breadcrumbs) -->
   <nav class="flex items-center gap-2 text-xs text-[#6B726E] mb-6 flex-wrap">
-    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">صفحه اصلی</a>
+    <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">{% if is_en %}Home{% else %}صفحه اصلی{% endif %}</a>
     <span>/</span>
-    <a href="{% url 'shop' %}" class="hover:text-[#2C4A3E]">گالری آثار</a>
+    <a href="{% url 'shop' %}" class="hover:text-[#2C4A3E]">{% if is_en %}Gallery Artworks{% else %}گالری آثار{% endif %}</a>
     <span>/</span>
     {% if product.category %}
     <a href="{% url 'shop' %}?cat={{ product.category.slug }}" class="hover:text-[#2C4A3E]">{{ product.category.name }}</a>
@@ -39,27 +39,27 @@
           {% endif %}
           
           <!-- برچسب‌های شناور پویا -->
-          <div class="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
+          <div class="absolute top-3 {% if is_en %}left-3{% else %}right-3{% endif %} flex flex-col gap-1.5 z-10">
             {% if product.has_discount %}
             <span class="bg-[#C69A52] text-[#1E3329] text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
-              تخفیف ویژه گالری
+              {% if is_en %}Special Gallery Offer{% else %}تخفیف ویژه گالری{% endif %}
             </span>
             {% endif %}
             {% if product.stock <= 2 %}
             <span class="bg-[#2C4A3E] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-md">
-              تک‌نسخه اختصاصی
+              {% if is_en %}Exclusive Edition{% else %}تک‌نسخه اختصاصی{% endif %}
             </span>
             {% endif %}
             {% if product.has_physical_certificate %}
             <span class="bg-[#F7EFEA] border border-[#C69A52]/60 text-[#82533D] text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
               <svg class="w-3 h-3 text-[#C69A52]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              <span>دارای شناسنامه فیزیکی</span>
+              <span>{% if is_en %}Physical Certificate{% else %}دارای شناسنامه فیزیکی{% endif %}</span>
             </span>
             {% endif %}
           </div>
 
           <!-- دکمه نشان کردن (Wishlist) -->
-          <button type="button" class="absolute top-3 left-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-[#6B726E] hover:text-red-500 flex items-center justify-center shadow-md transition-colors z-10" title="افزودن به علاقه‌مندی‌ها">
+          <button type="button" class="absolute top-3 {% if is_en %}right-3{% else %}left-3{% endif %} w-9 h-9 rounded-full bg-white/90 backdrop-blur text-[#6B726E] hover:text-red-500 flex items-center justify-center shadow-md transition-colors z-10" title="{% if is_en %}Add to Wishlist{% else %}افزودن به علاقه‌مندی‌ها{% endif %}">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
           </button>
         </div>
@@ -84,13 +84,17 @@
         <div class="w-11 h-11 rounded-2xl bg-[#C69A52]/20 border border-[#C69A52]/40 text-[#82533D] flex items-center justify-center shrink-0">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"></path></svg>
         </div>
-        <div class="text-xs">
-          <h5 class="font-bold text-[#1E3329] mb-0.5">شناسنامه فیزیکی ممهور و معتبر</h5>
+        <div class="text-xs {% if is_en %}text-left{% else %}text-right{% endif %}">
+          <h5 class="font-bold text-[#1E3329] mb-0.5">{% if is_en %}Verified Physical Certificate with Seal{% else %}شناسنامه فیزیکی ممهور و معتبر{% endif %}</h5>
           <p class="text-[#6B726E] leading-relaxed">
-            {% if product.has_physical_certificate %}
-              {{ product.certificate_description|default:"این اثر همراه با برگ گواهی اصالت فیزیکی با هولوگرام ضدجعل و امضای پدیدآورنده تحویل خریدار می‌گردد." }}
+            {% if is_en %}
+              This artwork is delivered with an official Certificate of Authenticity featuring anti-counterfeit hologram and creator's signature.
             {% else %}
-              کلیه آثار ارائه‌شده در هنرکده تحت نظارت کیفی و اصالت کارشناسی‌شده گالری تحویل داده می‌شوند.
+              {% if product.has_physical_certificate %}
+                {{ product.certificate_description|default:"این اثر همراه با برگ گواهی اصالت فیزیکی با هولوگرام ضدجعل و امضای پدیدآورنده تحویل خریدار می‌گردد." }}
+              {% else %}
+                کلیه آثار ارائه‌شده در هنرکده تحت نظارت کیفی و اصالت کارشناسی‌شده گالری تحویل داده می‌شوند.
+              {% endif %}
             {% endif %}
           </p>
         </div>
@@ -99,18 +103,18 @@
     </div>
 
     <!-- ================= ستون اطلاعات و خرید (۷ ستون) ================= -->
-    <div class="lg:col-span-7 flex flex-col space-y-5">
+    <div class="lg:col-span-7 flex flex-col space-y-5 {% if is_en %}text-left{% else %}text-right{% endif %}">
       
       <!-- عنوان و امتیاز اثر -->
       <div class="space-y-2">
         <div class="flex items-center justify-between flex-wrap gap-2">
           <span class="text-xs font-bold text-[#82533D] bg-[#F7EFEA] px-3 py-1 rounded-full">
-            کد ثبت در گالری: {{ product.sku|default:product.id }}
+            {% if is_en %}Gallery SKU: {{ product.sku|default:product.id }}{% else %}کد ثبت در گالری: {{ product.sku|default:product.id }}{% endif %}
           </span>
           <div class="flex items-center gap-1 text-xs text-[#C69A52]">
-            <span class="font-bold text-[#1E3329]">۴.۹</span>
+            <span class="font-bold text-[#1E3329]">4.9</span>
             <span>★★★★★</span>
-            <span class="text-[#98A19C]">(اصالت تأییدشده گالری)</span>
+            <span class="text-[#98A19C]">({% if is_en %}Gallery Authenticated{% else %}اصالت تأییدشده گالری{% endif %})</span>
           </div>
         </div>
 
@@ -129,13 +133,13 @@
             {{ product.booth.name|slice:":2" }}
           </div>
           <div>
-            <span class="text-[11px] text-[#98A19C] block">پدیدآورنده و غرفه اثر:</span>
+            <span class="text-[11px] text-[#98A19C] block">{% if is_en %}Creator Studio & Booth:{% else %}پدیدآورنده و غرفه اثر:{% endif %}</span>
             <h4 class="text-sm font-bold text-[#1E3329]">{{ product.booth.name }}</h4>
-            <span class="text-[11px] text-[#82533D]">هنرمند: {{ product.booth.owner.get_full_name|default:product.booth.owner.username }}</span>
+            <span class="text-[11px] text-[#82533D]">{% if is_en %}Artist:{% else %}هنرمند:{% endif %} {{ product.booth.owner.get_full_name|default:product.booth.owner.username }}</span>
           </div>
         </div>
         <a href="{% url 'shop' %}?booth={{ product.booth.slug }}" class="text-xs text-[#2C4A3E] hover:underline font-bold border border-[#2C4A3E]/30 px-3 py-1.5 rounded-xl hover:bg-[#FAF7F2] transition-colors">
-          مشاهده آثار این غرفه ←
+          {% if is_en %}Explore Studio Artworks →{% else %}مشاهده آثار این غرفه ←{% endif %}
         </a>
       </div>
 
@@ -143,7 +147,7 @@
       {% if product.attributes.exists %}
       <div class="bg-white rounded-2xl p-4 border border-[#E8E3D9] shadow-sm space-y-3">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-[#1E3329]">مشخصه و گونه اثر:</span>
+          <span class="text-xs font-bold text-[#1E3329]">{% if is_en %}Selected Variant:{% else %}مشخصه و گونه اثر:{% endif %}</span>
           <span id="selected-variant-label" class="text-xs font-bold text-[#2C4A3E] bg-[#E8EFEA] px-2.5 py-0.5 rounded-full">
             {% with first_attr=product.attributes.first %}{{ first_attr.attribute.public_name }}: {{ first_attr.value }}{% endwith %}
           </span>
@@ -163,21 +167,21 @@
       <!-- شناسنامه فنی و ویژگی‌های سریع اثر -->
       <div class="bg-white rounded-2xl p-4 border border-[#E8E3D9] shadow-sm">
         <h4 class="text-xs font-bold text-[#1E3329] mb-3 pb-2 border-b border-[#E8E3D9] flex items-center justify-between">
-          <span>شناسنامه فنی و مشخصات ساختاری</span>
-          <span class="text-[10px] text-[#98A19C] font-normal">بررسی کارشناسی گالری</span>
+          <span>{% if is_en %}Technical Specifications & Provenance{% else %}شناسنامه فنی و مشخصات ساختاری{% endif %}</span>
+          <span class="text-[10px] text-[#98A19C] font-normal">{% if is_en %}Expert Curated{% else %}بررسی کارشناسی گالری{% endif %}</span>
         </h4>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
           <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
-            <span class="text-[#98A19C] block text-[10px]">دسته‌بندی اثر:</span>
+            <span class="text-[#98A19C] block text-[10px]">{% if is_en %}Collection Category:{% else %}دسته‌بندی اثر:{% endif %}</span>
             <span class="font-bold text-[#1E3329]">{{ product.category.name }}</span>
           </div>
           <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
-            <span class="text-[#98A19C] block text-[10px]">نشان تجاری / مکتب:</span>
-            <span class="font-bold text-[#1E3329]">{{ product.brand.name|default:"هنرمند مستقل" }}</span>
+            <span class="text-[#98A19C] block text-[10px]">{% if is_en %}Artist / Movement:{% else %}نشان تجاری / مکتب:{% endif %}</span>
+            <span class="font-bold text-[#1E3329]">{% if is_en %}Independent Studio{% else %}{{ product.brand.name|default:"هنرمند مستقل" }}{% endif %}</span>
           </div>
           <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
-            <span class="text-[#98A19C] block text-[10px]">وزن تقریبی:</span>
-            <span class="font-bold text-[#1E3329]">{{ product.weight }} گرم</span>
+            <span class="text-[#98A19C] block text-[10px]">{% if is_en %}Approx. Weight:{% else %}وزن تقریبی:{% endif %}</span>
+            <span class="font-bold text-[#1E3329]">{{ product.weight }} {% if is_en %}g{% else %}گرم{% endif %}</span>
           </div>
           {% for feat in product.features.all %}
           <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
@@ -186,11 +190,11 @@
           </div>
           {% endfor %}
           <div class="bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8E3D9]/60">
-            <span class="text-[#98A19C] block text-[10px]">شناسنامه فیزیکی:</span>
+            <span class="text-[#98A19C] block text-[10px]">{% if is_en %}Physical Certificate:{% else %}شناسنامه فیزیکی:{% endif %}</span>
             {% if product.has_physical_certificate %}
-            <span class="font-bold text-emerald-700">دارد (ممهور)</span>
+            <span class="font-bold text-emerald-700">{% if is_en %}Yes (Sealed){% else %}دارد (ممهور){% endif %}</span>
             {% else %}
-            <span class="font-bold text-[#82533D]">فاقد شناسنامه</span>
+            <span class="font-bold text-[#82533D]">{% if is_en %}Without Certificate{% else %}فاقد شناسنامه{% endif %}</span>
             {% endif %}
           </div>
         </div>
@@ -200,7 +204,7 @@
       <div class="bg-white rounded-3xl p-5 sm:p-6 border-2 border-[#2C4A3E]/30 shadow-md space-y-4">
         <div class="flex items-center justify-between">
           <div>
-            <span class="text-xs text-[#98A19C] block">ارزش‌گذاری اثر در گالری:</span>
+            <span class="text-xs text-[#98A19C] block">{% if is_en %}Gallery Valuation & Price:{% else %}ارزش‌گذاری اثر در گالری:{% endif %}</span>
             <div class="flex items-baseline gap-2">
               {% if product.discount_price %}
               <span class="text-sm line-through text-[#98A19C]">{{ product.price|intcomma }}</span>
@@ -208,18 +212,18 @@
               {% else %}
               <span class="text-2xl sm:text-3xl font-black text-[#1E3329]">{{ product.price|intcomma }}</span>
               {% endif %}
-              <span class="text-xs font-bold text-[#6B726E]">تومان</span>
+              <span class="text-xs font-bold text-[#6B726E]">{% if is_en %}Toman{% else %}تومان{% endif %}</span>
             </div>
           </div>
-          <div class="text-left">
+          <div class="{% if is_en %}text-right{% else %}text-left{% endif %}">
             {% if product.stock > 0 %}
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#E8EFEA] text-[#2C4A3E]">
               <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>موجودی: {{ product.stock }} عدد</span>
+              <span>{% if is_en %}In Stock: {{ product.stock }} pcs{% else %}موجودی: {{ product.stock }} عدد{% endif %}</span>
             </span>
             {% else %}
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700">
-              <span>ناموجود در گالری</span>
+              <span>{% if is_en %}Sold Out{% else %}ناموجود در گالری{% endif %}</span>
             </span>
             {% endif %}
           </div>
@@ -230,16 +234,16 @@
           {% if product.stock > 0 %}
           <button type="button" class="add-to-cart-btn w-full sm:flex-grow py-3.5 px-6 rounded-2xl bg-[#2C4A3E] hover:bg-[#1E3329] text-white text-xs sm:text-sm font-bold text-center transition-all shadow-md flex items-center justify-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-            <span>افزودن به سبد خرید و رزرو اثر</span>
+            <span>{% if is_en %}Add to Cart & Reserve Artwork{% else %}افزودن به سبد خرید و رزرو اثر{% endif %}</span>
           </button>
           {% else %}
           <button type="button" disabled class="w-full sm:flex-grow py-3.5 px-6 rounded-2xl bg-gray-300 text-gray-600 text-xs sm:text-sm font-bold text-center cursor-not-allowed">
-            اثر در حال حاضر فروخته شده است
+            {% if is_en %}Artwork has been sold{% else %}اثر در حال حاضر فروخته شده است{% endif %}
           </button>
           {% endif %}
-          <button type="button" id="share-btn" onclick="shareProduct()" class="w-full sm:w-auto py-3.5 px-4 rounded-2xl border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] text-[#1E3329] text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0" title="اشتراک‌گذاری">
+          <button type="button" id="share-btn" onclick="shareProduct()" class="w-full sm:w-auto py-3.5 px-4 rounded-2xl border border-[#E8E3D9] hover:border-[#2C4A3E] hover:bg-[#FAF7F2] text-[#1E3329] text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0" title="{% if is_en %}Share{% else %}اشتراک‌گذاری{% endif %}">
             <svg class="w-4 h-4 text-[#82533D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-            <span id="share-text">اشتراک اثر</span>
+            <span id="share-text">{% if is_en %}Share Artwork{% else %}اشتراک اثر{% endif %}</span>
           </button>
         </div>
 
@@ -247,15 +251,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-3 border-t border-[#E8E3D9] text-[11px] text-[#6B726E]">
           <div class="flex items-center gap-1.5">
             <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-            <span>۷ روز ضمانت اصالت</span>
+            <span>{% if is_en %}7-Day Return Guarantee{% else %}۷ روز ضمانت اصالت{% endif %}</span>
           </div>
           <div class="flex items-center gap-1.5">
             <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-            <span>بسته‌بندی ۵ لایه ضدضربه</span>
+            <span>{% if is_en %}5-Layer Shockproof Box{% else %}بسته‌بندی ۵ لایه ضدضربه{% endif %}</span>
           </div>
           <div class="flex items-center gap-1.5">
             <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-            <span>بیمه سلامت حمل و نقل</span>
+            <span>{% if is_en %}Full Transit Insurance{% else %}بیمه سلامت حمل و نقل{% endif %}</span>
           </div>
         </div>
       </div>
@@ -270,44 +274,48 @@
     <!-- سربرگ تب‌ها -->
     <div class="flex items-center gap-4 sm:gap-8 border-b border-[#E8E3D9] pb-4 mb-6 overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap">
       <button type="button" onclick="switchTab('tab-story', this)" class="product-tab-btn active text-sm sm:text-base font-bold text-[#2C4A3E] border-b-2 border-[#2C4A3E] pb-2 px-1 transition-all">
-        داستان و پیشینه اثر
+        {% if is_en %}Artwork Story & Provenance{% else %}داستان و پیشینه اثر{% endif %}
       </button>
       <button type="button" onclick="switchTab('tab-specs', this)" class="product-tab-btn text-sm sm:text-base font-medium text-[#6B726E] hover:text-[#1E3329] pb-2 px-1 transition-all">
-        مشخصات کامل و راهنمای نگهداری
+        {% if is_en %}Specifications & Care Guide{% else %}مشخصات کامل و راهنمای نگهداری{% endif %}
       </button>
       <button type="button" onclick="switchTab('tab-reviews', this)" class="product-tab-btn text-sm sm:text-base font-medium text-[#6B726E] hover:text-[#1E3329] pb-2 px-1 transition-all">
-        دیدگاه مجموعه‌داران
+        {% if is_en %}Collector Reviews{% else %}دیدگاه مجموعه‌داران{% endif %}
       </button>
     </div>
 
     <!-- محتوای تب ۱: داستان اثر -->
-    <div id="tab-story" class="tab-content space-y-4 text-xs sm:text-sm text-[#6B726E] leading-loose">
+    <div id="tab-story" class="tab-content space-y-4 text-xs sm:text-sm text-[#6B726E] leading-loose {% if is_en %}text-left{% else %}text-right{% endif %}">
       <div class="text-[#1E3329] font-medium leading-relaxed">
         {{ product.description|linebreaks }}
       </div>
       <div class="bg-[#FAF7F2] rounded-2xl p-4 border border-[#E8E3D9] flex items-center gap-3 mt-4">
         <span class="text-2xl text-[#82533D]">❝</span>
         <p class="text-xs text-[#1E3329] italic font-medium">
-          «هر اثر دست‌ساز، بخشی از روح و زمان هنرمند آفریننده را در دل خود به همراه دارد.» — غرفه {{ product.booth.name }}
+          {% if is_en %}
+            "Every handmade piece carries a portion of the master creator's soul and time." — {{ product.booth.name }}
+          {% else %}
+            «هر اثر دست‌ساز، بخشی از روح و زمان هنرمند آفریننده را در دل خود به همراه دارد.» — غرفه {{ product.booth.name }}
+          {% endif %}
         </p>
       </div>
     </div>
 
     <!-- محتوای تب ۲: مشخصات دقیق و نگهداری -->
-    <div id="tab-specs" class="tab-content hidden space-y-4">
+    <div id="tab-specs" class="tab-content hidden space-y-4 {% if is_en %}text-left{% else %}text-right{% endif %}">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
         <div class="border border-[#E8E3D9] rounded-2xl p-4 space-y-2">
-          <h5 class="font-bold text-[#1E3329] mb-2 text-sm">جدول کامل مشخصات ساختاری</h5>
+          <h5 class="font-bold text-[#1E3329] mb-2 text-sm">{% if is_en %}Full Specifications Table{% else %}جدول کامل مشخصات ساختاری{% endif %}</h5>
           <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
-            <span class="text-[#98A19C]">کد ثبت کاتالوگ (SKU):</span>
+            <span class="text-[#98A19C]">{% if is_en %}Catalog SKU:{% else %}کد ثبت کاتالوگ (SKU):{% endif %}</span>
             <span class="font-semibold text-[#1E3329]">{{ product.sku|default:product.id }}</span>
           </div>
           <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
-            <span class="text-[#98A19C]">وزن خالص اثر:</span>
-            <span class="font-semibold text-[#1E3329]">{{ product.weight }} گرم</span>
+            <span class="text-[#98A19C]">{% if is_en %}Net Weight:{% else %}وزن خالص اثر:{% endif %}</span>
+            <span class="font-semibold text-[#1E3329]">{{ product.weight }} {% if is_en %}g{% else %}گرم{% endif %}</span>
           </div>
           <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
-            <span class="text-[#98A19C]">پدیدآورنده و کارگاه:</span>
+            <span class="text-[#98A19C]">{% if is_en %}Studio & Workshop:{% else %}پدیدآورنده و کارگاه:{% endif %}</span>
             <span class="font-semibold text-[#1E3329]">{{ product.booth.name }}</span>
           </div>
           {% for attr in product.attributes.all %}
@@ -323,48 +331,59 @@
           </div>
           {% endfor %}
           <div class="flex justify-between py-1.5 border-b border-[#FAF7F2]">
-            <span class="text-[#98A19C]">شناسنامه فیزیکی:</span>
+            <span class="text-[#98A19C]">{% if is_en %}Physical Certificate:{% else %}شناسنامه فیزیکی:{% endif %}</span>
             {% if product.has_physical_certificate %}
-            <span class="font-semibold text-emerald-700">دارد (ممهور به هولوگرام ضدجعل)</span>
+            <span class="font-semibold text-emerald-700">{% if is_en %}Yes (Sealed with Hologram){% else %}دارد (ممهور به هولوگرام ضدجعل){% endif %}</span>
             {% else %}
-            <span class="font-semibold text-[#82533D]">فاقد شناسنامه فیزیکی</span>
+            <span class="font-semibold text-[#82533D]">{% if is_en %}Without Physical Certificate{% else %}فاقد شناسنامه فیزیکی{% endif %}</span>
             {% endif %}
           </div>
         </div>
 
         <div class="border border-[#E8E3D9] rounded-2xl p-4 space-y-2">
-          <h5 class="font-bold text-[#1E3329] mb-2 text-sm">دستورالعمل نگهداری و اصالت اثر هنری</h5>
+          <h5 class="font-bold text-[#1E3329] mb-2 text-sm">{% if is_en %}Care Instructions & Preservation{% else %}دستورالعمل نگهداری و اصالت اثر هنری{% endif %}</h5>
           <ul class="space-y-2.5 text-[#6B726E] list-disc list-inside leading-relaxed">
+            {% if is_en %}
+            <li>Avoid placing under direct continuous sunlight to preserve natural mineral pigments.</li>
+            <li>Use a dry or slightly damp soft microfiber cloth to gently dust the surface.</li>
+            <li>Do not use abrasive chemicals, acidic detergents or industrial solvents.</li>
+            <li>Delivered inside a 5-layer shockproof box with official certificate of provenance.</li>
+            {% else %}
             <li>از قرار دادن اثر در معرض تابش مستقیم و مداوم خورشید جهت حفظ ثبات رنگدانه‌ها خودداری شود.</li>
             <li>برای تمیز کردن گرد و غبار، از دستمال نرم میکروفیبر خشک یا کمی نمدار استفاده کنید.</li>
             <li>از مصرف شوینده‌های شیمیایی اسیدی قوی یا حلال‌ها بر روی سطح کار پرهیز نمایید.</li>
             <li>اثر به همراه جعبه محافظ ۵ لایه ضدضربه و شناسنامه فیزیکی ممهور ارسال خواهد شد.</li>
+            {% endif %}
           </ul>
         </div>
       </div>
     </div>
 
     <!-- محتوای تب ۳: نظرات مجموعه‌داران -->
-    <div id="tab-reviews" class="tab-content hidden space-y-6">
+    <div id="tab-reviews" class="tab-content hidden space-y-6 {% if is_en %}text-left{% else %}text-right{% endif %}">
       <div class="flex items-center justify-between pb-4 border-b border-[#E8E3D9]">
         <div>
-          <h5 class="text-sm font-bold text-[#1E3329]">دیدگاه خریداران و مجموعه‌داران</h5>
-          <p class="text-xs text-[#6B726E]">تجربه اصیل دوست‌داران هنر از این اثر</p>
+          <h5 class="text-sm font-bold text-[#1E3329]">{% if is_en %}Art Collector & Buyer Reviews{% else %}دیدگاه خریداران و مجموعه‌داران{% endif %}</h5>
+          <p class="text-xs text-[#6B726E]">{% if is_en %}Authentic impressions from art connoisseurs{% else %}تجربه اصیل دوست‌داران هنر از این اثر{% endif %}</p>
         </div>
         <button type="button" class="px-4 py-2 rounded-xl bg-[#2C4A3E] text-white text-xs font-bold hover:bg-[#1E3329] transition-all">
-          ثبت دیدگاه جدید
+          {% if is_en %}Write a Review{% else %}ثبت دیدگاه جدید{% endif %}
         </button>
       </div>
 
       <div class="space-y-4">
         <div class="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E8E3D9] space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-xs text-[#1E3329]">خریدار تاییدشده هنرکده</span>
-            <span class="text-[10px] text-[#98A19C]">دارای گواهی شناسنامه فیزیکی</span>
+            <span class="font-bold text-xs text-[#1E3329]">{% if is_en %}Verified Art Collector{% else %}خریدار تاییدشده هنرکده{% endif %}</span>
+            <span class="text-[10px] text-[#98A19C]">{% if is_en %}Verified Physical Certificate{% else %}دارای گواهی شناسنامه فیزیکی{% endif %}</span>
           </div>
           <div class="text-[#C69A52] text-xs">★★★★★</div>
           <p class="text-xs text-[#6B726E] leading-relaxed">
+            {% if is_en %}
+            Gallery packaging was remarkably secure and elegant. The physical certificate came sealed with official hologram inside the wooden presentation box. The craftsmanship is breathtaking.
+            {% else %}
             بسته‌بندی گالری کاملاً ایمن و حرفه‌ای بود. شناسنامه اثر نیز بسیار تمیز و با مهر رسمی همراه جعبه ارسال شده بود. کیفیت کار فراتر از تصاویر بود.
+            {% endif %}
           </p>
         </div>
       </div>
@@ -376,8 +395,10 @@
   <!-- آثار مرتبط در همان دسته‌بندی -->
   <section class="mb-12">
     <div class="flex items-center justify-between mb-6 pb-3 border-b border-[#E8E3D9]">
-      <h3 class="text-lg font-black text-[#1E3329]">سایر آثار مرتبط با این مجموعه</h3>
-      <a href="{% url 'shop' %}?cat={{ product.category.slug }}" class="text-xs text-[#2C4A3E] font-bold hover:underline">مشاهده همه آثار این شاخه ←</a>
+      <h3 class="text-lg font-black text-[#1E3329]">{% if is_en %}Related Collection Artworks{% else %}سایر آثار مرتبط با این مجموعه{% endif %}</h3>
+      <a href="{% url 'shop' %}?cat={{ product.category.slug }}" class="text-xs text-[#2C4A3E] font-bold hover:underline">
+        {% if is_en %}Explore Collection Branch →{% else %}مشاهده همه آثار این شاخه ←{% endif %}
+      </a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {% for rel in related_products %}
@@ -390,7 +411,7 @@
           {% endif %}
           <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#82533D] font-bold px-2.5 py-1 rounded-full shadow-sm">{{ rel.category.name }}</span>
         </a>
-        <div class="p-4 flex flex-col flex-grow">
+        <div class="p-4 flex flex-col flex-grow {% if is_en %}text-left{% else %}text-right{% endif %}">
           <h4 class="text-xs font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-1">
             <a href="{% url 'product_detail' rel.slug %}">{{ rel.name }}</a>
           </h4>
@@ -400,13 +421,13 @@
               {% if rel.discount_price %}
               <div class="flex items-baseline gap-1">
                 <span class="text-[10px] line-through text-[#98A19C]">{{ rel.price|intcomma }}</span>
-                <span class="text-xs font-extrabold text-[#1E3329]">{{ rel.discount_price|intcomma }} <span class="text-[9px] font-normal text-[#6B726E]">تومان</span></span>
+                <span class="text-xs font-extrabold text-[#1E3329]">{{ rel.discount_price|intcomma }} <span class="text-[9px] font-normal text-[#6B726E]">{% if is_en %}Toman{% else %}تومان{% endif %}</span></span>
               </div>
               {% else %}
-              <span class="text-xs font-extrabold text-[#1E3329]">{{ rel.price|intcomma }} <span class="text-[9px] font-normal text-[#6B726E]">تومان</span></span>
+              <span class="text-xs font-extrabold text-[#1E3329]">{{ rel.price|intcomma }} <span class="text-[9px] font-normal text-[#6B726E]">{% if is_en %}Toman{% else %}تومان{% endif %}</span></span>
               {% endif %}
             </div>
-            <a href="{% url 'product_detail' rel.slug %}" class="text-[11px] text-[#2C4A3E] font-bold hover:underline">مشاهده اثر</a>
+            <a href="{% url 'product_detail' rel.slug %}" class="text-[11px] text-[#2C4A3E] font-bold hover:underline">{% if is_en %}View Artwork{% else %}مشاهده اثر{% endif %}</a>
           </div>
         </div>
       </article>
@@ -447,13 +468,14 @@
   }
 
   function shareProduct() {
+    const isEn = {{ is_en|yesno:"true,false" }};
     if (navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href).then(() => {
         const shareText = document.getElementById('share-text');
         const shareBtn = document.getElementById('share-btn');
         if (shareText && shareBtn) {
           const original = shareText.textContent;
-          shareText.textContent = '✓ لینک کپی شد!';
+          shareText.textContent = isEn ? '✓ Link Copied!' : '✓ لینک کپی شد!';
           shareBtn.classList.add('!border-emerald-600', '!text-emerald-700', 'bg-emerald-50');
           setTimeout(() => {
             shareText.textContent = original;

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load humanize %}
 
-{% block title %}هنرکده | جستجوی آثار هنری و دست‌سازه‌ها{% endblock %}
+{% block title %}{% if is_en %}Honarkadeh | Search Artworks & Handicrafts{% else %}هنرکده | جستجوی آثار هنری و دست‌سازه‌ها{% endif %}{% endblock %}
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -9,18 +9,18 @@
   <!-- نوار مسیر راهنما و اطلاعات کوئری -->
   <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#E8E3D9]">
     <nav class="flex items-center gap-2 text-xs text-[#6B726E]">
-      <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">صفحه اصلی</a>
+      <a href="{% url 'home' %}" class="hover:text-[#2C4A3E]">{% if is_en %}Home{% else %}صفحه اصلی{% endif %}</a>
       <span>/</span>
-      <a href="{% url 'shop' %}" class="hover:text-[#2C4A3E]">گالری آثار</a>
+      <a href="{% url 'shop' %}" class="hover:text-[#2C4A3E]">{% if is_en %}Gallery Shop{% else %}گالری آثار{% endif %}</a>
       <span>/</span>
-      <span class="text-[#1E3329] font-bold">جستجوی آثار هنری</span>
+      <span class="text-[#1E3329] font-bold">{% if is_en %}Search Artworks{% else %}جستجوی آثار هنری{% endif %}</span>
     </nav>
     <div class="flex items-center gap-2 text-xs">
-      <span class="text-[#6B726E]">نتیجه جستجو برای:</span>
+      <span class="text-[#6B726E]">{% if is_en %}Search results for:{% else %}نتیجه جستجو برای:{% endif %}</span>
       <span class="bg-[#FAF7F2] border border-[#2C4A3E]/30 text-[#2C4A3E] px-3 py-1 rounded-full font-bold">
-        «{{ query|default:"تمام آثار" }}»
+        «{{ query|default:(is_en|yesno:"All Artworks,تمام آثار") }}»
       </span>
-      <span class="text-[#98A19C] text-[11px]">({{ products.count }} اثر یافت شد)</span>
+      <span class="text-[#98A19C] text-[11px]">({% if is_en %}{{ products.count }} artworks found{% else %}{{ products.count }} اثر یافت شد{% endif %})</span>
     </div>
   </div>
 
@@ -30,31 +30,37 @@
             class="w-full py-3 px-4 bg-white border border-[#E8E3D9] hover:border-[#2C4A3E] rounded-2xl flex items-center justify-between text-xs font-bold text-[#1E3329] shadow-sm transition-all cursor-pointer">
       <span class="flex items-center gap-2">
         <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
-        <span>فیلتر شاخه‌های هنری</span>
+        <span>{% if is_en %}Filter Art Branches{% else %}فیلتر شاخه‌های هنری{% endif %}</span>
       </span>
-      <span class="text-[#82533D] text-[11px] bg-[#F7EFEA] px-2.5 py-0.5 rounded-full font-bold">نمایش / پنهان</span>
+      <span class="text-[#82533D] text-[11px] bg-[#F7EFEA] px-2.5 py-0.5 rounded-full font-bold">{% if is_en %}Show / Hide{% else %}نمایش / پنهان{% endif %}</span>
     </button>
   </div>
 
   <!-- ساختار دو ستونه: فیلترها در راست، نتایج در چپ -->
   <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
     
-    <!-- ستون فیلترها (۱ ستون راست) -->
+    <!-- ستون فیلترها -->
     <aside id="search-filters-aside" class="hidden lg:block space-y-6">
       <div class="bg-white rounded-3xl p-6 border border-[#E8E3D9] shadow-sm space-y-6">
         <div class="flex items-center justify-between pb-3 border-b border-[#E8E3D9]">
           <h3 class="text-sm font-bold text-[#1E3329] flex items-center gap-2">
             <svg class="w-4 h-4 text-[#2C4A3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
-            <span>شاخه‌های هنری</span>
+            <span>{% if is_en %}Art Branches{% else %}شاخه‌های هنری{% endif %}</span>
           </h3>
-          <a href="{% url 'shop' %}" class="text-[11px] text-[#82533D] hover:underline">مشاهده همه</a>
+          <a href="{% url 'shop' %}" class="text-[11px] text-[#82533D] hover:underline">{% if is_en %}View All{% else %}مشاهده همه{% endif %}</a>
         </div>
 
         <!-- فیلتر دسته‌بندی -->
         <div class="space-y-2 text-xs text-[#6B726E]">
           {% for cat in categories %}
           <a href="{% url 'shop' %}?cat={{ cat.slug }}" class="flex items-center justify-between py-1 hover:text-[#1E3329]">
-            <span>{{ cat.name }}</span>
+            <span>
+              {% if is_en %}
+                {% if "سفال" in cat.name %}Pottery & Ceramics{% elif "مینا" in cat.name %}Enameling & Minakari{% elif "قلم" in cat.name %}Engraving (Ghalamzani){% elif "نقاشی" in cat.name %}Fine Paintings{% elif "فرش" in cat.name %}Handwoven Rugs{% elif "چوب" in cat.name %}Woodcraft & Marquetry{% else %}{{ cat.name }}{% endif %}
+              {% else %}
+                {{ cat.name }}
+              {% endif %}
+            </span>
             <span class="text-[10px] bg-[#FAF7F2] px-2 py-0.5 rounded-full text-[#98A19C]">{{ cat.products.count }}</span>
           </a>
           {% endfor %}
@@ -62,30 +68,30 @@
 
         <!-- اصالت و شناسنامه -->
         <div class="pt-4 border-t border-[#E8E3D9] space-y-2 text-xs text-[#6B726E]">
-          <h4 class="font-bold text-[#1E3329]">ویژگی‌های ممتاز آثار</h4>
+          <h4 class="font-bold text-[#1E3329]">{% if is_en %}Distinguished Features{% else %}ویژگی‌های ممتاز آثار{% endif %}</h4>
           <div class="flex items-center gap-2">
             <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-            <span>همراه با شناسنامه فیزیکی معتبر</span>
+            <span>{% if is_en %}Verified Physical Certificate{% else %}همراه با شناسنامه فیزیکی معتبر{% endif %}</span>
           </div>
           <div class="flex items-center gap-2">
             <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-            <span>بسته‌بندی ۵ لایه ضدضربه</span>
+            <span>{% if is_en %}5-Layer Shockproof Packaging{% else %}بسته‌بندی ۵ لایه ضدضربه{% endif %}</span>
           </div>
         </div>
 
       </div>
     </aside>
 
-    <!-- ستون نتایج (۳ ستون چپ) -->
+    <!-- ستون نتایج -->
     <section class="lg:col-span-3 space-y-6">
       
       <!-- نوار مرتب‌سازی و آمار -->
       <div class="bg-white rounded-2xl p-4 border border-[#E8E3D9] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
         <div class="flex items-center gap-3 text-xs">
-          <span class="font-bold text-[#1E3329]">نتایج منطبق در گالری:</span>
-          <span class="text-[#6B726E]">{{ products.count }} اثر یافت شد</span>
+          <span class="font-bold text-[#1E3329]">{% if is_en %}Matching Gallery Results:{% else %}نتایج منطبق در گالری:{% endif %}</span>
+          <span class="text-[#6B726E]">{% if is_en %}{{ products.count }} artworks found{% else %}{{ products.count }} اثر یافت شد{% endif %}</span>
         </div>
-        <a href="{% url 'shop' %}" class="text-xs font-bold text-[#2C4A3E] hover:underline">مشاهده کاتالوگ جامع آثار ←</a>
+        <a href="{% url 'shop' %}" class="text-xs font-bold text-[#2C4A3E] hover:underline">{% if is_en %}Explore Full Gallery Catalog →{% else %}مشاهده کاتالوگ جامع آثار ←{% endif %}</a>
       </div>
 
       <!-- گرید محصولات -->
@@ -100,12 +106,12 @@
             {% endif %}
             <span class="absolute top-3 right-3 bg-white/90 backdrop-blur text-[10px] text-[#2C4A3E] font-bold px-2.5 py-1 rounded-full shadow-sm">{{ product.category.name }}</span>
             {% if product.stock == 1 %}
-            <span class="absolute top-3 left-3 bg-[#2C4A3E] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">تک‌نسخه</span>
+            <span class="absolute top-3 left-3 bg-[#2C4A3E] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">{% if is_en %}Unique Edition{% else %}تک‌نسخه{% endif %}</span>
             {% endif %}
           </a>
-          <div class="p-5 flex flex-col flex-grow">
+          <div class="p-5 flex flex-col flex-grow {% if is_en %}text-left{% else %}text-right{% endif %}">
             <div class="text-[11px] text-[#6B726E] flex items-center justify-between mb-1.5">
-              <a href="{% url 'shop' %}?booth={{ product.booth.slug }}" class="hover:text-[#2C4A3E] transition-colors">غرفه: <strong class="text-[#1E3329]">{{ product.booth.name }}</strong></a>
+              <a href="{% url 'shop' %}?booth={{ product.booth.slug }}" class="hover:text-[#2C4A3E] transition-colors">{% if is_en %}Studio:{% else %}غرفه:{% endif %} <strong class="text-[#1E3329]">{{ product.booth.name }}</strong></a>
               <span class="text-[10px] text-[#82533D]">{{ product.brand.name|default:"" }}</span>
             </div>
             <h3 class="text-sm font-bold text-[#1E3329] group-hover:text-[#2C4A3E] transition-colors line-clamp-1 mb-2">
@@ -116,17 +122,17 @@
             </p>
             <div class="mt-auto pt-3 border-t border-[#E8E3D9] flex items-center justify-between">
               <div>
-                <span class="text-[10px] text-[#98A19C] block">قیمت اثر:</span>
+                <span class="text-[10px] text-[#98A19C] block">{% if is_en %}Price:{% else %}قیمت اثر:{% endif %}</span>
                 {% if product.discount_price %}
                 <div class="flex items-baseline gap-1.5">
                   <span class="text-xs line-through text-[#98A19C]">{{ product.price|intcomma }}</span>
-                  <span class="text-sm font-extrabold text-[#1E3329]">{{ product.discount_price|intcomma }} <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+                  <span class="text-sm font-extrabold text-[#1E3329]">{{ product.discount_price|intcomma }} <span class="text-[10px] font-normal text-[#6B726E]">{% if is_en %}Toman{% else %}تومان{% endif %}</span></span>
                 </div>
                 {% else %}
-                <span class="text-sm font-extrabold text-[#1E3329]">{{ product.price|intcomma }} <span class="text-[10px] font-normal text-[#6B726E]">تومان</span></span>
+                <span class="text-sm font-extrabold text-[#1E3329]">{{ product.price|intcomma }} <span class="text-[10px] font-normal text-[#6B726E]">{% if is_en %}Toman{% else %}تومان{% endif %}</span></span>
                 {% endif %}
               </div>
-              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="افزودن به سبد">
+              <button type="button" class="add-to-cart-btn p-2.5 rounded-xl bg-[#E8EFEA] text-[#2C4A3E] hover:bg-[#2C4A3E] hover:text-white transition-all shadow-sm" title="{% if is_en %}Add to Cart{% else %}افزودن به سبد{% endif %}">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
               </button>
             </div>
@@ -134,10 +140,10 @@
         </article>
         {% empty %}
         <div class="col-span-full py-16 text-center text-[#6B726E] bg-white rounded-3xl border border-[#E8E3D9] p-8">
-          <p class="text-base font-bold text-[#1E3329] mb-2">هیچ اثری منطبق با «{{ query }}» پیدا نشد.</p>
-          <p class="text-xs text-[#6B726E] mb-4">می‌توانید با عبارات عمومی‌تر مانند «سفال»، «نقاشی»، یا نام هنرمند جستجو فرمایید.</p>
+          <p class="text-base font-bold text-[#1E3329] mb-2">{% if is_en %}No artworks matched «{{ query }}».{% else %}هیچ اثری منطبق با «{{ query }}» پیدا نشد.{% endif %}</p>
+          <p class="text-xs text-[#6B726E] mb-4">{% if is_en %}Try searching for broader terms such as "Ceramics", "Painting", or artist names.{% else %}می‌توانید با عبارات عمومی‌تر مانند «سفال»، «نقاشی»، یا نام هنرمند جستجو فرمایید.{% endif %}</p>
           <a href="{% url 'shop' %}" class="inline-block px-5 py-2.5 bg-[#2C4A3E] text-white rounded-xl text-xs font-bold hover:bg-[#1E3329] transition-all">
-            مشاهده کلیه آثار گالری
+            {% if is_en %}View All Gallery Artworks{% else %}مشاهده کلیه آثار گالری{% endif %}
           </a>
         </div>
         {% endfor %}
