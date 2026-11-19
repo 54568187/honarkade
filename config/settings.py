@@ -140,7 +140,7 @@ UNFOLD = {
     "SITE_URL": "/",
     "SITE_SYMBOL": "palette",
     "STYLES": [
-        lambda request: "/static/css/admin_custom.css?v=2.6",
+        lambda request: "/static/css/admin_custom.css?v=2.7",
     ],
     "SCRIPTS": [
         lambda request: "/static/js/admin_custom.js",

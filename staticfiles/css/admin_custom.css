@@ -333,9 +333,10 @@ input[type="submit"].default:hover {
   transform: translateY(-2px) !important;
 }
 
-.submit-row,
-.submit-line,
-div[class*="submit-row"] {
+/* نوار ابزار پایین صفحه ویرایش فرم‌ها (فقط کانتینرها، نه دکمه تکی) */
+div.submit-row,
+footer.submit-row,
+div[class*="submit-row"]:not(button) {
   position: sticky !important;
   bottom: 1.25rem !important;
   z-index: 45 !important;
@@ -353,9 +354,9 @@ div[class*="submit-row"] {
   gap: 0.75rem !important;
 }
 
-.dark .submit-row,
-.dark .submit-line,
-.dark div[class*="submit-row"] {
+.dark div.submit-row,
+.dark footer.submit-row,
+.dark div[class*="submit-row"]:not(button) {
   background: rgba(17, 24, 39, 0.94) !important;
   border-color: rgba(0, 164, 190, 0.4) !important;
 }
@@ -596,3 +597,46 @@ a.admin-edit-btn .material-symbols-outlined {
   }
 }
 
+
+
+/* دکمه اختصاصی ورود در صفحه ورود پنل مدیریت (Unfold / Admin Login) */
+#login-form button[type="submit"],
+.login button[type="submit"],
+.login button.submit-row,
+.admin-login-submit-btn {
+  background: linear-gradient(135deg, #00A4BE 0%, #007082 100%) !important;
+  color: #ffffff !important;
+  font-family: 'Vazirmatn', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  padding: 0.85rem 1.5rem !important;
+  border-radius: 12px !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(0, 164, 190, 0.45) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  position: static !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  margin-top: 0.5rem !important;
+}
+
+#login-form button[type="submit"]:hover,
+.login button[type="submit"]:hover,
+.login button.submit-row:hover,
+.admin-login-submit-btn:hover {
+  background: linear-gradient(135deg, #008a9f 0%, #045b6a 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 164, 190, 0.65) !important;
+  transform: translateY(-2px) !important;
+  color: #ffffff !important;
+}
+
+#login-form button[type="submit"] *,
+.login button[type="submit"] *,
+.login button.submit-row *,
+.admin-login-submit-btn * {
+  color: #ffffff !important;
+}
